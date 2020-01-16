@@ -227,3 +227,15 @@
                      (concat result (take N (repeat x))))
                    '() col)))
 (map p33 [[1 2 3] [:a :b] [4 5 6] [[1 2] [3 4]] [44 33]] [2 4 1 2 2])
+
+
+;p34: Implement range
+;Write a function which creates a list of all integers in a given range
+;restrictions: range
+(def p34 (fn my-range
+           ([N1 N2] (my-range N1 N2 '()))
+           ([N1 N2 result]
+            (if (= N1 N2)
+              result
+              (cons N1 (my-range (+ N1 1) N2))))))
+(map p34 [1 -2 5] [4 2 8])
