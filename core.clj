@@ -174,3 +174,10 @@
                      '() col))
            ["Leeeeeerrroyyy" [1 1 2 3 3 2 2 3] [[1 2] [1 2] [3 4] [1 2]]])]
   [(apply str (first result)) (second result) (nth result 2)])
+
+;solution 4
+(let [result
+      (map (fn [col]
+             (map first (partition-by identity col)))
+           ["Leeeeeerrroyyy" [1 1 2 3 3 2 2 3] [[1 2] [1 2] [3 4] [1 2]]])]
+  [(apply str (first result)) (second result) (nth result 2)])
