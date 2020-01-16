@@ -209,3 +209,12 @@
 (def p31_3 (fn [col]
              (partition-by identity col)))
 (map p31_3 [[1 1 2 1 1 1 3 3] [:a :a :b :b :c] [[1 2] [1 2] [3 4]]])
+
+
+;p32: Duplicate a Sequence
+;Write a function which duplicates each element of a sequence
+(def p32 (fn [col]
+           (reduce (fn [result x]
+                     (concat result [x x]))
+                   '() col)))
+(map p32 [[1 2 3] [:a :a :b :b] [[1 2] [3 4]]])
