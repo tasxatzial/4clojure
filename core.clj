@@ -181,3 +181,19 @@
              (map first (partition-by identity col)))
            ["Leeeeeerrroyyy" [1 1 2 3 3 2 2 3] [[1 2] [1 2] [3 4] [1 2]]])]
   [(apply str (first result)) (second result) (nth result 2)])
+
+
+;p31: Pack a Sequence
+;Write a function which packs consecutive duplicates into sub-lists
+(map (fn my-pack
+   ([col] (my-pack col 0 [] '()))
+   ([col N result result_tmp]
+    (if (= N 0)
+      (my-pack col (+ N 1) result (concat result_tmp (list (first col))))
+      (if (= (count col) N)
+        (conj result result_tmp)
+        (let [nth_col (nth col N)]
+          (if (= nth_col (nth col (- N 1)))
+            (my-pack col (+ N 1) result (concat result_tmp (list nth_col)))
+            (my-pack col (+ N 1) (conj result result_tmp) (list nth_col))))))))
+ [[1 1 2 1 1 1 3 3] [:a :a :b :b :c] [[1 2] [1 2] [3 4]]])
