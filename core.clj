@@ -121,3 +121,9 @@
                  result))
              (re-find matcher) '()))))
  ["HeLlO, WoRlD!" "nothing" "$#A(*&987Zf"])
+
+;solution 3: re-seq
+(map (fn [col]
+   (apply str
+          (re-seq #"[A-Z]" col)))
+ ["HeLlO, WoRlD!" "nothing" "$#A(*&987Zf"])
