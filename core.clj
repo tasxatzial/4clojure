@@ -35,3 +35,14 @@
              (inc new-val))
            0 col))
  ['(1 2 3 3 1) "Hello World" [[1 2] [3 4] [5 6]] '(13) '(:a :b :c)])
+
+
+;p23: Reverse a Sequence
+;Write a function which reverses a sequence
+;restrictions: reverse, rseq
+(map (fn my-reverse
+   [col]
+   (reduce (fn [result x]
+             (conj result x))
+           '() col))
+ [[1 2 3 4 5] (sorted-set 5 7 2 7) [[1 2][3 4][5 6]]])
