@@ -85,3 +85,17 @@
         false))
     ))
  ['(1 2 3 4 5) "racecar" [:foo :bar :foo] '(1 1 3 3 1 1) '(:a :b :c)])
+
+
+;p28: Flatten a Sequence
+;Write a function which flattens a sequence
+;restrictions: flatten
+(map (fn my-flatten
+   ([col]
+    (reduce (fn [result x]
+              (concat result
+                      (if (sequential? x)
+                        (my-flatten x)
+                        (list x))))
+            '() col)))
+ ['((1 2) 3 [4 [5 6]]) ["a" ["b"] "c"] '((((:a))))])
