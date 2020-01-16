@@ -211,3 +211,8 @@
           (my-pack (rest col) result (concat result_tmp (list (first col))))
           (my-pack (rest col) (conj result (concat result_tmp (list (first col)))) '()))))))
      [[1 1 2 1 1 1 3 3] [:a :a :b :b :c] [[1 2] [1 2] [3 4]]])
+
+;solution 3
+(map (fn [col]
+   (partition-by identity col))
+     [[1 1 2 1 1 1 3 3] [:a :a :b :b :c] [[1 2] [1 2] [3 4]]])
