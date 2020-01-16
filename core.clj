@@ -103,8 +103,21 @@
 
 ;p29: Get the Caps
 ;Write a function which takes a string and returns a new string containing only the capital letters
+;solution 1
 (map (fn [col]
    (apply str
           (filter #(and (re-find #"[A-Z]" %) (= (clojure.string/upper-case %) %))
                   (clojure.string/split col, #""))))
+ ["HeLlO, WoRlD!" "nothing" "$#A(*&987Zf"])
+
+;solution 2: recursion with re-find
+(map (fn [col]
+   (apply str
+          (let [matcher (re-matcher #"[A-Z]" col)]
+            ((fn find-all [has-next result]
+               (if has-next
+                 (let [match (re-find matcher)]
+                   (recur match (concat result [has-next])))
+                 result))
+             (re-find matcher) '()))))
  ["HeLlO, WoRlD!" "nothing" "$#A(*&987Zf"])
