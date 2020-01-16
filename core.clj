@@ -161,3 +161,16 @@
                     (my-compress (rest col) (conj result (first col))))))))
            ["Leeeeeerrroyyy" [1 1 2 3 3 2 2 3] [[1 2] [1 2] [3 4] [1 2]]])]
   [(apply str (first result)) (second result) (nth result 2)])
+
+;solution 3: reduce
+(let [result
+      (map (fn my-compress [col]
+             (reduce (fn [result x]
+                       (if (empty? result)
+                         (concat result [x])
+                         (if (not (= (last result) x))
+                           (concat result [x])
+                           result)))
+                     '() col))
+           ["Leeeeeerrroyyy" [1 1 2 3 3 2 2 3] [[1 2] [1 2] [3 4] [1 2]]])]
+  [(apply str (first result)) (second result) (nth result 2)])
