@@ -46,3 +46,10 @@
              (conj result x))
            '() col))
  [[1 2 3 4 5] (sorted-set 5 7 2 7) [[1 2][3 4][5 6]]])
+
+
+;p24: Sum It All Up
+;Write a function which returns the sum of a sequence of numbers
+(map (fn [x]
+   (apply + x))
+ [[1 2 3] (list 0 -2 5 5) #{4 2 1} '(0 0 -1) '(1 10 3)])
