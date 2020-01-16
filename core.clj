@@ -218,3 +218,12 @@
                      (concat result [x x]))
                    '() col)))
 (map p32 [[1 2 3] [:a :a :b :b] [[1 2] [3 4]]])
+
+
+;p33: Replicate a Sequence
+;Write a function which replicates each element of a sequence a variable number of times
+(def p33 (fn [col N]
+           (reduce (fn [result x]
+                     (concat result (take N (repeat x))))
+                   '() col)))
+(map p33 [[1 2 3] [:a :b] [4 5 6] [[1 2] [3 4]] [44 33]] [2 4 1 2 2])
