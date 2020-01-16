@@ -152,8 +152,8 @@
                 (if (= 1 (count col))
                   (conj result (first col))
                   (if (= (first col) (second col))
-                    (my-compress (rest col) result)
-                    (my-compress (rest col) (conj result (first col)))))))))
+                    (recur (rest col) result)
+                    (recur (rest col) (conj result (first col)))))))))
 (let [result (map p30_2 ["Leeeeeerrroyyy" [1 1 2 3 3 2 2 3] [[1 2] [1 2] [3 4] [1 2]]])]
   [(apply str (first result)) (second result) (nth result 2)])
 
@@ -183,13 +183,13 @@
            ([col] (my-pack col 0 [] '()))
            ([col N result result_tmp]
             (if (= N 0)
-              (my-pack col (+ N 1) result (concat result_tmp (list (first col))))
+              (recur col (+ N 1) result (concat result_tmp (list (first col))))
               (if (= (count col) N)
                 (conj result result_tmp)
                 (let [nth_col (nth col N)]
                   (if (= nth_col (nth col (- N 1)))
-                    (my-pack col (+ N 1) result (concat result_tmp (list nth_col)))
-                    (my-pack col (+ N 1) (conj result result_tmp) (list nth_col)))))))))
+                    (recur col (+ N 1) result (concat result_tmp (list nth_col)))
+                    (recur col (+ N 1) (conj result result_tmp) (list nth_col)))))))))
 (map p31 [[1 1 2 1 1 1 3 3] [:a :a :b :b :c] [[1 2] [1 2] [3 4]]])
 
 ;solution 2: recursion with rest
@@ -201,8 +201,8 @@
                 (if (= 1 (count col))
                   (conj result (concat result_tmp (list (first col))))
                   (if (= (first col) (second col))
-                    (my-pack (rest col) result (concat result_tmp (list (first col))))
-                    (my-pack (rest col) (conj result (concat result_tmp (list (first col)))) '())))))))
+                    (recur (rest col) result (concat result_tmp (list (first col))))
+                    (recur (rest col) (conj result (concat result_tmp (list (first col)))) '())))))))
 (map p31_2 [[1 1 2 1 1 1 3 3] [:a :a :b :b :c] [[1 2] [1 2] [3 4]]])
 
 ;solution 3
