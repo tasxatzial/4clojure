@@ -185,6 +185,7 @@
 
 ;p31: Pack a Sequence
 ;Write a function which packs consecutive duplicates into sub-lists
+;solution 1: recursion with nth
 (map (fn my-pack
    ([col] (my-pack col 0 [] '()))
    ([col N result result_tmp]
@@ -197,3 +198,16 @@
             (my-pack col (+ N 1) result (concat result_tmp (list nth_col)))
             (my-pack col (+ N 1) (conj result result_tmp) (list nth_col))))))))
  [[1 1 2 1 1 1 3 3] [:a :a :b :b :c] [[1 2] [1 2] [3 4]]])
+
+;solution 2: recursion with rest
+(map (fn my-pack
+   ([col] (my-pack col [] '()))
+   ([col result result_tmp]
+    (if (= 0 (count col))
+      result
+      (if (= 1 (count col))
+        (conj result (concat result_tmp (list (first col))))
+        (if (= (first col) (second col))
+          (my-pack (rest col) result (concat result_tmp (list (first col))))
+          (my-pack (rest col) (conj result (concat result_tmp (list (first col)))) '()))))))
+     [[1 1 2 1 1 1 3 3] [:a :a :b :b :c] [[1 2] [1 2] [3 4]]])
