@@ -25,3 +25,13 @@
      (first col)
      (recur (rest col) (- n 1))))
  ['(4 5 6 7) [:a :b :c] [1 2 3 4] '([1 2] [3 4] [5 6])] [2 0 1 2])
+
+
+;p22: Count a Sequence
+;Write a function which returns the total number of elements in a sequence
+;restrictions: count
+(map (fn [col]
+   (reduce (fn [new-val x]
+             (inc new-val))
+           0 col))
+ ['(1 2 3 3 1) "Hello World" [[1 2] [3 4] [5 6]] '(13) '(:a :b :c)])
