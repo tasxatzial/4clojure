@@ -71,3 +71,17 @@
                (let [sum (+ x1 x2)]
                  (cons x1 (lazy-seq (fib x2 sum)))))))))
  [3 6 8])
+
+
+;p27: Palindrome Detector
+;Write a function which returns true if the given sequence is a palindrome
+(map (fn palindrome?
+   ([col] (palindrome? col 0))
+   ([col n]
+    (if (= (count col) n)
+      true
+      (if (= (nth col (- (count col) 1)) (first col))
+        (recur col (+ n 1))
+        false))
+    ))
+ ['(1 2 3 4 5) "racecar" [:foo :bar :foo] '(1 1 3 3 1 1) '(:a :b :c)])
