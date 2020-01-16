@@ -99,3 +99,12 @@
                         (list x))))
             '() col)))
  ['((1 2) 3 [4 [5 6]]) ["a" ["b"] "c"] '((((:a))))])
+
+
+;p29: Get the Caps
+;Write a function which takes a string and returns a new string containing only the capital letters
+(map (fn [col]
+   (apply str
+          (filter #(and (re-find #"[A-Z]" %) (= (clojure.string/upper-case %) %))
+                  (clojure.string/split col, #""))))
+ ["HeLlO, WoRlD!" "nothing" "$#A(*&987Zf"])
