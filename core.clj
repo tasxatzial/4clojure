@@ -160,11 +160,9 @@
 ;solution 3: reduce
 (def p30_3 (fn my-compress [col]
              (reduce (fn [result x]
-                       (if (empty? result)
+                       (if (or (empty? result) (not (= (last result) x)))
                          (concat result [x])
-                         (if (not (= (last result) x))
-                           (concat result [x])
-                           result)))
+                         result))
                      '() col)))
 (let [result (map p30_3 ["Leeeeeerrroyyy" [1 1 2 3 3 2 2 3] [[1 2] [1 2] [3 4] [1 2]]])]
   [(apply str (first result)) (second result) (nth result 2)])
