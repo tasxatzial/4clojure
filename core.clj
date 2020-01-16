@@ -127,3 +127,21 @@
    (apply str
           (re-seq #"[A-Z]" col)))
  ["HeLlO, WoRlD!" "nothing" "$#A(*&987Zf"])
+
+
+;p30: Compress a Sequence
+;Write a function which removes consecutive duplicates from a sequence
+(let [result
+      (map (fn my-compress
+             ([col] (my-compress col 0 [] (count col)))
+             ([col N result col_count]
+              (if (= 0 N)
+                (recur col (+ N 1) (conj result (first col)) col_count)
+                (if (= col_count N)
+                  result
+                  (let [nth_col (nth col N)]
+                    (if (= nth_col (nth col (- N 1)))
+                      (recur col (+ N 1) result col_count)
+                      (recur col (+ N 1) (conj result nth_col) col_count)))))))
+           ["Leeeeeerrroyyy" [1 1 2 3 3 2 2 3] [[1 2] [1 2] [3 4] [1 2]]])]
+  [(apply str (first result)) (second result) (nth result 2)])
