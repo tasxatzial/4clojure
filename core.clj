@@ -60,3 +60,14 @@
 (map (fn [col]
    (filter #(= 1 (mod % 2)) col))
  [#{1 2 3 4 5} [4 2 1 6] [2 2 4 6] [1 1 1 3]])
+
+
+;p26: Fibonacci Sequence
+;Write a function which returns the first X fibonacci numbers
+(map (fn [n]
+   (take n ((fn fib
+              ([] (fib 1 1))
+              ([x1 x2]
+               (let [sum (+ x1 x2)]
+                 (cons x1 (lazy-seq (fib x2 sum)))))))))
+ [3 6 8])
