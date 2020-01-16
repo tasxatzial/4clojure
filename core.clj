@@ -224,7 +224,11 @@
            (reduce (fn [result x]
                      (concat result (take N (repeat x))))
                    '() col)))
-(map p33 [[1 2 3] [:a :b] [4 5 6] [[1 2] [3 4]] [44 33]] [2 4 1 2 2])
+(p33 [1 2 3] 2)
+(p33 [:a :b] 4)
+(p33 [4 5 6] 1)
+(p33 [[1 2] [3 4]] 2)
+(p33 [44 33] 2)
 
 
 ;p34: Implement range
@@ -236,7 +240,9 @@
             (if (= N1 N2)
               result
               (cons N1 (my-range (+ N1 1) N2))))))
-(map p34 [1 -2 5] [4 2 8])
+(p34 1 4)
+(p34 -2 2)
+(p34 5 8)
 
 
 ;p38: Maximum value
