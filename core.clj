@@ -53,3 +53,10 @@
 (map (fn [x]
    (apply + x))
  [[1 2 3] (list 0 -2 5 5) #{4 2 1} '(0 0 -1) '(1 10 3)])
+
+
+;p25: Find the odd numbers
+;Write a function which returns only the odd numbers from a sequence
+(map (fn [col]
+   (filter #(= 1 (mod % 2)) col))
+ [#{1 2 3 4 5} [4 2 1 6] [2 2 4 6] [1 1 1 3]])
