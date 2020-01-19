@@ -308,3 +308,14 @@
 (p41 [1 2 3 4 5 6 7 8] 3)
 (p41 [:a :b :c :d :e :f] 2)
 (p41 [1 2 3 4 5 6] 4)
+
+
+;p42: Factorial Fun
+;Write a function which calculates factorials
+(def p42 (fn [N]
+           ((fn my-factorial [N result]
+              (if (= N 0)
+                result
+                (recur (- N 1) (* result N))))
+            N 1)))
+(map p42 [1 3 5 8])
