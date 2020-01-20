@@ -356,3 +356,10 @@
 (p43_3 [1 2 3 4 5 6] 2)
 (p43_3 (range 9) 3)
 (p43_3 (range 10) 5)
+
+;solution 4
+(def p43_4 (fn [col N]
+             (apply map list (partition N col))))
+(p43_4 [1 2 3 4 5 6] 2)
+(p43_4 (range 9) 3)
+(p43_4 (range 10) 5)
