@@ -312,6 +312,7 @@
 
 ;p42: Factorial Fun
 ;Write a function which calculates factorials
+;solution 1: recur
 (def p42 (fn [N]
            ((fn my-factorial [N result]
               (if (= N 0)
@@ -319,3 +320,18 @@
                 (recur (- N 1) (* result N))))
             N 1)))
 (map p42 [1 3 5 8])
+
+
+;p43: Reverse Interleave
+;Write a function which reverses the interleave process into x number of subsequences
+(def p43 (fn [col N]
+           (let [T (/ (count col) N)]
+             ((fn my-rinterleave [result col]
+                (if (empty? col)
+                  result
+                  (my-rinterleave (concat result (list (take T col))) (nthrest col T))))
+              '() (apply interleave (partition N col))))
+           ))
+(p43 [1 2 3 4 5 6] 2)
+(p43 (range 9) 3)
+(p43 (range 10) 5)
