@@ -340,7 +340,7 @@
 ;solution 2: partition + recursion
 (def p43_2 (fn [col N]
              (let [col_new (partition N col) count_col (count (first col_new))]
-               ((fn my-rinteleave [result C]
+               ((fn my-rinterleave [result C]
                   (if (= count_col C)
                     result
                     (recur (concat result (list (map #(nth % C) col_new)) ) (+ C 1))))
@@ -348,3 +348,11 @@
 (p43_2 [1 2 3 4 5 6] 2)
 (p43_2 (range 9) 3)
 (p43_2 (range 10) 5)
+
+;solution 3: partition + interleave
+(def p43_3 (fn [col N]
+             (let [partitioned (partition N col) interleaved (apply interleave partitioned)]
+               (partition (count partitioned) interleaved))))
+(p43_3 [1 2 3 4 5 6] 2)
+(p43_3 (range 9) 3)
+(p43_3 (range 10) 5)
