@@ -407,3 +407,12 @@
 ;It returns the first logical true value of (predicate x) where x is an item in the collection
 (= 6 (some #{2 7 6} [5 6 7 8]))                            ;6
 (= 6 (some #(when (even? %) %) [5 6 7 8]))                 ;6
+
+
+;p49: Split a sequence
+;Write a function which will split a sequence into two parts
+(def p49 (fn [N col]
+           [(apply vector (take N col)) (apply vector (drop N col))]))
+(p49 3 [1 2 3 4 5 6])
+(p49 1 [:a :b :c :d])
+(p49 2 [[1 2] [3 4] [5 6]])
