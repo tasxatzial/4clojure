@@ -400,3 +400,10 @@
 (contains? [1 1 1 1 1] 4)                                   ;true, 4th index
 (contains? {4 :a 2 :b} 4)                                   ;true, 4
 (not (contains? [1 2 4] 4))                                 ;true, 4th index
+
+
+;p48: Intro to some
+;The some function takes a predicate function and a collection.
+;It returns the first logical true value of (predicate x) where x is an item in the collection
+(= 6 (some #{2 7 6} [5 6 7 8]))                            ;6
+(= 6 (some #(when (even? %) %) [5 6 7 8]))                 ;6
