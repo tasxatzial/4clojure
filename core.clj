@@ -472,3 +472,12 @@
 (p53 [5 6 1 3 2 7])
 (p53 [2 3 3 4 5])
 (p53 [7 6 5 4])
+
+
+;p54: Partition a Sequence
+;Write a function which returns a sequence of lists of x items each. Lists of less than x items should not be returned
+(def p54 (fn my-partition [N col]
+           (take (Math/floor (/ (count col) N))  (concat (list (take N col)) (lazy-seq (my-partition N (drop N col)))))))
+(p54 3 (range 9))
+(p54 2 (range 8))
+(p54 3 (range 8))
