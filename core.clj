@@ -476,8 +476,20 @@
 
 ;p54: Partition a Sequence
 ;Write a function which returns a sequence of lists of x items each. Lists of less than x items should not be returned
+;solution 1: lazy-seq
 (def p54 (fn my-partition [N col]
            (take (Math/floor (/ (count col) N))  (concat (list (take N col)) (lazy-seq (my-partition N (drop N col)))))))
 (p54 3 (range 9))
 (p54 2 (range 8))
 (p54 3 (range 8))
+
+;solution 2: non-lazy recursion
+(def p54_2 (fn [N col]
+             ((fn my-partition [result col]
+                (if (< (count col) N)
+                  result
+                  (recur (concat result (list (take N col))) (drop N col))))
+              '() col)))
+(p54_2 3 (range 9))
+(p54_2 2 (range 8))
+(p54_2 3 (range 8))
