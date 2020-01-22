@@ -494,6 +494,17 @@
 (p54_2 2 (range 8))
 (p54_2 3 (range 8))
 
+;solution 3: recursion but in non-tail position
+;works due to the fact that (cons X nil) -> (X)
+(def p54_3 (fn [N col]
+             (concat [] ((fn my-partition [col]             ;concat necessary if we pass empty seq
+                           (when (>= (count col) N)
+                             (cons (take N col) (my-partition (drop N col)))))
+                         col))))
+(p54_3 3 (range 9))
+(p54_3 2 (range 8))
+(p54_3 3 (range 8))
+
 
 ;p55: Count Occurrences
 ;Write a function which returns a map containing the number of occurrences of each distinct item in a sequence
