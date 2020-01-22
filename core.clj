@@ -321,6 +321,13 @@
             N 1)))
 (map p42 [1 3 5 8])
 
+;solution 2: recursion but in non-tail position
+(def p42_2 (fn my-recursion [N]
+             (if (= N 0)
+               1
+               (* N (my-recursion (- N 1))))))
+(map p42_2 [1 3 5 8])
+
 
 ;p43: Reverse Interleave
 ;Write a function which reverses the interleave process into x number of subsequences
@@ -537,3 +544,8 @@
 ;A recursive function is a function which calls itself.
 ;This is one of the fundamental techniques used in functional programming
 (= [5 4 3 2 1] ((fn foo [x] (when (> x 0) (conj (foo (dec x)) x))) 5)) ;[5 4 3 2 1]
+
+
+;p58: Function Composition
+;Write a function which allows you to create function compositions.
+;The parameter list should take a variable number of functions, and create a function that applies them from right-to-left
