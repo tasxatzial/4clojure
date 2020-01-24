@@ -584,3 +584,14 @@
 (p61 [:a :b :c] [1 2 3])
 (p61 [1 2 3 4] ["one" "two" "three"])
 (p61 [:foo :bar] ["foo" "bar" "baz"])
+
+
+;p62: Re-implement Iterate
+;Given a side-effect free function f and an initial value x write a function which returns an infinite
+;lazy sequence of x, (f x), (f (f x)), (f (f (f x))), etc
+(def p62 (fn my-iterate [func i]
+           (cons i (lazy-seq (my-iterate func (func i))))))
+(take 5 (p62 #(* 2 %) 1))
+(take 100 (p62 inc 0))
+(take 9 (p62 #(inc (mod % 3)) 1))
+
