@@ -573,3 +573,14 @@
 ((p59 + max min) 2 3 5 1 6 4)
 ((p59 #(.toUpperCase %) count) "hello")
 ((p59 :a :c :b) {:a 2, :b 4, :c 6, :d 8 :e 10})
+
+
+;p61: Map Construction
+;Write a function which takes a vector of keys and a vector of values and constructs a map from them
+(def p61 (fn [col1 col2]
+           (into {} (map (fn [x1 x2]
+                           [x1 x2])
+                         col1 col2))))
+(p61 [:a :b :c] [1 2 3])
+(p61 [1 2 3 4] ["one" "two" "three"])
+(p61 [:foo :bar] ["foo" "bar" "baz"])
