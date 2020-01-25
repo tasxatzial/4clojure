@@ -675,7 +675,17 @@
                                        (conj result2 x2)))
                                    {} x)))
                    (second args) (nnext args))))
-
 (p69 * {:a 2, :b 3, :c 4} {:a 2} {:b 2} {:c 5})
 (p69 - {1 10, 2 20} {1 3, 2 10, 3 15})
 (p69 concat {:a [3], :b [6]} {:a [4 5], :c [8 9]} {:b [7]})
+
+
+;p70: Word Sorting
+;Write a function that splits a sentence up into a sorted list of words. Capitalization should not affect sort
+;order and punctuation should be ignored
+(def p70 (fn [string1]
+           (sort-by clojure.string/lower-case
+                    (clojure.string/split (clojure.string/replace string1 #"[^A-Za-z ]" "") #" "))))
+(p70 "Have a nice day.")
+(p70 "Clojure is a fun language!")
+(p70 "Fools fall for foolish follies.")
