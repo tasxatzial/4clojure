@@ -959,3 +959,17 @@
 (p80 496)
 (p80 500)
 (p80 8128)
+
+
+;p81: Set Intersection
+;Write a function which returns the intersection of two sets.
+;The intersection is the sub-set of items that each set has in common
+(def p81 (fn [col1 col2]
+           (reduce (fn [result x]
+                     (if (and (contains? col1 x) (contains? col2 x))
+                       (conj result x)
+                       result))
+                   #{} (into col1 col2))))
+(p81 #{0 1 2 3} #{2 3 4 5})
+(p81 #{0 1 2} #{3 4 5})
+(p81 #{:a :b :c :d} #{:c :e :a :f :d})
