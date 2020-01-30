@@ -1053,3 +1053,15 @@
 (p88 #{:a :b :c} #{})
 (p88 #{} #{4 5 6})
 (p88 #{[1 2] [2 3]} #{[2 3] [3 4]})
+
+;solution 2
+(def p88_2 (fn [col1 col2]
+             (reduce (fn [result x]
+                       (if (not (contains? (clojure.set/intersection col1 col2) x))
+                         (conj result x)
+                         result))
+                     #{} (into col1 col2))))
+(p88_2 #{1 2 3 4 5 6} #{1 3 5 7})
+(p88_2 #{:a :b :c} #{})
+(p88_2 #{} #{4 5 6})
+(p88_2 #{[1 2] [2 3]} #{[2 3] [3 4]})
