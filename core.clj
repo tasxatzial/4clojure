@@ -1038,3 +1038,18 @@
 (p86 986543210)
 (p86 2)
 (p86 3)
+
+
+;p88: Symmetric Difference
+;Write a function which returns the symmetric difference of two sets. The symmetric difference is the set of items
+;belonging to one but not both of the two sets
+(def p88 (fn [col1 col2]
+           (reduce (fn [result x]
+                     (if (or (and (contains? col1 x) (not (contains? col2 x)))  (and (contains? col2 x) (not (contains? col1 x))))
+                       (conj result x)
+                       result))
+                   #{} (into col1 col2))))
+(p88 #{1 2 3 4 5 6} #{1 3 5 7})
+(p88 #{:a :b :c} #{})
+(p88 #{} #{4 5 6})
+(p88 #{[1 2] [2 3]} #{[2 3] [3 4]})
