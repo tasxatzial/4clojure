@@ -410,6 +410,7 @@
 ;p48: Intro to some
 ;The some function takes a predicate function and a collection.
 ;It returns the first logical true value of (predicate x) where x is an item in the collection
+;restrictions: split-at
 (= 6 (some #{2 7 6} [5 6 7 8]))                            ;6
 (= 6 (some #(when (even? %) %) [5 6 7 8]))                 ;6
 
@@ -481,6 +482,7 @@
 
 ;p54: Partition a Sequence
 ;Write a function which returns a sequence of lists of x items each. Lists of less than x items should not be returned
+;restrictions: partition, partition-all
 ;solution 1: lazy-seq
 (def p54 (fn my-partition [N col]
            (take (Math/floor (/ (count col) N))  (concat (list (take N col)) (lazy-seq (my-partition N (drop N col)))))))
@@ -513,6 +515,7 @@
 
 ;p55: Count Occurrences
 ;Write a function which returns a map containing the number of occurrences of each distinct item in a sequence
+;restrictions: frequencies
 (def p55 (fn [col]
             (reduce (fn [result x]
                       (if (result x)
@@ -526,6 +529,7 @@
 
 ;p56: Find Distinct Items
 ;Write a function which removes the duplicates from a sequence. Order of the items must be maintained
+;restrictions: distinct
 (def p56 (fn [col]
            (reduce (fn [result x]
                      (if ((set result) x)
@@ -547,6 +551,7 @@
 ;p58: Function Composition
 ;Write a function which allows you to create function compositions.
 ;The parameter list should take a variable number of functions, and create a function that applies them from right-to-left
+;restrictions: comp
 ;partial solution: compose two functions
 (def p58_tmp (fn my-comp [f1 f2]
            (fn [& args]
@@ -567,6 +572,7 @@
 ;p59: Juxtaposition
 ;Take a set of functions and return a new function that takes a variable number of arguments and returns a sequence
 ;containing the result of applying each function left-to-right to the argument list
+;restrictions: juxt
 (def p59 (fn [& f-args]
            (fn [& args]
              (map #(apply % args) f-args))))
@@ -589,6 +595,7 @@
 ;p62: Re-implement Iterate
 ;Given a side-effect free function f and an initial value x write a function which returns an infinite
 ;lazy sequence of x, (f x), (f (f x)), (f (f (f x))), etc
+;restrictions: iterate
 (def p62 (fn my-iterate [func i]
            (cons i (lazy-seq (my-iterate func (func i))))))
 (take 5 (p62 #(* 2 %) 1))
@@ -600,6 +607,7 @@
 ;Given a function f and a sequence s, write a function which returns a map.
 ;The keys should be the values of f applied to each item in s.
 ;The value at each key should be a vector of corresponding items in the order they appear in s
+;restrictions: group-by
 (def p63 (fn [func col]
             (reduce (fn [result x]
                       (if (contains? result (x 1))
@@ -898,6 +906,7 @@
 
 ;p78: Reimplement Trampoline
 ;Reimplement the function described in "Intro to Trampoline" (problem 76)
+;restrictions: trampoline
 (def p78 (fn my-trampoline
            ([fn1 & args]
             (if (empty? args)
@@ -964,6 +973,7 @@
 ;p81: Set Intersection
 ;Write a function which returns the intersection of two sets.
 ;The intersection is the sub-set of items that each set has in common
+;restrictions: intersection
 ;solution 1: union
 (def p81 (fn [col1 col2]
            (reduce (fn [result x]
