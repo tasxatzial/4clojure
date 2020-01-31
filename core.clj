@@ -270,7 +270,8 @@
 
 
 ;p39: Interleave Two Seqs
-;Write a function which takes two sequences and returns the first item from each, then the second item from each, then the third, etc
+;Write a function which takes two sequences and returns the first item from each, then the second item from each,
+;then the third, etc
 ;restrictions: interleave
 (def p39 (fn [col1 col2]
            (reduce concat (map (fn [x1 x2]
@@ -550,7 +551,8 @@
 
 ;p58: Function Composition
 ;Write a function which allows you to create function compositions.
-;The parameter list should take a variable number of functions, and create a function that applies them from right-to-left
+;The parameter list should take a variable number of functions, and create a function that applies them from
+;right-to-left
 ;restrictions: comp
 ;partial solution: compose two functions
 (def p58_tmp (fn my-comp [f1 f2]
@@ -1055,7 +1057,8 @@
 ;belonging to one but not both of the two sets
 (def p88 (fn [col1 col2]
            (reduce (fn [result x]
-                     (if (or (and (contains? col1 x) (not (contains? col2 x)))  (and (contains? col2 x) (not (contains? col1 x))))
+                     (if (or (and (contains? col1 x) (not (contains? col2 x)))
+                             (and (contains? col2 x) (not (contains? col1 x))))
                        (conj result x)
                        result))
                    #{} (into col1 col2))))
@@ -1092,3 +1095,21 @@
 (p90 #{1 2 3} #{4 5})
 (= 300 (count (p90 (into #{} (range 10))
                   (into #{} (range 30)))))
+
+
+;p93: Partially Flatten a Sequence
+;Write a function which flattens any nested combination of sequential things (lists, vectors, etc.), but
+;maintains the lowest level sequential items. The result should be a sequence of sequences with only one level of
+;nesting
+(def p93 (fn my-flatten [col]
+           (reduce (fn [result x]
+                     (into result
+                           (if (sequential? x)
+                             (if (sequential? (first x))
+                               (my-flatten x)
+                               [x])
+                             [x])))
+                   [] col)))
+(p93  [["Do"] ["Nothing"]])
+(p93 [[[[:a :b]]] [[:c :d]] [:e :f]])
+(p93 '((1 2)((3 4)((((5 6)))))))
