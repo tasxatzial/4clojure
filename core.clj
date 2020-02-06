@@ -1216,6 +1216,7 @@
 ;p100: Least Common Multiple
 ;Write a function which calculates the least common multiple. Your function should accept a variable number of
 ;positive integers or ratios
+;solution 1: LCM is a multiple of the max number
 (def p100 (fn [& args]
             (let [maxN (memoize (fn [args] (apply max args)))]
               ((fn my-lcm[i]
@@ -1228,3 +1229,18 @@
 (p100 1/3 2/5)
 (p100 3/4 1/6)
 (p100 7 5/7 2 3/5)
+
+;solution 2: reduce
+(def p100_2 (fn [& args]
+              (letfn [(my-gcd [x y]
+                        (if (= 0 y)
+                          x
+                          (my-gcd y (mod x y))))]
+                (reduce (fn [result x]
+                          (/ (* result x) (my-gcd result x)))
+                        (first args) args))))
+(p100_2 2 3)
+(p100_2 3 5 7)
+(p100_2 1/3 2/5)
+(p100_2 3/4 1/6)
+(p100_2 7 5/7 2 3/5)
