@@ -1301,7 +1301,7 @@
 (p105 [:a 1 2 3 :b :c 4])
 
 
-;p106: Simple closures
+;p107: Simple closures
 ;Lexical scope and first-class functions are two of the most basic building blocks of a functional language like
 ;Clojure. When you combine the two together, you get something very powerful called lexical closures. With these,
 ;you can exercise a great deal of control over the lifetime of your local bindings, saving their values for use
@@ -1310,19 +1310,39 @@
 ;function (f x) which computes x^n. Observe that the effect of this is to preserve the value of n for use outside
 ;the scope in which it is defined
 ;solution 1: recursion
-(def p106 (fn [n]
+(def p107 (fn [n]
             #((fn my-pow [res n]
                 (if (= 0 n)
                   res
                   (recur (* res %) (- n 1))))
               1 n)))
-((p106 2) 16)
-(map (p106 3) [1 2 3 4])
-(map #((p106 %) 2) [0 1 2 3 4])
+((p107 2) 16)
+(map (p107 3) [1 2 3 4])
+(map #((p107 %) 2) [0 1 2 3 4])
 
 ;solution 2: round
-(def p106_2 (fn [n]
+(def p107_2 (fn [n]
               #(Math/round (Math/pow % n))))
-((p106_2 2) 16)
-(map (p106_2 3) [1 2 3 4])
-(map #((p106_2 %) 2) [0 1 2 3 4])
+((p107_2 2) 16)
+(map (p107_2 3) [1 2 3 4])
+(map #((p107_2 %) 2) [0 1 2 3 4])
+
+
+;p108: Lazy Searching
+;Given any number of sequences, each sorted from smallest to largest, find the smallest single number which appears
+;in all of the sequences. The sequences may be infinite, so be careful to search lazily
+(def p108 (fn [& args]
+            (letfn [(p108_S [col X]
+                      (= X (last (take-while #(<= % X) col))))]
+              ((fn my-lz [N]
+                 (if (nil? (nth (first args) N nil))
+                   nil
+                   (if (some #(false? %) (map p108_S (rest args) (repeat (nth (first args) N))))
+                     (my-lz (+ N 1))
+                     (nth (first args) N))))
+               0))))
+(p108 [1 2 3 4 5 6 7] [0.5 3/2 4 19])
+(p108 (range) (range 0 100 7/6) [2 3 5 7 11 13])
+(p108 (map #(* % % %) (range)) ;; perfect cubes
+    (filter #(zero? (bit-and % (dec %))) (range)) ;; powers of 2
+    (iterate inc 20))                                       ;64
