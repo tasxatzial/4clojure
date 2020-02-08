@@ -1309,6 +1309,7 @@
 ;It can be hard to follow in the abstract, so let's build a simple closure. Given a positive integer n, return a
 ;function (f x) which computes x^n. Observe that the effect of this is to preserve the value of n for use outside
 ;the scope in which it is defined
+;solution 1: recursion
 (def p106 (fn [n]
             #((fn my-pow [res n]
                 (if (= 0 n)
@@ -1318,3 +1319,10 @@
 ((p106 2) 16)
 (map (p106 3) [1 2 3 4])
 (map #((p106 %) 2) [0 1 2 3 4])
+
+;solution 2: round
+(def p106_2 (fn [n]
+              #(Math/round (Math/pow % n))))
+((p106_2 2) 16)
+(map (p106_2 3) [1 2 3 4])
+(map #((p106_2 %) 2) [0 1 2 3 4])
