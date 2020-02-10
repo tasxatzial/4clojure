@@ -1366,3 +1366,26 @@
 (first (p110 [1 1 1 4 4]))
 (nth (p110 [1]) 6)
 (count (nth (p110 [3 2]) 15))
+
+
+;p112: Sequs Horribilis
+;Create a function which takes an integer and a nested collection of integers as arguments. Analyze the elements
+;of the input collection and return a sequence which maintains the nested structure, and which includes all
+;elements starting from the head whose sum is less than or equal to the input integer
+(def p112 (fn [N col]
+            ((fn my-sh [col sm fcol]
+               (if (empty? col)
+                 fcol
+                 (if (sequential? (first col))
+                   (concat fcol (list (my-sh (first col) sm '())))
+                   (if (< N (+ sm (first col)))
+                     fcol
+                     (my-sh (next col) (+ sm (first col)) (concat fcol [(first col)]))))))
+             col 0 '())))
+(p112 10 [1 2 [3 [4 5] 6] 7])
+(p112 30 [1 2 [3 [4 [5 [6 [7 8]] 9]] 10] 11])
+(p112 9 (range))
+(p112 1 [[[[[1]]]]])
+(p112 0 [1 2 [3 [4 5] 6] 7])
+(p112 0 [0 0 [0 [0]]])
+(p112 1 [-10 [1 [2 3 [4 5 [6 7 [8]]]]]])
