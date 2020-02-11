@@ -1373,19 +1373,37 @@
 ;of the input collection and return a sequence which maintains the nested structure, and which includes all
 ;elements starting from the head whose sum is less than or equal to the input integer
 (def p112 (fn [N col]
-            ((fn my-sh [col sm fcol]
-               (if (empty? col)
+            ((fn my-sh [col sm fcol idx]
+               (if (nil? (nth col idx nil))
                  fcol
-                 (if (sequential? (first col))
-                   (concat fcol (list (my-sh (first col) sm '())))
-                   (if (< N (+ sm (first col)))
+                 (if (sequential? (nth col idx))
+                   (concat fcol (list (my-sh (nth col idx) sm '() 0)))
+                   (if (< N (+ sm (nth col idx)))
                      fcol
-                     (my-sh (next col) (+ sm (first col)) (concat fcol [(first col)]))))))
-             col 0 '())))
-(p112 10 [1 2 [3 [4 5] 6] 7])
-(p112 30 [1 2 [3 [4 [5 [6 [7 8]] 9]] 10] 11])
+                     (my-sh col (+ sm (nth col idx)) (concat fcol [(nth col idx)]) (+ idx 1))))))
+             col 0 '() 0)))
+(p112 30 [1 2 [3 [4 5] 6] 7])
+(p112 48 [1 2 [3 [4 [5 [6 [7 8]] 9]] 10] 11])
 (p112 9 (range))
 (p112 1 [[[[[1]]]]])
 (p112 0 [1 2 [3 [4 5] 6] 7])
 (p112 0 [0 0 [0 [0]]])
 (p112 1 [-10 [1 [2 3 [4 5 [6 7 [8]]]]]])
+
+
+;p114: Global take-while
+;take-while is great for filtering sequences, but it limited: you can only examine a single item of the sequence
+;at a time. What if you need to keep track of some state as you go over the sequence?
+;Write a function which accepts an integer n, a predicate p, and a sequence. It should return a lazy sequence
+;of items in the list up to, but not including, the nth item that satisfies the predicate
+(def p114 (fn [N pred col]
+            ((fn gltake [result N i]
+               (if (pred (nth col i))
+                 (if (= N 1)
+                   result
+                   (lazy-seq (cons (nth col i) (gltake result (- N 1) (+ i 1)))))
+                 (lazy-seq (cons (nth col i) (gltake result N (+ i 1))))))
+             [] N 0)))
+(p114 4 #(= 2 (mod % 3)) [2 3 5 7 11 13 17 19 23])
+(p114 3 #(some #{\i} %) ["this" "is" "a" "sentence" "i" "wrote"])
+(p114 1 #{"a"} ["this" "is" "a" "sentence" "i" "wrote"])
