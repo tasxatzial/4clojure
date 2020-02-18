@@ -1429,3 +1429,25 @@
 (p115 89098)
 (p115 89089)
 (take 20 (filter p115 (range)))
+
+
+;p116: Prime Sandwich
+;A balanced prime is a prime number which is also the mean of the primes directly before and after it in the
+;sequence of valid primes. Create a function which takes an integer n, and returns true iff it is a balanced prime
+(def p116 (fn [n]
+            (letfn [(isPrime? [n]
+                      (not (contains? (set (map #(mod n %) (range 2 (inc (/ n 2))))) 0)))]
+              (if (and (not= 0 n) (not= 1 n) (not= 2 n) (isPrime? n))
+                (letfn [(nextPrime [n]
+                          (if (isPrime? n)
+                            n
+                            (recur (+ n 1))))
+                        (prevPrime [n]
+                          (if (isPrime? n)
+                            n
+                            (recur (- n 1))))]
+                  (= n (/ (+ (nextPrime (+ n 1)) (prevPrime (- n 1))) 2)))
+                false))))
+(p116 4)
+(p116 563)
+(nth (filter p116 (range)) 15)
