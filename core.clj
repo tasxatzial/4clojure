@@ -1550,3 +1550,22 @@
 (p120 (range 30))
 (p120 (range 100))
 (p120 (range 1000))
+
+
+;p122: Read a binary number
+;Convert a binary number, provided in the form of a string, to its numerical value
+;solution 1: recursion
+(def p122 (fn [N]
+             (let [c (count N)]
+               ((fn [idx result]
+                  (if (= idx c)
+                    result
+                    (recur (+ idx 1) (+ result (* (Character/digit (get N idx) 10) (Math/round (Math/pow 2 (- c idx 1))))))))
+                0 0))))
+(p122 "0")
+(p122 "111")
+(p122 "1000")
+(p122 "1001")
+(p122 "11111111")
+(p122 "10101010101")
+(p122 "1111111111111111")
