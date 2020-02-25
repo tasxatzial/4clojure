@@ -1714,15 +1714,48 @@
 ;with an arbitrary base (second argument). Digits should be represented with their integer values,
 ;e.g. 15 would be [1 5] in base 10, [1 1 1 1] in base 2 and [15] in base 16
 (def p137 (fn [number base]
-            ((fn [result num]
-               (if (= 0 num)
-                 (if (empty? result)
-                   '(0)
-                   result)
-                 (recur (conj result (mod num base)) (int (/ num base)))))
-             '() number)))
+            (if (= 0 number)
+              '(0)
+              ((fn [result num]
+                 (if (= 0 num)
+                   result
+                   (recur (conj result (mod num base)) (int (/ num base)))))
+               '() number))))
 (p137 1234501 10)
 (p137 0 11)
 (p137 9 2)
 (let [n (rand-int 100000)](p137 n n))
 (p137 Integer/MAX_VALUE 42)
+
+
+;p141: Tricky card games
+;In trick-taking card games such as bridge, spades, or hearts, cards are played in groups known as "tricks" - each
+;player plays a single card, in order; the first player is said to "lead" to the trick. After all players have played,
+;one card is said to have "won" the trick. How the winner is determined will vary by game, but generally the winner is
+;the highest card played in the suit that was led. Sometimes (again varying by game), a particular suit will be
+;designated "trump", meaning that its cards are more powerful than any others: if there is a trump suit, and any
+;trumps are played, then the highest trump wins regardless of what was led.
+;Your goal is to devise a function that can determine which of a number of cards has won a trick. You should accept
+;a trump suit, and return a function winner. Winner will be called on a sequence of cards, and should return the one
+;which wins the trick. Cards will be represented in the format returned by Problem 128,
+;Recognize Playing Cards: a hash-map of :suit and a numeric :rank. Cards with a larger rank are stronger
+(def p141 (fn [trump]
+            (fn [col]
+              (let [trump2 (if (nil? trump)
+                            (:suit (nth col 0))
+                            trump)]
+                (reduce (fn [result x]
+                          (if (and (= trump2 (:suit x)) (> (:rank x) (:rank result)))
+                            x
+                            result))
+                        {:rank 0} col)))))
+
+(let [notrump (p141 nil)]
+  (and (= {:suit :club :rank 9}  (notrump [{:suit :club :rank 4}
+                                           {:suit :club :rank 9}]))
+       (= {:suit :spade :rank 2} (notrump [{:suit :spade :rank 2}
+                                           {:suit :club :rank 10}]))))
+((p141 :club) [{:suit :spade :rank 2}
+               {:suit :club :rank 10}])
+((p141 :heart) [{:suit :heart :rank 6} {:suit :heart :rank 8}
+              {:suit :diamond :rank 10} {:suit :heart :rank 4}])
