@@ -1759,3 +1759,14 @@
                {:suit :club :rank 10}])
 ((p141 :heart) [{:suit :heart :rank 6} {:suit :heart :rank 8}
               {:suit :diamond :rank 10} {:suit :heart :rank 4}])
+
+
+;p143: dot product
+;Create a function that computes the dot product of two sequences. You may assume that the vectors will have the
+;same length
+(def p143 (fn [col1 col2]
+            (reduce + (map * col1 col2))))
+(p143 [0 1 0] [1 0 0])
+(p143 [1 1 1] [1 1 1])
+(p143 [1 2 3] [4 5 6])
+(p143 [2 5 6] [100 10 1])
