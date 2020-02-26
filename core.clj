@@ -1823,3 +1823,17 @@
 (take 5 (p147 [1]))
 (take 2 (p147 [3 1 2]))
 (take 100 (p147 [2 4 2]))
+
+;solution 2
+(def p147_2 (fn [col]
+            (letfn [(newrow [col]
+                      (let [middle (map (fn [x1 x2]
+                                          (+' x1 x2)) col (rest col))]
+                        (conj (into [(first col)] middle) (last col))))]
+              ((fn pascal [col]
+                 (lazy-seq (cons col (pascal (newrow col)))))
+               col))))
+(second (p147_2 [2 3 2]))
+(take 5 (p147_2 [1]))
+(take 2 (p147_2 [3 1 2]))
+(take 100 (p147_2 [2 4 2]))
