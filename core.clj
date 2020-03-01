@@ -1992,3 +1992,12 @@
 (p171 [1 1 1 1 1 1 1])
 (p171 [])
 (p171 [19 4 17 1 3 10 2 13 13 2 16 4 2 15 13 9 6 14 2 11])
+
+
+;p173: Intro to Destructuring 2
+;Sequential destructuring allows you to bind symbols to parts of sequential things (vectors, lists, seqs, etc.):
+;(let [bindings* ] exprs*) Complete the bindings so all let-parts evaluate to 3
+(= 3
+   (let [[x y] [+ (range 3)]] (apply x y))                  ;x y
+   (let [[[x y] b] [[+ 1] 2]] (x y b))
+   (let [[x y] [inc 2]] (x y)))
