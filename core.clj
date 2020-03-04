@@ -327,6 +327,16 @@
                (* N (my-recursion (- N 1))))))
 (map p42_2 [1 3 5 8])
 
+;solution 3: iterate
+(def p42_3 #(last (last (take (inc %) (iterate (fn [[x y]]
+                                                 [(inc x) (* x y)]) [1 1])))))
+(map p42_3 [1 3 5 8])
+
+;solution 4: reduce
+(def p42_4 (fn [N]
+             (reduce * (range 1 (inc N)))))
+(map p42_4 [1 3 5 8])
+
 
 ;p43: Reverse Interleave
 ;Write a function which reverses the interleave process into x number of subsequences
