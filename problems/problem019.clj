@@ -3,9 +3,9 @@
 ;
 ;restrictions: last
 ;
-(def p19 #(if (empty? %)
-            nil
-            (nth % (- (count %) 1))))
-
-;tests
-(map p19 [[1 2 3 4 5] '(5 4 3) ["b" "c" "d"]])
+(defn my-last
+  "Returns the last element in col."
+  [col]
+  (if (empty? col)
+    nil
+    (nth col (- (count col) 1))))
