@@ -1,9 +1,17 @@
 ;p32: Duplicate a Sequence
 ;Write a function which duplicates each element of a sequence
-(def p32 (fn [col]
-           (reduce (fn [result x]
-                     (concat result [x x]))
-                   '() col)))
 
-;tests
-(map p32 [[1 2 3] [:a :a :b :b] [[1 2] [3 4]]])
+;solution 1
+(defn duplicate1
+  "Duplicates each element of a sequence."
+  [col]
+  (reduce (fn [result x]
+            (concat result [x x]))
+          '()
+          col))
+
+;solution 2
+(defn duplicate2
+  "Duplicates each element of a sequence."
+  [col]
+  (apply concat (map #(vector % %) col)))
