@@ -3,12 +3,7 @@
 ;
 ;restrictions: interpose
 ;
-(def p40 (fn [N col]
-           (butlast (reduce (fn [result x]
-                              (concat result (concat (list x) (list N))))
-                            '() col))))
-
-;tests
-(p40 0 [1 2 3])
-(apply str (p40 ", " ["one" "two" "three"]))
-(p40 :z [:a :b :c :d])
+(defn my-interpose
+  "Interposes a sequence by N."
+  [N col]
+  (butlast (apply concat (map #(vector % N) col))))
