@@ -3,15 +3,14 @@
 ;
 ;restrictions: distinct
 ;
-(def p56 (fn [col]
-           (reduce (fn [result x]
-                     (if ((set result) x)
-                       result
-                       (conj result x)))
-                   [] col)))
-
-;tests
-(p56 [1 2 1 3 1 2 4])
-(p56 [:a :a :b :b :c :c])
-(p56 '([2 4] [1 2] [1 3] [1 3]))
-(p56 (range 50))
+(defn my-distinct
+  "Removes the duplicates from a sequence."
+  ([col] (my-distinct col #{} []))
+  ([col set-result result]
+   (if (empty? col)
+     result
+     (if (set-result (first col))
+       (recur (rest col) set-result result)
+       (let [new-set-result (conj set-result (first col))
+             new-result (conj result (first col))]
+         (recur (rest col) new-set-result new-result))))))
