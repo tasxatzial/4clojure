@@ -3,14 +3,16 @@
 ;
 ;restrictions: frequencies
 ;
-(def p55 (fn [col]
-            (reduce (fn [result x]
-                      (if (result x)
-                        (conj result [x (+ 1 (result x))])
-                        (conj result [x 1])))
-                    {} col)))
+(defn my-frequencies
+  "Returns a map containing the number of occurrences of each distinct item in a sequence."
+  [col]
+  (reduce (fn [result x]
+            (if (result x)
+              (assoc result x (inc (result x)))
+              (conj result x 1)))
+          {}
+          col))
 
-;tests
-(p55 [1 1 2 3 2 1 1])
-(p55 [:b :a :b :a :b])
-(p55 '([1 2] [1 3] [1 3]))
+(= (my-frequencies [1 1 2 3 2 1 1]) {1 4, 2 2, 3 1})
+(= (my-frequencies [:b :a :b :a :b]) {:a 2, :b 3})
+(= (my-frequencies '([1 2] [1 3] [1 3])) {[1 2] 1, [1 3] 2})
