@@ -4,47 +4,61 @@
 ;sub-set is a group of words which are anagrams of each other. Each sub-set should have at least two words. Words
 ;without any anagrams should not be included in the result
 
-;solution 1 ----------------------------------------
-(def p77 (fn [col]
-           (letfn [(p77_3 [col]                             ;collect all strings in every value in a set
-                     (reduce (fn [result y]
-                               (conj result (reduce (fn [result x]
-                                                      (conj result (x 0)))
-                                                    #{} y)))
-                             #{} col))
-                   (p77_2 [col] (filter #(> (count %) 1) col)) ;remove all values that have one element
-                   (p77_1 [col] (reduce (fn [result x]      ;get the values in group-by
-                                    (conj result (get col x) ))
-                                  #{} (keys col)))
-                   (p77_0 [col sorted] (group-by #(get % 1) (map (fn [x y] ;group-by the sorted letter list
-                                                                   [x y]) col sorted)))
-                   (p77_ [col] (map (fn [x]                 ;split into letters, then sort
-                                      (sort (clojure.string/split x #""))) col))]
-             (p77_3 (p77_2 (p77_1 (p77_0 col (p77_ col))))))))
+(defn split-word
+  "Splits a string into chars (sorted)."
+  [s]
+  (sort (map identity s)))
 
-;solution 1 tests
-(p77 ["meat" "mat" "team" "mate" "eat"])
-(p77 ["veer" "lake" "item" "kale" "mite" "ever"])
+(defn remove-single
+  "Removes from col all cols that consist of one element."
+  [col]
+  (set (filter #(> (count %) 1) col)))
 
-;solution 2 ----------------------------------------
-(def p77_2 (fn [col]
-             (letfn [(F [string] (sort (clojure.string/split string #"")))
-                     (Remove-single [col] (set (filter #(> (count %) 1) col)))
-                     (Process-col [col] (if (empty? col)
-                                          #{}
-                                          (reduce (fn [result x]
-                                                    (if (= (F x) (F (first col)))
-                                                      (conj result x)
-                                                      result))
-                                                  #{(first col)} (next col))))]
-               (Remove-single ((fn G [result col]
-                                 (if (empty? col)
-                                   result
-                                   (if (not (some true? (map #(contains? % (first col)) result)))
-                                     (G (conj result (Process-col col)) (next col))
-                                     (G result (next col)))))
-                               #{} col)))))
+(defn collect-anagrams
+  "Returns a set of all anagrams of string s that are found in word-map.
+  word-map consists of [word (split-word word)]"
+  [[s split-s] word-map]
+  (reduce (fn [result x]
+            (if (= (second x) split-s)
+              (conj result (first x))
+              result))
+          #{}
+          word-map))
 
-;solution 2 tests
-(p77_2 ["meat" "mat" "team" "mate" "eat"])
-(p77_2 ["veer" "lake" "item" "kale" "mite" "ever"])
+(defn split-word-map
+  "Splits a collection of words into a map, for each word the
+  [word (split-word word)] is added to the map."
+  [col]
+  (let [no-duplicates (set col)]
+    (reduce (fn [result x]
+              (conj result [x (split-word x)]))
+            {}
+            no-duplicates)))
+
+(defn dissoc-words
+  "Removes all words from word-map."
+  [word-map words]
+  (reduce (fn [result x]
+            (dissoc result x))
+          word-map
+          words))
+
+(defn group-by-anagrams
+  "Groups col by anagrams."
+  ([col] (group-by-anagrams #{} (split-word-map col)))
+  ([result word-map]
+   (if (empty? word-map)
+     result
+     (let [word (first word-map)
+           rest-word-map (dissoc word-map (first word))
+           anagrams (collect-anagrams word rest-word-map)
+           new-map (dissoc-words rest-word-map anagrams)
+           new-result (conj result (conj anagrams (first word)))]
+       (recur new-result new-map)))))
+
+(def remove-single-anagrams #(remove-single (group-by-anagrams %)))
+
+(= (remove-single-anagrams ["meat" "mat" "team" "mate" "eat"])
+   #{#{"meat" "team" "mate"}})
+(= (remove-single-anagrams ["veer" "lake" "item" "kale" "mite" "ever"])
+   #{#{"veer" "ever"} #{"lake" "kale"} #{"mite" "item"}})
