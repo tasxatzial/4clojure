@@ -44,3 +44,7 @@
   "Removes consecutive duplicates from a sequence."
   [col]
   (map first (partition-by identity col)))
+
+(= (apply str (my-compress1 "Leeeeeerrroyyy")) "Leroy")
+(= (my-compress1 [1 1 2 3 3 2 2 3]) '(1 2 3 2 3))
+(= (my-compress1 [[1 2] [1 2] [3 4] [1 2]]) '([1 2] [3 4] [1 2]))

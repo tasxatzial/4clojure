@@ -15,3 +15,8 @@
    (if (= N 1)
      result
      (recur (dec N) (* result N)))))
+
+(= (factorial1 1) 1)
+(= (factorial1 3) 6)
+(= (factorial1 5) 120)
+(= (factorial1 8) 40320)

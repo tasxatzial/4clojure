@@ -6,3 +6,8 @@
   [f]
   (fn [arg1 arg2]
     (f arg2 arg1)))
+
+(= 3 ((flip-args nth) 2 [1 2 3 4 5]))
+(= true ((flip-args >) 7 8))
+(= 4 ((flip-args quot) 2 8))
+(= [1 2 3] ((flip-args take) [1 2 3 4 5] 3))

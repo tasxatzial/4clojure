@@ -14,3 +14,8 @@
        (let [new-set-result (conj set-result (first col))
              new-result (conj result (first col))]
          (recur (rest col) new-set-result new-result))))))
+
+(= (my-distinct [1 2 1 3 1 2 4]) [1 2 3 4])
+(= (my-distinct [:a :a :b :b :c :c]) [:a :b :c])
+(= (my-distinct '([2 4] [1 2] [1 3] [1 3])) '([2 4] [1 2] [1 3]))
+(= (my-distinct (range 50)) (range 50))

@@ -12,3 +12,7 @@
   "Returns a new string containing only the capital letters."
   [s]
   (apply str (re-seq #"[A-Z]" s)))
+
+(= (get-caps1 "HeLlO, WoRlD!") "HLOWRD")
+(empty? (get-caps1 "nothing"))
+(= (get-caps1 "$#A(*&987Zf") "AZ")

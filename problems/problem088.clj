@@ -12,3 +12,8 @@
                 (conj result x)))
             #{}
             (into set1 set2))))
+
+(= (symmetric-difference #{1 2 3 4 5 6} #{1 3 5 7}) #{2 4 6 7})
+(= (symmetric-difference #{:a :b :c} #{}) #{:a :b :c})
+(= (symmetric-difference #{} #{4 5 6}) #{4 5 6})
+(= (symmetric-difference #{[1 2] [2 3]} #{[2 3] [3 4]}) #{[1 2] [3 4]})

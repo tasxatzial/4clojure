@@ -15,3 +15,9 @@
   "Replicates each element of a sequence a variable number of times."
   [col N]
   (apply concat (map #(take N (repeat %)) col)))
+
+(= (my-replicate1 [1 2 3] 2) '(1 1 2 2 3 3))
+(= (my-replicate1 [:a :b] 4) '(:a :a :a :a :b :b :b :b))
+(= (my-replicate1 [4 5 6] 1) '(4 5 6))
+(= (my-replicate1 [[1 2] [3 4]] 2) '([1 2] [1 2] [3 4] [3 4]))
+(= (my-replicate1 [44 33] 2) [44 44 33 33])

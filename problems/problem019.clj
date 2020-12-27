@@ -9,3 +9,7 @@
   (if (empty? col)
     nil
     (nth col (- (count col) 1))))
+
+(= (my-last [1 2 3 4 5]) 5)
+(= (my-last '(5 4 3)) 3)
+(= (my-last ["b" "c" "d"]) "d")

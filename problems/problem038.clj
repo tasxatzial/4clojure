@@ -12,3 +12,7 @@
               max))
           (first col)
           (rest col)))
+
+(= (my-max 1 8 3 4) 8)
+(= (my-max 30 20) 30)
+(= (my-max 45 67 11) 67)

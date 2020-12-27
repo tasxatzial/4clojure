@@ -23,3 +23,7 @@
        (recur (concat result (list (take N col))) (drop N col))))
    '()
    col))
+
+(= (my-partition1 3 (range 9)) '((0 1 2) (3 4 5) (6 7 8)))
+(= (my-partition1 2 (range 8)) '((0 1) (2 3) (4 5) (6 7)))
+(= (my-partition1 3 (range 8)) '((0 1 2) (3 4 5)))

@@ -7,3 +7,7 @@
   (if (>= (count col) 2)
     (nth col (- (count col) 2))
     nil))
+
+(= (second-to-last (list 1 2 3 4 5)) 4)
+(= (second-to-last ["a" "b" "c"]) "b")
+(= (second-to-last [[1 2] [3 4]]) [1 2])

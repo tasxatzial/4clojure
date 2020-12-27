@@ -10,3 +10,7 @@
              (let [sum (+ prev next)]
                (cons prev (lazy-seq (lazy-fib next sum))))))]
     (take N (lazy-fib))))
+
+(= (first-N-fib 3) '(1 1 2))
+(= (first-N-fib 6) '(1 1 2 3 5 8))
+(= (first-N-fib 8) '(1 1 2 3 5 8 13 21))

@@ -6,3 +6,10 @@
 (defn half-truth
   [& args]
   (and (or (some true? args) false) (or (some false? args) false)))
+
+(= false (half-truth false false))
+(= true (half-truth true false))
+(= false (half-truth true))
+(= true (half-truth false true false))
+(= false (half-truth true true true))
+(= true (half-truth true true true false))

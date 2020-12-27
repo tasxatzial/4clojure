@@ -33,3 +33,7 @@
   "Packs consecutive duplicates into sub-lists."
   [col]
   (partition-by identity col))
+
+(= (my-pack1 [1 1 2 1 1 1 3 3]) '((1 1) (2) (1 1 1) (3 3)))
+(= (my-pack1 [:a :a :b :b :c]) '((:a :a) (:b :b) (:c)))
+(= (my-pack1 [[1 2] [1 2] [3 4]]) '(([1 2] [1 2]) ([3 4])))

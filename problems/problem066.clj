@@ -7,3 +7,8 @@
   (if (= 0 N2)
     N1
     (my-gcd N2 (mod N1 N2))))
+
+(= (my-gcd 2 4) 2)
+(= (my-gcd 10 5) 5)
+(= (my-gcd 5 7) 1)
+(= (my-gcd 1023 858) 33)
