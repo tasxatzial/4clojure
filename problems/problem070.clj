@@ -1,11 +1,16 @@
 ;p70: Word Sorting
 ;Write a function that splits a sentence up into a sorted list of words. Capitalization should not affect sort
 ;order and punctuation should be ignored
-(def p70 (fn [string1]
-           (sort-by clojure.string/lower-case
-                    (clojure.string/split (clojure.string/replace string1 #"[^A-Za-z ]" "") #" "))))
+;
+(defn word-split
+  "Splits a sentence up into a sorted list of words."
+  [s]
+  (let [no-punctuation (clojure.string/replace s #"[^A-Za-z ]" "")]
+    (sort-by clojure.string/lower-case (clojure.string/split no-punctuation #" "))))
 
-;tests
-(p70 "Have a nice day.")
-(p70 "Clojure is a fun language!")
-(p70 "Fools fall for foolish follies.")
+(= (word-split  "Have a nice day.")
+   ["a" "day" "Have" "nice"])
+(= (word-split  "Clojure is a fun language!")
+   ["a" "Clojure" "fun" "is" "language"])
+(= (word-split  "Fools fall for foolish follies.")
+   ["fall" "follies" "foolish" "Fools" "for"])
