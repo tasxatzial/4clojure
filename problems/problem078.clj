@@ -1,25 +1,26 @@
 ;p78: Reimplement Trampoline
-;Reimplement the function described in "Intro to Trampoline" (problem 76)
+;Reimplement the function trampoline."
 ;
 ;restrictions: trampoline
 ;
-(def p78 (fn my-trampoline
-           ([fn1 & args]
-            (if (empty? args)
-              (my-trampoline fn1)
-              (my-trampoline (apply fn1 args))))
-           ([fn1]
-            (if (fn? fn1)
-              (my-trampoline (fn1))
-              fn1))))
+(defn my-trampoline
+  "See clojure.core/trampoline."
+  ([f & args]
+   (if (empty? args)
+     (my-trampoline f)
+     (my-trampoline (apply f args))))
+  ([f]
+   (if (fn? f)
+     (my-trampoline (f))
+     f)))
 
 ;tests
 (= (letfn [(triple [x] #(sub-two (* 3 x)))
-           (sub-two [x] #(stop?(- x 2)))
+           (sub-two [x] #(stop? (- x 2)))
            (stop? [x] (if (> x 50) x #(triple x)))]
-     (p78 triple 2))
+     (my-trampoline triple 2))
    82)
 (= (letfn [(my-even? [x] (if (zero? x) true #(my-odd? (dec x))))
            (my-odd? [x] (if (zero? x) false #(my-even? (dec x))))]
-     (map (partial p78 my-even?) (range 6)))
+     (map (partial my-trampoline my-even?) (range 6)))
    [true false true false true false])
