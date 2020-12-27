@@ -1,63 +1,83 @@
 ;p73: Analyze a Tic-Tac-Toe Board
-;A tic-tac-toe board is represented by a two dimensional vector. X is represented by :x, O is represented by :o,
-;and empty is represented by :e. A player wins by placing three Xs or three Os in a horizontal, vertical, or diagonal
-;row. Write a function which analyzes a tic-tac-toe board and returns :x if X has won, :o if O has won, and nil
-;if neither player has won
-(def p73_1 (fn [row]                                        ;analyze a row or column
-             (let [sr (set row)]
-               (when (= 1 (count sr))
-                 (if (contains? sr :x)
-                   :x
-                   (when (contains? sr :o)
-                     :o))))))
+;A tic-tac-toe board is represented by a two dimensional vector.
+;X is represented by :x, O is represented by :o, and empty is represented by :e.
+;A player wins by placing three Xs or three Os in a horizontal, vertical, or diagonal row.
+;Write a function which analyzes a tic-tac-toe board
+;and returns :x if X has won, :o if O has won, and nil if neither player has won
+;
+(defn analyze
+  "Analyzes a row or column. Returns :x or :o if all elements are :x or :o
+  respectively. Returns nil otherwise."
+  [line]
+  (let [set-line (set line)]
+    (when (= 1 (count set-line))
+      (if (contains? set-line :x)
+        :x
+        (when (contains? set-line :o)
+          :o)))))
 
-(def tic_cols ((fn [tic]                                    ;all columns
-                 (apply map vector tic))
-               tic))
+(defn get-diagonal1
+  "Returns the first diagonal of the board."
+  [tic-tac]
+  [(get-in tic-tac [0 0])
+   (get-in tic-tac [1 1])
+   (get-in tic-tac [2 2])])
 
-(def d1 ((fn [tic]                                          ;diagonal 1
-           [(get (get tic 0) 0) (get (get tic 1) 1) (get (get tic 2) 2)])
-         tic))
+(defn get-diagonal2
+  "Returns the second diagonal of the board."
+  [tic-tac]
+  [(get-in tic-tac [0 2])
+   (get-in tic-tac [1 1])
+   (get-in tic-tac [2 0])])
 
-(def d2 ((fn [tic]                                          ;diagonal 2
-           [(get (get tic 0) 0) (get (get tic 1) 1) (get (get tic 2) 2)])
-         tic))
+(defn get-col-i
+  "Returns the i-th column of the board."
+  [tic-tac i]
+  [(get-in tic-tac [0 i])
+   (get-in tic-tac [1 i])
+   (get-in tic-tac [2 i])])
 
-(def p73_2 (fn [tic]                                        ;rows + columns + diagonal 1 + diagonal 2
-           (concat tic tic_cols [d1] [d2])))
+(defn new-tic-tac
+  "Returns a new board that includes both diagonals and all 3 columns."
+  [tic-tac]
+  (let [diag1 (get-diagonal1 tic-tac)
+        diag2 (get-diagonal2 tic-tac)
+        col1 (get-col-i tic-tac 0)
+        col2 (get-col-i tic-tac 1)
+        col3 (get-col-i tic-tac 2)
+        new-tic-tac (conj tic-tac diag1 diag2 col1 col2 col3)]
+    new-tic-tac))
 
-(def p73_3 (fn [col]                                        ;analyze (rows + columns + diagonal 1 + diagonal 2)
-            (set (reduce (fn [result x]                     ;should contain 8 values
-                           (concat result [(p73_1 x)]))
-                         [] (p73_2 col)))))
+(defn analyze-board
+  "Analyzes a tic-tac-toe board and returns :x if x wins, :o if o wins
+  and nil otherwise."
+  [tic-tac]
+  (let [new-tic-tac (new-tic-tac tic-tac)
+        analyzed-tic-tac (map analyze new-tic-tac)
+        tic-tac-values (set analyzed-tic-tac)]
+    (if (contains? tic-tac-values :x)
+      :x
+      (when (contains? tic-tac-values :o)
+        :o))))
 
-(def p73_S (fn [col]                                        ;check for :x :o
-             (let [res ((memoize p73_3) col)]
-               (if (contains? res :x)
-                 :x
-                 (if (contains? res :o)
-                   :o
-                   nil)))))
-
-;tests
-(= nil (p73_S [[:e :e :e]
-            [:e :e :e]
-            [:e :e :e]]))
-(= :x (p73_S [[:x :e :o]
-           [:x :e :e]
-           [:x :e :o]]))
-(= :o (p73_S [[:e :x :e]
-           [:o :o :o]
-           [:x :e :x]]))
-(= nil (p73_S [[:x :e :o]
-            [:x :x :e]
-            [:o :x :o]]))
-(= :x (p73_S [[:x :e :e]
-           [:o :x :e]
-           [:o :e :x]]))
-(= :o (p73_S [[:x :e :o]
-           [:x :o :e]
-           [:o :e :x]]))
-(= nil (p73_S [[:x :o :x]
-            [:x :o :x]
-            [:o :x :o]]))
+(= nil (analyze-board [[:e :e :e]
+                       [:e :e :e]
+                       [:e :e :e]]))
+(= :x (analyze-board [[:x :e :o]
+                      [:x :e :e]
+                      [:x :e :o]]))
+(= :o (analyze-board [[:e :x :e]
+                      [:o :o :o]
+                      [:x :e :x]]))
+(= nil (analyze-board [[:x :e :o]
+                       [:x :x :e]
+                       [:o :x :o]]))
+(= :x (analyze-board [[:x :e :e]
+                      [:o :x :e]
+                      [:o :e :x]]))
+(= :o (analyze-board [[:x :e :o]
+                      [:x :o :e]
+                      [:o :e :x]]))
+(= nil (analyze-board [[:x :o :x]
+                       [:x :o :x]
+                       [:o :x :o]]))
