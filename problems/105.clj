@@ -1,18 +1,20 @@
 ;p105: Identify keys and values
-;Given an input sequence of keywords and numbers, create a map such that each key in the map is a keyword,
-;and the value is a sequence of all the numbers (if any) between it and the next keyword in the sequence
-(def p105 (fn idk
-            ([col] (idk {} col))
-            ([result col] (idk result col (first col)))
-            ([result col x]
-             (if (empty? col)
-               result
-               (if (keyword? (first col))
-                 (recur (assoc result (first col) []) (rest col) (first col))
-                 (recur (assoc result x (conj (result x) (first col))) (rest col) x))))))
+;Given an input sequence of keywords and numbers, create a map such that each
+;key in the map is a keyword, and the value is a sequence of all the numbers (if any)
+;between it and the next keyword in the sequence
+;
+(defn identify-keys-vals
+  ([col] (identify-keys-vals col {}))
+  ([col result]
+   (if (empty? col)
+     result
+     (let [key (first col)
+           nums (take-while #(not (keyword? %)) (rest col))
+           new-result (assoc result key nums)
+           new-col (drop (inc (count nums)) col)]
+       (recur new-col new-result)))))
 
-;tests
-(p105 [])
-(p105 [:a 1])
-(p105 [:a 1, :b 2])
-(p105 [:a 1 2 3 :b :c 4])
+(= {} (identify-keys-vals []))
+(= {:a [1]} (identify-keys-vals [:a 1]))
+(= {:a [1], :b [2]} (identify-keys-vals [:a 1, :b 2]))
+(= {:a [1 2 3], :b [], :c [4]} (identify-keys-vals [:a 1 2 3 :b :c 4]))
