@@ -1,34 +1,22 @@
 ;p122: Read a binary number
 ;Convert a binary number, provided in the form of a string, to its numerical value
 
-;solution 1 ----------------------------------------
-(def p122 (fn [N]
-             (let [c (count N)]
-               ((fn [idx result]
-                  (if (= idx c)
-                    result
-                    (recur (+ idx 1) (+ result (* (Character/digit (get N idx) 10) (Math/round (Math/pow 2 (- c idx 1))))))))
-                0 0))))
+(defn to-decimal
+  "Coverts a binary number represented as a string, to decimal."
+  ([digits] (to-decimal digits 0 (dec (count digits))))
+  ([digits result i]
+   (if (empty? digits)
+     result
+     (let [digit (first digits)]
+       (if (= \0 digit)
+         (recur (rest digits) result (dec i))
+         (let [new-result (+ result (Math/round (Math/pow 2 i)))]
+           (recur (rest digits) new-result (dec i))))))))
 
-;solution 1 tests
-(p122 "0")
-(p122 "111")
-(p122 "1000")
-(p122 "1001")
-(p122 "11111111")
-(p122 "10101010101")
-(p122 "1111111111111111")
-
-;solution 2 ----------------------------------------
-(def p122_2 (fn [N]
-              (reduce + (map #(* %1 (Math/round (Math/pow 2 %2)))
-                             (map #(Character/digit % 10) N) (range (- (count N) 1) -1 -1)))))
-
-;solution 2 tests
-(p122_2 "0")
-(p122_2 "111")
-(p122_2 "1000")
-(p122_2 "1001")
-(p122_2 "11111111")
-(p122_2 "10101010101")
-(p122_2 "1111111111111111")
+(= 0     (to-decimal "0"))
+(= 7     (to-decimal "111"))
+(= 8     (to-decimal "1000"))
+(= 9     (to-decimal "1001"))
+(= 255   (to-decimal "11111111"))
+(= 1365  (to-decimal "10101010101"))
+(= 65535 (to-decimal "1111111111111111"))
