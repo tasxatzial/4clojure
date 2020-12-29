@@ -8,6 +8,7 @@
   (let [no-punctuation (clojure.string/replace s #"[^A-Za-z ]" "")]
     (sort-by clojure.string/lower-case (clojure.string/split no-punctuation #" "))))
 
+;tests
 (= (word-split  "Have a nice day.")
    ["a" "day" "Have" "nice"])
 (= (word-split  "Clojure is a fun language!")

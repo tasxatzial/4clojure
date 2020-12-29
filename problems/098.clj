@@ -11,6 +11,7 @@
           #{}
           (group-by func col)))
 
+;tests
 (= (group-by-equivalence #(* % %) #{-2 -1 0 1 2})
    #{#{0} #{1 -1} #{2 -2}})
 (= (group-by-equivalence #(rem % 3) #{0 1 2 3 4 5})

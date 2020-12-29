@@ -16,6 +16,7 @@
         false
         (recur (rest col))))))
 
+;tests
 (= (disjoint? #{#{\U} #{\s} #{\e \R \E} #{\P \L} #{\.}})
    true)
 (= (disjoint? #{#{:a :b :c :d :e}

@@ -45,6 +45,19 @@
   [col]
   (map first (partition-by identity col)))
 
+;tests
 (= (apply str (my-compress1 "Leeeeeerrroyyy")) "Leroy")
 (= (my-compress1 [1 1 2 3 3 2 2 3]) '(1 2 3 2 3))
 (= (my-compress1 [[1 2] [1 2] [3 4] [1 2]]) '([1 2] [3 4] [1 2]))
+
+(= (apply str (my-compress2 "Leeeeeerrroyyy")) "Leroy")
+(= (my-compress2 [1 1 2 3 3 2 2 3]) '(1 2 3 2 3))
+(= (my-compress2 [[1 2] [1 2] [3 4] [1 2]]) '([1 2] [3 4] [1 2]))
+
+(= (apply str (my-compress3 "Leeeeeerrroyyy")) "Leroy")
+(= (my-compress3 [1 1 2 3 3 2 2 3]) '(1 2 3 2 3))
+(= (my-compress3 [[1 2] [1 2] [3 4] [1 2]]) '([1 2] [3 4] [1 2]))
+
+(= (apply str (my-compress4 "Leeeeeerrroyyy")) "Leroy")
+(= (my-compress4 [1 1 2 3 3 2 2 3]) '(1 2 3 2 3))
+(= (my-compress4 [[1 2] [1 2] [3 4] [1 2]]) '([1 2] [3 4] [1 2]))

@@ -18,5 +18,6 @@
         ints (map #(Integer. ^String %) split-s)]
     (clojure.string/join "," (filter square? ints))))
 
+;tests
 (= (filter-squares "4,5,6,7,8,9") "4,9")
 (= (filter-squares "15,16,25,36,37") "16,25,36")

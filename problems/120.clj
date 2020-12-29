@@ -20,6 +20,7 @@
   [col]
   (count (filter #(< % (squared-digit-sum %)) col)))
 
+;tests
 (= 8 (p120 (range 10)))
 (= 19 (p120 (range 30)))
 (= 50 (p120 (range 100)))

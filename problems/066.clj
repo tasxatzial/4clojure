@@ -8,6 +8,7 @@
     N1
     (my-gcd N2 (mod N1 N2))))
 
+;tests
 (= (my-gcd 2 4) 2)
 (= (my-gcd 10 5) 5)
 (= (my-gcd 5 7) 1)

@@ -19,6 +19,7 @@
   [col]
   (lazy-seq (cons (pronounce col) (gen-pronounce-seq (pronounce col)))))
 
+;tests
 (= [[1 1] [2 1] [1 2 1 1]] (take 3 (gen-pronounce-seq [1])))
 (= [3 1 2 4] (first (gen-pronounce-seq [1 1 1 4 4])))
 (= [1 1 1 3 2 1 3 2 1 1] (nth (gen-pronounce-seq [1]) 6))

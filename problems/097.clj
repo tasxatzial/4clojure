@@ -25,6 +25,7 @@
      row
      (recur (dec N) (next-row row)))))
 
+;tests
 (= (pascal-triangle 1) [1])
 (= (map pascal-triangle (range 1 6))
    [[1]

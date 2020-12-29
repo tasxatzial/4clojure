@@ -16,7 +16,13 @@
      result
      (recur (dec N) (* result N)))))
 
+;tests
 (= (factorial1 1) 1)
 (= (factorial1 3) 6)
 (= (factorial1 5) 120)
 (= (factorial1 8) 40320)
+
+(= (factorial2 1) 1)
+(= (factorial2 3) 6)
+(= (factorial2 5) 120)
+(= (factorial2 8) 40320)

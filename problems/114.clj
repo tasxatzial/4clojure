@@ -21,6 +21,7 @@
            (lazy-seq (cons current-item (_global-take-while (rest col) result collected)))))))
    col [] 0))
 
+;tests
 (= [2 3 5 7 11 13]
    (global-take-while 4 #(= 2 (mod % 3))
                       [2 3 5 7 11 13 17 19 23]))

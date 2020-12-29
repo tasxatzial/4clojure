@@ -13,6 +13,7 @@
             #{}
             (into set1 set2))))
 
+;tests
 (= (symmetric-difference #{1 2 3 4 5 6} #{1 3 5 7}) #{2 4 6 7})
 (= (symmetric-difference #{:a :b :c} #{}) #{:a :b :c})
 (= (symmetric-difference #{} #{4 5 6}) #{4 5 6})

@@ -18,6 +18,7 @@
         (recur (* res %) (dec n))))
     1 n))
 
+;tests
 (= 256 ((my-pow 2) 16)
    ((my-pow 8) 2))
 (= [1 8 27 64] (map (my-pow 3) [1 2 3 4]))

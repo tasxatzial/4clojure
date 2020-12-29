@@ -19,6 +19,7 @@
                            set)]
     (conj power-set0 #{})))
 
+;tests
 (= (power-set #{1 :a}) #{#{1 :a} #{:a} #{} #{1}})
 (= (power-set #{}) #{#{}})
 (= (power-set #{1 2 3})

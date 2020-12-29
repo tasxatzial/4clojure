@@ -15,6 +15,7 @@
         capitalized-first (map capitalize-first (rest split-s))]
     (str (first split-s) (apply str capitalized-first))))
 
+;tests
 (= (to-camel-case "something") "something")
 (= (to-camel-case "multi-word-key") "multiWordKey")
 (= (to-camel-case "leaveMeAlone") "leaveMeAlone")

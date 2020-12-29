@@ -7,6 +7,7 @@
   [& args]
   (and (or (some true? args) false) (or (some false? args) false)))
 
+;tests
 (= false (half-truth false false))
 (= true (half-truth true false))
 (= false (half-truth true))

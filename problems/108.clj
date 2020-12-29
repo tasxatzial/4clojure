@@ -27,6 +27,7 @@
   [& args]
   (_smallest-common args))
 
+;tests
 (= 3 (smallest-common [3 4 5]))
 (= 4 (smallest-common [1 2 3 4 5 6 7] [0.5 3/2 4 19]))
 (= 7 (smallest-common (range) (range 0 100 7/6) [2 3 5 7 11 13]))

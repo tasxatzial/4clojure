@@ -12,6 +12,7 @@
     nil
     (lazy-seq (cons (f (first col)) (my-map f (next col))))))
 
+;tests
 (= [3 4 5 6 7]
    (my-map inc [2 3 4 5 6]))
 (= (repeat 10 nil)

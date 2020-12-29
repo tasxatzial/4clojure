@@ -24,6 +24,7 @@
     true
     (symmetric-trees? (second node) (last node))))
 
+;tests
 (= (symmetric-tree? '(:a (:b nil nil) (:b nil nil))) true)
 (= (symmetric-tree? '(:a (:b nil nil) nil)) false)
 (= (symmetric-tree? '(:a (:b nil nil) (:c nil nil))) false)

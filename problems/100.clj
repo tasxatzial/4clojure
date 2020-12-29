@@ -29,8 +29,15 @@
             (/ (* result x) (my-gcd result x)))
           (first args) args))
 
+;tests
 (== (my-lcm1 2 3) 6)
 (== (my-lcm1 5 3 7) 105)
 (== (my-lcm1 1/3 2/5) 2)
 (== (my-lcm1 3/4 1/6) 3/2)
 (== (my-lcm1 7 5/7 2 3/5) 210)
+
+(== (my-lcm2 2 3) 6)
+(== (my-lcm2 5 3 7) 105)
+(== (my-lcm2 1/3 2/5) 2)
+(== (my-lcm2 3/4 1/6) 3/2)
+(== (my-lcm2 7 5/7 2 3/5) 210)

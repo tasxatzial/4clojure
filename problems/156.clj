@@ -18,6 +18,7 @@
   [val col]
   (apply hash-map (interleave col (repeat val))))
 
+;tests
 (= (create-map1 0 [:a :b :c]) {:a 0 :b 0 :c 0})
 (= (create-map1 "x" [1 2 3]) {1 "x" 2 "x" 3 "x"})
 (= (create-map1 [:a :b] [:foo :bar]) {:foo [:a :b] :bar [:a :b]})

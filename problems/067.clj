@@ -11,6 +11,7 @@
        (recur x result (inc N)) ; N is composite
        (recur (dec x) (conj result N) (inc N)))))) ; N is prime
 
+;tests
 (= (my-primes 2) [2 3])
 (= (my-primes 5) [2 3 5 7 11])
 (= (last (my-primes 100)) 541)

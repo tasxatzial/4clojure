@@ -7,6 +7,7 @@
   (let [N (mod N (count col))]
     (concat (drop N col) (take N col))))
 
+;tests
 (= (rotate 2 [1 2 3 4 5]) '(3 4 5 1 2))
 (= (rotate -2 [1 2 3 4 5]) '(4 5 1 2 3))
 (= (rotate 6 [1 2 3 4 5]) '(2 3 4 5 1))

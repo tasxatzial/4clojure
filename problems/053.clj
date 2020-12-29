@@ -28,6 +28,7 @@
             []
             split-col)))
 
+;tests
 (= (longest-increasing [1 0 1 2 3 0 4 5]) [0 1 2 3])
 (= (longest-increasing [5 6 1 3 2 7]) [5 6])
 (= (longest-increasing [2 3 3 4 5]) [3 4 5])

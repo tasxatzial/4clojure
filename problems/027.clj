@@ -7,6 +7,7 @@
   (let [reversed (reverse col)]
     (not (some true? (map #(not= %1 %2) col reversed)))))
 
+;tests
 (false? (palindrome? '(1 2 3 4 5)))
 (true? (palindrome? "racecar"))
 (true? (palindrome? [:foo :bar :foo]))

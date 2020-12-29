@@ -14,6 +14,7 @@
           '()
           col))
 
+;tests
 (= (my-flatten '((1 2) 3 [4 [5 6]])) '(1 2 3 4 5 6))
 (= (my-flatten ["a" ["b"] "c"]) '("a" "b" "c"))
 (= (my-flatten '((((:a))))) '(:a))

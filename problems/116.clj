@@ -57,6 +57,7 @@
               next-prime (last new-primes)]
           (= N (Math/round ^double (/ (+ prev-prime next-prime) 2))))))))
 
+;tests
 (= false (balanced-prime? 4))
 (= true (balanced-prime? 563))
 (= 1103 (nth (filter balanced-prime? (range)) 15))

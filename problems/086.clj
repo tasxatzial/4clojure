@@ -24,7 +24,7 @@
        true
        (recur (squared-digit-sum N) (conj result N))))))
 
-	
+;tests
 (= (happy? 7) true)
 (= (happy? 986543210) true)
 (= (happy? 2) false)

@@ -15,6 +15,7 @@
         false)
       false)))
 
+;tests
 (= (binary-tree? '(:a (:b nil nil) nil))
    true)
 (= (binary-tree? '(:a (:b nil nil)))

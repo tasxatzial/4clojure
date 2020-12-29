@@ -12,6 +12,7 @@
        (recur N (inc I) (+ sum I))
        (recur N (inc I) sum)))))
 
+;tests
 (= (perfect? 6) true)
 (= (perfect? 7) false)
 (= (perfect? 496) true)

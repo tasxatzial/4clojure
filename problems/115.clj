@@ -26,6 +26,7 @@
         sum-right-half (apply + (take-last half-digit-count digits))]
     (= sum-left-half sum-right-half)))
 
+;tests
 (= true (balanced? 11))
 (= true (balanced? 121))
 (= false (balanced? 123))

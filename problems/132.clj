@@ -18,6 +18,7 @@
              (lazy-seq (cons cur-item (_insert-between (inc idx))))))))
      0)))
 
+;tests
 (= '(1 :less 6 :less 7 4 3) (insert-between < :less [1 6 7 4 3]))
 (= '(2) (insert-between > :more [2]))
 (= [0 1 :x 2 :x 3 :x 4]  (insert-between #(and (pos? %) (< % %2)) :x (range 5)))

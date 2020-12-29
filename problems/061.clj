@@ -8,5 +8,6 @@
   [col1 col2]
   (into {} (map #(vector %1 %2) col1 col2)))
 
+;tests
 (= (my-zipmap [:a :b :c] [1 2 3]) {:a 1, :b 2, :c 3})
 (= (my-zipmap [:foo :bar] ["foo" "bar" "baz"]) {:foo "foo", :bar "bar"})

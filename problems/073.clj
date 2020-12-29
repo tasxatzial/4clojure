@@ -60,6 +60,7 @@
       (when (contains? tic-tac-values :o)
         :o))))
 
+;tests
 (= nil (analyze-board [[:e :e :e]
                        [:e :e :e]
                        [:e :e :e]]))

@@ -6,6 +6,7 @@
   [x y]
   (map (comp read-string str) (str (* x y))))
 
+;tests
 (= (p99 1 1) [1])
 (= (p99 99 9) [8 9 1])
 (= (p99 999 99) [9 8 9 0 1])

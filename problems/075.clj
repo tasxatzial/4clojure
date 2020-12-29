@@ -19,6 +19,7 @@
     (let [gcds (map my-gcd (range 1 N) (repeat N))]
       (count (filter #(= 1 %) gcds)))))
 
+;tests
 (= (totient 1) 1)
 (= (totient 10) (count '(1 3 7 9)) 4)
 (= (totient 40) 16)

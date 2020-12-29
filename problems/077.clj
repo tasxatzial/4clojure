@@ -58,6 +58,7 @@
 
 (def remove-single-anagrams #(remove-single (group-by-anagrams %)))
 
+;tests
 (= (remove-single-anagrams ["meat" "mat" "team" "mate" "eat"])
    #{#{"meat" "team" "mate"}})
 (= (remove-single-anagrams ["veer" "lake" "item" "kale" "mite" "ever"])

@@ -25,6 +25,7 @@
   [N col]
   (set (filter #(= N (count %)) (power-set col))))
 
+;tests
 (= (gen-k-combinations 1 #{4 5 6}) #{#{4} #{5} #{6}})
 (= (gen-k-combinations 10 #{4 5 6}) #{})
 (= (gen-k-combinations 2 #{0 1 2}) #{#{0 1} #{0 2} #{1 2}})

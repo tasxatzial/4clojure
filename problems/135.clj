@@ -18,6 +18,7 @@
    (first args)
    (rest args)))
 
+;tests
 (= 7  (infix-calc 2 + 5))
 (= 42 (infix-calc 38 + 48 - 2 / 2))
 (= 8  (infix-calc 10 / 2 - 1 * 2))

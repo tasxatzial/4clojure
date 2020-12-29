@@ -19,6 +19,7 @@
      '()
      number)))
 
+;tests
 (= [1 2 3 4 5 0 1] (to-digits 1234501 10))
 (= [0] (to-digits 0 11))
 (= [1 0 0 1] (to-digits 9 2))

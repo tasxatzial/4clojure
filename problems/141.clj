@@ -26,6 +26,7 @@
               {:rank 0}
               col))))
 
+;tests
 (let [notrump (p141 nil)]
   (and (= {:suit :club :rank 9}  (notrump [{:suit :club :rank 4}
                                            {:suit :club :rank 9}]))

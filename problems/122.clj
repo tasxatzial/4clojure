@@ -13,6 +13,7 @@
          (let [new-result (+ result (Math/round (Math/pow 2 i)))]
            (recur (rest digits) new-result (dec i))))))))
 
+;tests
 (= 0     (to-decimal "0"))
 (= 7     (to-decimal "111"))
 (= 8     (to-decimal "1000"))

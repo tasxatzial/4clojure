@@ -20,7 +20,7 @@
         value (get card 1)]
     {:suit (cards-map suit) :rank (cards-map value)}))
 
-
+;tests
 (= {:suit :diamond :rank 10} (recognize-card "DQ"))
 (= {:suit :heart :rank 3} (recognize-card "H5"))
 (= {:suit :club :rank 12} (recognize-card "CA"))

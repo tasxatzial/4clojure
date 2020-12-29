@@ -19,6 +19,7 @@
       (apply (first f-args) args)
       ((first f-args) (apply (apply my-comp (rest f-args)) args)))))
 
+;tests
 (= [3 2 1] ((my-comp rest reverse) [1 2 3 4]))
 (= 5 ((my-comp (partial + 3) second) [1 2 3 4]))
 (= true ((my-comp zero? #(mod % 8) +) 3 5 7 9))

@@ -6,6 +6,7 @@
   [key col]
   (and (contains? col key) (nil? (col key))))
 
+;tests
 (true?  (my-nil? :a {:a nil :b 2}))
 (false? (my-nil? :b {:a nil :b 2}))
 (false? (my-nil? :c {:a nil :b 2}))

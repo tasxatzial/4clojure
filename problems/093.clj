@@ -12,6 +12,7 @@
                      [x])))
            [] col))
 
+;tests
 (= (my-partial-flatten [["Do"] ["Nothing"]])
    [["Do"] ["Nothing"]])
 (= (my-partial-flatten [[[[:a :b]]] [[:c :d]] [:e :f]])

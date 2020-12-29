@@ -14,6 +14,7 @@
            new-col (drop (inc (count nums)) col)]
        (recur new-col new-result)))))
 
+;tests
 (= {} (identify-keys-vals []))
 (= {:a [1]} (identify-keys-vals [:a 1]))
 (= {:a [1], :b [2]} (identify-keys-vals [:a 1, :b 2]))

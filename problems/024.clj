@@ -6,6 +6,7 @@
   [col]
   (apply + col))
 
+;tests
 (= (my-sum [1 2 3]) 6)
 (= (my-sum (list 0 -2 5 5)) 8)
 (= (my-sum #{4 2 1}) 7)

@@ -13,6 +13,7 @@
            y (min-path-sum col (inc outer-idx) (inc inner-idx))]
        (+ (min x y) ((nth col outer-idx) inner-idx))))))
 
+;tests
 (= 7 (min-path-sum '([1]
                      [2 4]
                      [5 1 4]
