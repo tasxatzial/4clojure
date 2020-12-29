@@ -13,11 +13,10 @@
 (defn power-set
   "Returns the power set of set."
   [set]
-  (let [power-set0 (reduce (fn [result x]
-                             (into result (conj (set-add result x) #{x})))
-                           #{}
-                           set)]
-    (conj power-set0 #{})))
+  (reduce (fn [result x]
+            (into result (conj (set-add result x) #{x})))
+          #{#{}}
+          set))
 
 ;tests
 (= (power-set #{1 :a}) #{#{1 :a} #{:a} #{} #{1}})
