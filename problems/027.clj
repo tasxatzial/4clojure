@@ -4,8 +4,7 @@
 (defn palindrome?
   "Returns true if col is palindrome, false otherwise."
   [col]
-  (let [reversed (reverse col)]
-    (not (some true? (map #(not= %1 %2) col reversed)))))
+  (= (seq col) (reverse col)))
 
 ;tests
 (false? (palindrome? '(1 2 3 4 5)))
