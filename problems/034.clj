@@ -1,15 +1,43 @@
-;p34: Implement range
-;Write a function which creates a list of all integers in a given range
-;
-;restrictions: range
-;
-(defn my-range
-  "Creates a list of all integers in a given range."
-  [N1 N2]
-  (when (< N1 N2)
-    (cons N1 (my-range (inc N1) N2))))
+;; p34: Implement range
 
-;tests
-(= (my-range 1 4) '(1 2 3))
-(= (my-range -2 2) '(-2 -1 0 1))
-(= (my-range 5 8) '(5 6 7))
+;; Write a function which creates a list of all integers in a given range
+;; restrictions: range
+
+(defn get-range
+  [n1 n2]
+  (lazy-seq (when (< n1 n2)
+              (cons n1 (get-range (inc n1) n2)))))
+
+(defn get-range2
+  [n1 n2]
+  (loop [result []
+         n1 n1]
+    (if (< n1 n2)
+      (recur (conj result n1) (inc n1))
+      result)))
+
+;; testing get-range -----------------------------------
+(clojure.test/deftest test1-get-range
+  (clojure.test/testing
+    (clojure.test/is (= (get-range 1 4) '(1 2 3)))))
+
+(clojure.test/deftest test2-get-range
+  (clojure.test/testing
+    (clojure.test/is (= (get-range -2 2) '(-2 -1 0 1)))))
+
+(clojure.test/deftest test3-get-range
+  (clojure.test/testing
+    (clojure.test/is (= (get-range 5 8) '(5 6 7)))))
+
+;; testing get-range2 -----------------------------------
+(clojure.test/deftest test1-get-range2
+  (clojure.test/testing
+    (clojure.test/is (= (get-range2 1 4) '(1 2 3)))))
+
+(clojure.test/deftest test2-get-range2
+  (clojure.test/testing
+    (clojure.test/is (= (get-range2 -2 2) '(-2 -1 0 1)))))
+
+(clojure.test/deftest test3-get-range2
+  (clojure.test/testing
+    (clojure.test/is (= (get-range2 5 8) '(5 6 7)))))
