@@ -1,23 +1,39 @@
-;p29: Get the Caps
-;Write a function which takes a string and returns a new string containing only the capital letters
-;
-;solution 1
-(defn get-caps1
-  "Returns a new string containing only the capital letters."
-  [s]
-  (apply str (filter #(and (>= (int %) (int \A)) (<= (int %) (int \Z))) s)))
+;; p29: Get the Caps
 
-;solution 2
-(defn get-caps2
-  "Returns a new string containing only the capital letters."
+;; Write a function which takes a string and returns a new string containing only the capital letters
+
+(defn get-capital
+  [s]
+  (letfn [(capital? [x]
+            (<= (int \A) (int x) (int \Z)))]
+    (apply str (filter capital? s))))
+
+(defn get-capital2
   [s]
   (apply str (re-seq #"[A-Z]" s)))
 
-;tests
-(= (get-caps1 "HeLlO, WoRlD!") "HLOWRD")
-(empty? (get-caps1 "nothing"))
-(= (get-caps1 "$#A(*&987Zf") "AZ")
+;; testing get-capital -----------------------------------
+(clojure.test/deftest test1-get-capital
+  (clojure.test/testing
+    (clojure.test/is (= (get-capital "HeLlO, WoRlD!") "HLOWRD"))))
 
-(= (get-caps2 "HeLlO, WoRlD!") "HLOWRD")
-(empty? (get-caps2 "nothing"))
-(= (get-caps2 "$#A(*&987Zf") "AZ")
+(clojure.test/deftest test2-get-capital
+  (clojure.test/testing
+    (clojure.test/is (empty? (get-capital "nothing")))))
+
+(clojure.test/deftest test3-get-capital
+  (clojure.test/testing
+    (clojure.test/is (= (get-capital "$#A(*&987Zf") "AZ"))))
+
+;; testing get-capital2 -----------------------------------
+(clojure.test/deftest test1-get-capital2
+  (clojure.test/testing
+    (clojure.test/is (= (get-capital2 "HeLlO, WoRlD!") "HLOWRD"))))
+
+(clojure.test/deftest test2-get-capital2
+  (clojure.test/testing
+    (clojure.test/is (empty? (get-capital2 "nothing")))))
+
+(clojure.test/deftest test3-get-capital2
+  (clojure.test/testing
+    (clojure.test/is (= (get-capital2 "$#A(*&987Zf") "AZ"))))
