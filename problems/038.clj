@@ -1,19 +1,25 @@
-;p38: Maximum value
-;Write a function which takes a variable number of parameters and returns the maximum value
-;
-;restrictions: max, max-key
+;; p38: Maximum value
 
-(defn my-max
-  "Returns the maximum value."
-  [& col]
-  (reduce (fn [max x]
-            (if (> x max)
+;; Write a function which takes a variable number of parameters and returns the maximum value
+;; restrictions: max, max-key
+
+(defn get-max
+  [& xs]
+  (reduce (fn [result x]
+            (if (> x result)
               x
-              max))
-          (first col)
-          (rest col)))
+              result))
+          (first xs)
+          (rest xs)))
 
-;tests
-(= (my-max 1 8 3 4) 8)
-(= (my-max 30 20) 30)
-(= (my-max 45 67 11) 67)
+(clojure.test/deftest test1
+  (clojure.test/testing
+    (clojure.test/is (= (get-max 1 8 3 4) 8))))
+
+(clojure.test/deftest test2
+  (clojure.test/testing
+    (clojure.test/is (= (get-max 30 20) 30))))
+
+(clojure.test/deftest test3
+  (clojure.test/testing
+    (clojure.test/is (= (get-max 45 67 11) 67))))
