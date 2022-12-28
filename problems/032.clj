@@ -9,7 +9,11 @@
   [xs]
   (reduce into [] (map #(vector % %) xs)))
 
-(deftest tests
+(defn duplicate-elements2
+  [xs]
+  (interleave xs xs))
+
+(deftest tests--duplicate-elements
   (testing "test1"
     (is (= (duplicate-elements [1 2 3]) '(1 1 2 2 3 3))))
   (testing "test2"
@@ -18,3 +22,13 @@
     (is (= (duplicate-elements [[1 2] [3 4]]) '([1 2] [1 2] [3 4] [3 4]))))
   (testing "test4"
     (is (= (duplicate-elements [44 33]) [44 44 33 33]))))
+
+(deftest tests-duplicate-elements2
+  (testing "test1"
+    (is (= (duplicate-elements2 [1 2 3]) '(1 1 2 2 3 3))))
+  (testing "test2"
+    (is (= (duplicate-elements2 [:a :a :b :b]) '(:a :a :a :a :b :b :b :b))))
+  (testing "test3"
+    (is (= (duplicate-elements2 [[1 2] [3 4]]) '([1 2] [1 2] [3 4] [3 4]))))
+  (testing "test4"
+    (is (= (duplicate-elements2 [44 33]) [44 44 33 33]))))
