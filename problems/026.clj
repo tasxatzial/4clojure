@@ -5,14 +5,15 @@
 (ns p26.core
   (:require [clojure.test :refer [deftest testing is]]))
 
+(defn fib
+  ([]
+   (fib 1 1))
+  ([prev next]
+   (lazy-seq (cons prev (fib next (+ prev next))))))
+
 (defn get-fib
   [N]
-  (letfn [(lazy-fib
-            ([]
-             (lazy-fib 1 1))
-            ([prev next]
-             (lazy-seq (cons prev (lazy-fib next (+ prev next))))))]
-    (take N (lazy-fib))))
+  (take N (fib)))
 
 (deftest tests
   (testing "test1"
