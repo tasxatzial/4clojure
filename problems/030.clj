@@ -5,6 +5,9 @@
 (ns p30.core
   (:require [clojure.test :refer [deftest testing is]]))
 
+;; Note: A trivial solution is the built-in function 'dedupe'
+;; but it is not listed as a problem restriction
+
 (defn compress-seq
   ([xs]
    (if (empty? xs)
