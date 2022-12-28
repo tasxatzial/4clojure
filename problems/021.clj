@@ -3,24 +3,21 @@
 ;; Write a function which returns the Nth element from a sequence
 ;; restrictions: nth
 
+(ns p21.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn get-nth
   [xs n]
   (if (zero? n)
     (first xs)
     (recur (rest xs) (dec n))))
 
-(clojure.test/deftest test1
-  (clojure.test/testing
-    (clojure.test/is (= (get-nth '(4 5 6 7) 2) 6))))
-
-(clojure.test/deftest test2
-  (clojure.test/testing
-    (clojure.test/is (= (get-nth [:a :b :c] 0) :a))))
-
-(clojure.test/deftest test3
-  (clojure.test/testing
-    (clojure.test/is (= (get-nth [1 2 3 4] 1) 2))))
-
-(clojure.test/deftest test4
-  (clojure.test/testing
-    (clojure.test/is (= (get-nth '([1 2] [3 4] [5 6]) 2) [5 6]))))
+(deftest tests
+  (testing "test1"
+    (is (= (get-nth '(4 5 6 7) 2) 6)))
+  (testing "test2"
+    (is (= (get-nth [:a :b :c] 0) :a)))
+  (testing "test3"
+    (is (= (get-nth [1 2 3 4] 1) 2)))
+  (testing "test4"
+    (is (= (get-nth '([1 2] [3 4] [5 6]) 2) [5 6]))))

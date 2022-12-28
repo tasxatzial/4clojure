@@ -2,26 +2,21 @@
 
 ;; Write a function which returns true if the given sequence is a palindrome
 
+(ns p27.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn palindrome?
   [xs]
   (= (seq xs) (reverse xs)))
 
-(clojure.test/deftest test1
-  (clojure.test/testing
-    (clojure.test/is (false? (palindrome? '(1 2 3 4 5))))))
-
-(clojure.test/deftest test2
-  (clojure.test/testing
-    (clojure.test/is (true? (palindrome? "racecar")))))
-
-(clojure.test/deftest test3
-  (clojure.test/testing
-    (clojure.test/is (true? (palindrome? [:foo :bar :foo])))))
-
-(clojure.test/deftest test4
-  (clojure.test/testing
-    (clojure.test/is (true? (palindrome? '(1 1 3 3 1 1))))))
-
-(clojure.test/deftest test5
-  (clojure.test/testing
-    (clojure.test/is (false? (palindrome? '(:a :b :c))))))
+(deftest tests
+  (testing "test1"
+    (is (false? (palindrome? '(1 2 3 4 5)))))
+  (testing "test2"
+    (is (true? (palindrome? "racecar"))))
+  (testing "test3"
+    (is (true? (palindrome? [:foo :bar :foo]))))
+  (testing "test4"
+    (is (true? (palindrome? '(1 1 3 3 1 1)))))
+  (testing "test5"
+    (is (false? (palindrome? '(:a :b :c))))))

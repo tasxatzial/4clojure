@@ -2,6 +2,9 @@
 
 ;; Write a function which takes a string and returns a new string containing only the capital letters
 
+(ns p29.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn get-capital
   [s]
   (letfn [(capital? [x]
@@ -12,28 +15,18 @@
   [s]
   (apply str (re-seq #"[A-Z]" s)))
 
-;; testing get-capital -----------------------------------
-(clojure.test/deftest test1-get-capital
-  (clojure.test/testing
-    (clojure.test/is (= (get-capital "HeLlO, WoRlD!") "HLOWRD"))))
+(deftest tests-get-capital
+  (testing "test1"
+    (is (= (get-capital "HeLlO, WoRlD!") "HLOWRD")))
+  (testing "test2"
+    (is (empty? (get-capital "nothing"))))
+  (testing "test3"
+    (is (= (get-capital "$#A(*&987Zf") "AZ"))))
 
-(clojure.test/deftest test2-get-capital
-  (clojure.test/testing
-    (clojure.test/is (empty? (get-capital "nothing")))))
-
-(clojure.test/deftest test3-get-capital
-  (clojure.test/testing
-    (clojure.test/is (= (get-capital "$#A(*&987Zf") "AZ"))))
-
-;; testing get-capital2 -----------------------------------
-(clojure.test/deftest test1-get-capital2
-  (clojure.test/testing
-    (clojure.test/is (= (get-capital2 "HeLlO, WoRlD!") "HLOWRD"))))
-
-(clojure.test/deftest test2-get-capital2
-  (clojure.test/testing
-    (clojure.test/is (empty? (get-capital2 "nothing")))))
-
-(clojure.test/deftest test3-get-capital2
-  (clojure.test/testing
-    (clojure.test/is (= (get-capital2 "$#A(*&987Zf") "AZ"))))
+(deftest tests-get-capital2
+  (testing "test1"
+    (is (= (get-capital2 "HeLlO, WoRlD!") "HLOWRD")))
+  (testing "test2"
+    (is (empty? (get-capital2 "nothing"))))
+  (testing "test3"
+    (is (= (get-capital2 "$#A(*&987Zf") "AZ"))))

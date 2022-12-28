@@ -2,6 +2,9 @@
 
 ;; Write a function which removes consecutive duplicates from a sequence
 
+(ns p30.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn compress-seq
   ([xs]
    (if (empty? xs)
@@ -18,28 +21,18 @@
   [xs]
   (map first (partition-by identity xs)))
 
-;; testing compress-seq -----------------------------------
-(clojure.test/deftest test1-compress-seq
-  (clojure.test/testing
-    (clojure.test/is (= (apply str (compress-seq "Leeeeeerrroyyy")) "Leroy"))))
+(deftest tests-compress-seq
+  (testing "test1"
+    (is (= (apply str (compress-seq "Leeeeeerrroyyy")) "Leroy")))
+  (testing "test2"
+    (is (= (compress-seq [1 1 2 3 3 2 2 3]) '(1 2 3 2 3))))
+  (testing "test3"
+    (is (= (compress-seq [[1 2] [1 2] [3 4] [1 2]]) '([1 2] [3 4] [1 2])))))
 
-(clojure.test/deftest test2-compress-seq
-  (clojure.test/testing
-    (clojure.test/is (= (compress-seq [1 1 2 3 3 2 2 3]) '(1 2 3 2 3)))))
-
-(clojure.test/deftest test3-compress-seq
-  (clojure.test/testing
-    (clojure.test/is (= (compress-seq [[1 2] [1 2] [3 4] [1 2]]) '([1 2] [3 4] [1 2])))))
-
-;; testing compress-seq2 -----------------------------------
-(clojure.test/deftest test1-compress-seq2
-  (clojure.test/testing
-    (clojure.test/is (= (apply str (compress-seq2 "Leeeeeerrroyyy")) "Leroy"))))
-
-(clojure.test/deftest test2-compress-seq2
-  (clojure.test/testing
-    (clojure.test/is (= (compress-seq2 [1 1 2 3 3 2 2 3]) '(1 2 3 2 3)))))
-
-(clojure.test/deftest test3-compress-seq2
-  (clojure.test/testing
-    (clojure.test/is (= (compress-seq2 [[1 2] [1 2] [3 4] [1 2]]) '([1 2] [3 4] [1 2])))))
+(deftest tests-compress-seq2
+  (testing "test1"
+    (is (= (apply str (compress-seq2 "Leeeeeerrroyyy")) "Leroy")))
+  (testing "test2"
+    (is (= (compress-seq2 [1 1 2 3 3 2 2 3]) '(1 2 3 2 3))))
+  (testing "test3"
+    (is (= (compress-seq2 [[1 2] [1 2] [3 4] [1 2]]) '([1 2] [3 4] [1 2])))))

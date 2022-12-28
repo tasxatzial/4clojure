@@ -2,23 +2,20 @@
 
 ;; Write a higher-order function which flips the order of the arguments of an input function
 
+(ns p46.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn flip-args
   [f]
   (fn [arg1 arg2]
     (f arg2 arg1)))
 
-(clojure.test/deftest test1
-  (clojure.test/testing
-    (clojure.test/is (= 3 ((flip-args nth) 2 [1 2 3 4 5])))))
-
-(clojure.test/deftest test2
-  (clojure.test/testing
-    (clojure.test/is (= true ((flip-args >) 7 8)))))
-
-(clojure.test/deftest test3
-  (clojure.test/testing
-    (clojure.test/is (= 4 ((flip-args quot) 2 8)))))
-
-(clojure.test/deftest test4
-  (clojure.test/testing
-    (clojure.test/is (= [1 2 3] ((flip-args take) [1 2 3 4 5] 3)))))
+(deftest tests
+  (testing "test1"
+    (is (= 3 ((flip-args nth) 2 [1 2 3 4 5]))))
+  (testing "test2"
+    (is (= true ((flip-args >) 7 8))))
+  (testing "test3"
+    (is (= 4 ((flip-args quot) 2 8))))
+  (testing "test4"
+    (is (= [1 2 3] ((flip-args take) [1 2 3 4 5] 3)))))

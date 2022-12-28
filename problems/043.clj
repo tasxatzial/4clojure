@@ -2,6 +2,9 @@
 
 ;; Write a function which reverses the interleave process into N number of subsequences
 
+(ns p43.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn reverse-interleave
   [xs N]
   (let [partitioned (partition N xs)]
@@ -13,28 +16,18 @@
   [xs N]
   (apply map list (partition N xs)))
 
-;; testing reverse-interleave -----------------------------------
-(clojure.test/deftest test1-reverse-interleave
-  (clojure.test/testing
-    (clojure.test/is (= (reverse-interleave [1 2 3 4 5 6] 2) '((1 3 5) (2 4 6))))))
+(deftest tests-reverse-interleave
+  (testing "test1"
+    (is (= (reverse-interleave [1 2 3 4 5 6] 2) '((1 3 5) (2 4 6)))))
+  (testing "test2"
+    (is (= (reverse-interleave (range 9) 3) '((0 3 6) (1 4 7) (2 5 8)))))
+  (testing "test3"
+    (is (= (reverse-interleave (range 10) 5) '((0 5) (1 6) (2 7) (3 8) (4 9))))))
 
-(clojure.test/deftest test2-reverse-interleave
-  (clojure.test/testing
-    (clojure.test/is (= (reverse-interleave (range 9) 3) '((0 3 6) (1 4 7) (2 5 8))))))
-
-(clojure.test/deftest test3-reverse-interleave
-  (clojure.test/testing
-    (clojure.test/is (= (reverse-interleave (range 10) 5) '((0 5) (1 6) (2 7) (3 8) (4 9))))))
-
-;; testing reverse-interleave2 -----------------------------------
-(clojure.test/deftest test1-reverse-interleave2
-  (clojure.test/testing
-    (clojure.test/is (= (reverse-interleave2 [1 2 3 4 5 6] 2) '((1 3 5) (2 4 6))))))
-
-(clojure.test/deftest test2-reverse-interleave2
-  (clojure.test/testing
-    (clojure.test/is (= (reverse-interleave2 (range 9) 3) '((0 3 6) (1 4 7) (2 5 8))))))
-
-(clojure.test/deftest test3-reverse-interleave2
-  (clojure.test/testing
-    (clojure.test/is (= (reverse-interleave2 (range 10) 5) '((0 5) (1 6) (2 7) (3 8) (4 9))))))
+(deftest tests-reverse-interleave2
+  (testing "test1"
+    (is (= (reverse-interleave2 [1 2 3 4 5 6] 2) '((1 3 5) (2 4 6)))))
+  (testing "test2"
+    (is (= (reverse-interleave2 (range 9) 3) '((0 3 6) (1 4 7) (2 5 8)))))
+  (testing "test3"
+    (is (= (reverse-interleave2 (range 10) 5) '((0 5) (1 6) (2 7) (3 8) (4 9))))))

@@ -3,6 +3,9 @@
 ;; Write a function which creates a list of all integers in a given range
 ;; restrictions: range
 
+(ns p34.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn get-range
   [n1 n2]
   (lazy-seq (when (< n1 n2)
@@ -16,28 +19,18 @@
       (recur (conj result n1) (inc n1))
       result)))
 
-;; testing get-range -----------------------------------
-(clojure.test/deftest test1-get-range
-  (clojure.test/testing
-    (clojure.test/is (= (get-range 1 4) '(1 2 3)))))
+(deftest tests-get-range
+  (testing "test1"
+    (is (= (get-range 1 4) '(1 2 3))))
+  (testing "test2"
+    (is (= (get-range -2 2) '(-2 -1 0 1))))
+  (testing "test3"
+    (is (= (get-range 5 8) '(5 6 7)))))
 
-(clojure.test/deftest test2-get-range
-  (clojure.test/testing
-    (clojure.test/is (= (get-range -2 2) '(-2 -1 0 1)))))
-
-(clojure.test/deftest test3-get-range
-  (clojure.test/testing
-    (clojure.test/is (= (get-range 5 8) '(5 6 7)))))
-
-;; testing get-range2 -----------------------------------
-(clojure.test/deftest test1-get-range2
-  (clojure.test/testing
-    (clojure.test/is (= (get-range2 1 4) '(1 2 3)))))
-
-(clojure.test/deftest test2-get-range2
-  (clojure.test/testing
-    (clojure.test/is (= (get-range2 -2 2) '(-2 -1 0 1)))))
-
-(clojure.test/deftest test3-get-range2
-  (clojure.test/testing
-    (clojure.test/is (= (get-range2 5 8) '(5 6 7)))))
+(deftest tests-get-range2
+  (testing "test1"
+    (is (= (get-range2 1 4) '(1 2 3))))
+  (testing "test2"
+    (is (= (get-range2 -2 2) '(-2 -1 0 1))))
+  (testing "test3"
+    (is (= (get-range2 5 8) '(5 6 7)))))

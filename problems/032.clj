@@ -2,22 +2,19 @@
 
 ;; Write a function which duplicates each element of a sequence
 
+(ns p32.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn duplicate-elements
   [xs]
   (reduce into [] (map #(vector % %) xs)))
 
-(clojure.test/deftest test1
-  (clojure.test/testing
-    (clojure.test/is (= (duplicate-elements [1 2 3]) '(1 1 2 2 3 3)))))
-
-(clojure.test/deftest test2
-  (clojure.test/testing
-    (clojure.test/is (= (duplicate-elements [:a :a :b :b]) '(:a :a :a :a :b :b :b :b)))))
-
-(clojure.test/deftest test3
-  (clojure.test/testing
-    (clojure.test/is (= (duplicate-elements [[1 2] [3 4]]) '([1 2] [1 2] [3 4] [3 4])))))
-
-(clojure.test/deftest test4
-  (clojure.test/testing
-    (clojure.test/is (= (duplicate-elements [44 33]) [44 44 33 33]))))
+(deftest tests
+  (testing "test1"
+    (is (= (duplicate-elements [1 2 3]) '(1 1 2 2 3 3))))
+  (testing "test2"
+    (is (= (duplicate-elements [:a :a :b :b]) '(:a :a :a :a :b :b :b :b))))
+  (testing "test3"
+    (is (= (duplicate-elements [[1 2] [3 4]]) '([1 2] [1 2] [3 4] [3 4]))))
+  (testing "test4"
+    (is (= (duplicate-elements [44 33]) [44 44 33 33]))))

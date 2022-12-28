@@ -3,6 +3,9 @@
 ;; Write a function which returns the total number of elements in a sequence
 ;; restrictions: count
 
+(ns p22.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn get-count
   [xs]
   (reduce (fn [res _]
@@ -10,22 +13,14 @@
           0
           xs))
 
-(clojure.test/deftest test1
-  (clojure.test/testing
-    (clojure.test/is (= (get-count '(1 2 3 3 1)) 5))))
-
-(clojure.test/deftest test2
-  (clojure.test/testing
-    (clojure.test/is (= (get-count "Hello World") 11))))
-
-(clojure.test/deftest test3
-  (clojure.test/testing
-    (clojure.test/is (= (get-count [[1 2] [3 4] [5 6]]) 3))))
-
-(clojure.test/deftest test4
-  (clojure.test/testing
-    (clojure.test/is (= (get-count '(13)) 1))))
-
-(clojure.test/deftest test5
-  (clojure.test/testing
-    (clojure.test/is (= (get-count '(:a :b :c)) 3))))
+(deftest tests
+  (testing "test1"
+    (is (= (get-count '(1 2 3 3 1)) 5)))
+  (testing "test2"
+    (is (= (get-count "Hello World") 11)))
+  (testing "test3"
+    (is (= (get-count [[1 2] [3 4] [5 6]]) 3)))
+  (testing "test4"
+    (is (= (get-count '(13)) 1)))
+  (testing "test5"
+    (is (= (get-count '(:a :b :c)) 3))))

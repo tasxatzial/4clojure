@@ -2,26 +2,21 @@
 
 ;; Write a function which returns the sum of a sequence of numbers
 
+(ns p24.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn my-sum
   [xs]
   (apply + xs))
 
-(clojure.test/deftest test1
-  (clojure.test/testing
-    (clojure.test/is (= (my-sum [1 2 3]) 6))))
-
-(clojure.test/deftest test2
-  (clojure.test/testing
-    (clojure.test/is (= (my-sum (list 0 -2 5 5)) 8))))
-
-(clojure.test/deftest test3
-  (clojure.test/testing
-    (clojure.test/is (= (my-sum #{4 2 1}) 7))))
-
-(clojure.test/deftest test4
-  (clojure.test/testing
-    (clojure.test/is (= (my-sum '(0 0 -1)) -1))))
-
-(clojure.test/deftest test5
-  (clojure.test/testing
-    (clojure.test/is (= (my-sum '(1 10 3)) 14))))
+(deftest tests
+  (testing "test1"
+    (is (= (my-sum [1 2 3]) 6)))
+  (testing "test2"
+    (is (= (my-sum (list 0 -2 5 5)) 8)))
+  (testing "test3"
+    (is (= (my-sum #{4 2 1}) 7)))
+  (testing "test4"
+    (is (= (my-sum '(0 0 -1)) -1)))
+  (testing "test5"
+    (is (= (my-sum '(1 10 3)) 14))))
