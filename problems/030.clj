@@ -20,6 +20,7 @@
        (recur rest-xs (conj result x)))
      (conj result x))))
 
+;; lazy
 (defn compress-seq2
   [xs]
   (map first (partition-by identity xs)))
