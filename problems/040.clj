@@ -8,7 +8,7 @@
 
 (defn interpose-seq
   [N xs]
-  (butlast (reduce into [] (map #(vector % N) xs))))
+  (rest (apply concat (map #(vector N %) xs))))
 
 (deftest tests
   (testing "test1"
