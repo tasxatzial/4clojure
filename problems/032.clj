@@ -7,7 +7,7 @@
 
 (defn duplicate-elements
   [xs]
-  (reduce into [] (map #(vector % %) xs)))
+  (apply concat (map #(vector % %) xs)))
 
 (defn duplicate-elements2
   [xs]
