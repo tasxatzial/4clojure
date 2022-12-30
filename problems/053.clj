@@ -4,7 +4,7 @@
 ;; If two sub-sequences have the same length, use the one that occurs first.
 ;; An increasing sub-sequence must have a length of 2 or greater to qualify.
 
-(defn get-non-increasing-length
+(defn get-non-decreasing-length
   "Returns the length of the first non-decreasing subseq."
   [xs]
   (loop [xs- (rest xs)
@@ -26,7 +26,7 @@
       (if (< max-length 2)
         ()
         (take max-length (drop max-idx xs)))
-      (let [non-increasing-length (get-non-increasing-length xs-)
+      (let [non-increasing-length (get-non-decreasing-length xs-)
             new-xs- (drop non-increasing-length xs-)
             new-idx (+ idx non-increasing-length)]
         (if (> non-increasing-length max-length)
