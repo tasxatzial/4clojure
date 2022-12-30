@@ -8,7 +8,7 @@
 
 (defn interleave-seq
   [xs1 xs2]
-  (reduce into [] (map #(vector %1 %2) xs1 xs2)))
+  (apply concat (map #(vector %1 %2) xs1 xs2)))
 
 (deftest tests
   (testing "test1"
