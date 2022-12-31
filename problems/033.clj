@@ -7,7 +7,7 @@
 
 (defn replicate-elements
   [xs N]
-  (reduce into [] (map #(take N (repeat %)) xs)))
+  (apply concat (map #(take N (repeat %)) xs)))
 
 (defn replicate-elements2
   [xs N]
