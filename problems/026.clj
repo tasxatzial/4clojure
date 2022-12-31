@@ -9,7 +9,8 @@
   ([]
    (fib 1 1))
   ([prev next]
-   (lazy-seq (cons prev (fib next (+ prev next))))))
+   (lazy-seq
+     (cons prev (fib next (+ prev next))))))
 
 (defn get-fib
   [N]
