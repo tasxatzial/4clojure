@@ -8,8 +8,9 @@
 
 (defn get-range
   [n1 n2]
-  (lazy-seq (when (< n1 n2)
-              (cons n1 (get-range (inc n1) n2)))))
+  (lazy-seq 
+    (when (< n1 n2) 
+      (cons n1 (get-range (inc n1) n2)))))
 
 (defn get-range2
   [n1 n2]
