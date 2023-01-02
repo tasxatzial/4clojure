@@ -1,7 +1,8 @@
-;p74: Filter Perfect Squares
-;Given a string of comma separated integers, write a function which returns a new comma
-;separated string that only contains the numbers which are perfect squares
-;
+;; p74: Filter Perfect Squares
+
+;; Given a string of comma separated integers, write a function which returns a new
+;; comma separated string that only contains the numbers which are perfect squares
+
 (defn square?
   "Returns true if x is square, false otherwise."
   [x]
@@ -10,14 +11,14 @@
         diff (Math/abs (- rounded-sqrt sqrt))]
     (< diff (Math/ulp diff))))
 
-(defn filter-squares
-  "Given a string s of comma separated integers, it returns a new comma separated string
-  that only contains the numbers which are perfect squares."
+(defn get-squares-str
   [s]
-  (let [split-s (clojure.string/split s #",")
-        ints (map #(Integer. ^String %) split-s)]
-    (clojure.string/join "," (filter square? ints))))
+  (let [ints (read-string (str "[" s "]"))
+        squares (filter square? ints)]
+    (clojure.string/join "," squares)))
 
-;tests
-(= (filter-squares "4,5,6,7,8,9") "4,9")
-(= (filter-squares "15,16,25,36,37") "16,25,36")
+(deftest tests
+  (testing "test1"
+    (is (= (get-squares-str "4,5,6,7,8,9") "4,9")))
+  (testing "test2"
+    (is (= (get-squares-str "15,16,25,36,37") "16,25,36"))))
