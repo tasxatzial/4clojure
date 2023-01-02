@@ -6,7 +6,7 @@
 ;; they appear in s.
 ;; restrictions: group-by
 
-(defn group-seq
+(defn group-seq-by
   [f xs]
   (reduce (fn [result x]
             (let [fx (f x)]
@@ -18,11 +18,11 @@
 
 (deftest tests
   (testing "test1"
-    (is (= (group-seq #(> % 5) [1 3 6 8])
+    (is (= (group-seq-by #(> % 5) [1 3 6 8])
            {false [1 3], true [6 8]})))
   (testing "test2"
-    (is (= (group-seq #(apply / %) [[1 2] [2 4] [4 6] [3 6]])
+    (is (= (group-seq-by #(apply / %) [[1 2] [2 4] [4 6] [3 6]])
            {1/2 [[1 2] [2 4] [3 6]], 2/3 [[4 6]]})))
   (testing "test3"
-    (is (= (group-seq count [[1] [1 2] [3] [1 2 3] [2 3]])
+    (is (= (group-seq-by count [[1] [1 2] [3] [1 2 3] [2 3]])
            {1 [[1] [3]], 2 [[1 2] [2 3]], 3 [[1 2 3]]}))))
