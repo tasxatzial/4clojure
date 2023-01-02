@@ -6,6 +6,9 @@
 ;; they appear in s.
 ;; restrictions: group-by
 
+(ns p63.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn group-seq-by
   [f xs]
   (reduce (fn [result x]

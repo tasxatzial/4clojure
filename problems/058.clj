@@ -5,6 +5,9 @@
 ;; that applies them from right-to-left.
 ;; restrictions: comp
 
+(ns p58.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn comp-two
   "Compose two functions."
   [f1 f2]

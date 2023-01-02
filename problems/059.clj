@@ -5,6 +5,9 @@
 ;; left-to-right to the argument list.
 ;; restrictions: juxt
 
+(ns p59.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn juxt-fns
   [& fns]
   (fn [& args]

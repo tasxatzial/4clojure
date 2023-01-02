@@ -3,6 +3,9 @@
 ;; Write a function which removes the duplicates from a sequence. Order of the items must be maintained
 ;; restrictions: distinct
 
+(ns p56.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn remove-duplicates
   ([xs]
    (remove-duplicates xs #{} []))

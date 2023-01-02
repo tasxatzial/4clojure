@@ -4,6 +4,9 @@
 ;; If two sub-sequences have the same length, use the one that occurs first.
 ;; An increasing sub-sequence must have a length of 2 or greater to qualify.
 
+(ns p53.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn get-non-decreasing-length
   "Returns the length of the first non-decreasing subseq."
   [xs]

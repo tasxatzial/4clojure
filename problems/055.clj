@@ -4,6 +4,9 @@
 ;; occurrences of each distinct item in a sequence
 ;; restrictions: frequencies
 
+(ns p55.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn frequencies-seq
   [xs]
   (reduce (fn [result x]

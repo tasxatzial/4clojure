@@ -7,6 +7,9 @@
 ;; calling (f val-in-result val-in-latter).
 ;; restrictions: merge-with
 
+(ns p69.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn merge-maps-with
   [f & args]
   (let [keys-set (set (apply concat (map keys args)))]

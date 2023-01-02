@@ -3,6 +3,9 @@
 ;; Write a function that splits a sentence up into a sorted list of words.
 ;; Capitalization should not affect sort order and punctuation should be ignored
 
+(ns p70.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn word-split
   [s]
   (re-seq #"\w+" s))

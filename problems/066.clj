@@ -2,6 +2,9 @@
 
 ;; Given two integers, write a function which returns the greatest common divisor.
 
+(ns p66.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn get-cgd
   [N1 N2]
   (if (= 0 N2)

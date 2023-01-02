@@ -4,6 +4,9 @@
 ;; returns an infinite lazy sequence of x, (f x), (f (f x)), (f (f (f x))), etc.
 ;; restrictions: iterate
 
+(ns p62.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn iterate-fn
   [f val]
   (lazy-seq

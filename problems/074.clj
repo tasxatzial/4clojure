@@ -3,6 +3,9 @@
 ;; Given a string of comma separated integers, write a function which returns a new
 ;; comma separated string that only contains the numbers which are perfect squares
 
+(ns p74.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn square?
   "Returns true if x is square, false otherwise."
   [x]

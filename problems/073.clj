@@ -6,6 +6,9 @@
 ;; Write a function which analyzes a tic-tac-toe board
 ;; and returns :x if X has won, :o if O has won, and nil if neither player has won.
 
+(ns p73.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn analyze-line
   "Analyzes a line (row, column, diagonal). Returns :x or :o if all elements
   are :x or :o respectively. Returns nil otherwise."

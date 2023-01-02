@@ -2,6 +2,9 @@
 
 ;; Write a function which returns the first x number of prime numbers
 
+(ns p67.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn my-primes
   ([x]
    (my-primes x [] 2))

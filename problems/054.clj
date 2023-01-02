@@ -4,6 +4,9 @@
 ;; Lists of less than N items should not be returned.
 ;; restrictions: partition, partition-all
 
+(ns p54.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn partition-seq
   [N xs]
   (loop [xs- xs

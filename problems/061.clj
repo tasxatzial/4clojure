@@ -4,6 +4,9 @@
 ;; a map from them.
 ;; restrictions: zipmap
 
+(ns p61.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn zip-map
   [col1 col2]
   (into {} (map #(vector %1 %2) col1 col2)))
