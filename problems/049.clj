@@ -8,7 +8,7 @@
 
 (defn split-seq-at
   [N xs]
-  (vector (take N xs) (drop N xs)))
+  [(take N xs) (drop N xs)])
 
 (deftest tests
   (testing "test1"
