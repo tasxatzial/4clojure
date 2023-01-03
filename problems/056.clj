@@ -1,6 +1,7 @@
 ;; p56: Find Distinct Items
 
-;; Write a function which removes the duplicates from a sequence. Order of the items must be maintained
+;; Write a function which removes the duplicates from a sequence. Order of the items
+;; must be maintained.
 ;; restrictions: distinct
 
 (ns p56.core

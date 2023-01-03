@@ -1,6 +1,6 @@
 ;; p42: Factorial Fun
 
-;; Write a function which calculates factorials
+;; Write a function which calculates factorials.
 
 (ns p42.core
   (:require [clojure.test :refer [deftest testing is]]))

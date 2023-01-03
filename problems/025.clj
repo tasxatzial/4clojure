@@ -1,6 +1,6 @@
 ;; p25: Find the odd numbers
 
-;; Write a function which returns only the odd numbers from a sequence
+;; Write a function which returns only the odd numbers from a sequence.
 
 (ns p25.core
   (:require [clojure.test :refer [deftest testing is]]))

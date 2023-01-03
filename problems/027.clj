@@ -1,6 +1,6 @@
 ;; p27: Palindrome Detector
 
-;; Write a function which returns true if the given sequence is a palindrome
+;; Write a function which returns true if the given sequence is a palindrome.
 
 (ns p27.core
   (:require [clojure.test :refer [deftest testing is]]))

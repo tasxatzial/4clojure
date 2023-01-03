@@ -1,7 +1,7 @@
 ;; p55: Count Occurrences
 
 ;; Write a function which returns a map containing the number of
-;; occurrences of each distinct item in a sequence
+;; occurrences of each distinct item in a sequence.
 ;; restrictions: frequencies
 
 (ns p55.core

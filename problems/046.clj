@@ -1,6 +1,6 @@
 ;; p46: Flipping out
 
-;; Write a higher-order function which flips the order of the arguments of an input function
+;; Write a higher-order function which flips the order of the arguments of an input function.
 
 (ns p46.core
   (:require [clojure.test :refer [deftest testing is]]))

@@ -1,6 +1,6 @@
 ;; p26: Fibonacci Sequence
 
-;; Write a function which returns the first X fibonacci numbers
+;; Write a function which returns the first X fibonacci numbers.
 
 (ns p26.core
   (:require [clojure.test :refer [deftest testing is]]))

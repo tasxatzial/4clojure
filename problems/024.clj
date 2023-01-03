@@ -1,6 +1,6 @@
 ;; p24: Sum It All Up
 
-;; Write a function which returns the sum of a sequence of numbers
+;; Write a function which returns the sum of a sequence of numbers.
 
 (ns p24.core
   (:require [clojure.test :refer [deftest testing is]]))

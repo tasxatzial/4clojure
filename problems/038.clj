@@ -1,6 +1,6 @@
 ;; p38: Maximum value
 
-;; Write a function which takes a variable number of parameters and returns the maximum value
+;; Write a function which takes a variable number of parameters and returns the maximum value.
 ;; restrictions: max, max-key
 
 (ns p38.core

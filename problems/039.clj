@@ -1,6 +1,7 @@
 ;; p39: Interleave Two Seqs
 
-;; Write a function which takes two sequences and returns the first item from each, then the second item from each, then the third, etc
+;; Write a function which takes two sequences and returns the first item from each,
+;; then the second item from each, then the third, etc.
 ;; restrictions: interleave
 
 (ns p39.core

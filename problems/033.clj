@@ -1,6 +1,6 @@
 ;; p33: Replicate a Sequence
 
-;; Write a function which replicates each element of a sequence a variable number of times
+;; Write a function which replicates each element of a sequence a variable number of times.
 
 (ns p33.core
   (:require [clojure.test :refer [deftest testing is]]))

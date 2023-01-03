@@ -1,6 +1,6 @@
 ;; p21: Nth element
 
-;; Write a function which returns the Nth element from a sequence
+;; Write a function which returns the Nth element from a sequence.
 ;; restrictions: nth
 
 (ns p21.core

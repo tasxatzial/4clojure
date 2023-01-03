@@ -1,6 +1,6 @@
 ;; p43: Reverse Interleave
 
-;; Write a function which reverses the interleave process into N number of subsequences
+;; Write a function which reverses the interleave process into N number of subsequences.
 
 (ns p43.core
   (:require [clojure.test :refer [deftest testing is]]))

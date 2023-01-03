@@ -1,6 +1,7 @@
 ;; p29: Get the Caps
 
-;; Write a function which takes a string and returns a new string containing only the capital letters
+;; Write a function which takes a string and returns a new string containing
+;; only the capital letters.
 
 (ns p29.core
   (:require [clojure.test :refer [deftest testing is]]))

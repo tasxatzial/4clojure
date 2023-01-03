@@ -1,6 +1,6 @@
 ;; p28: Flatten a Sequence
 
-;; Write a function which flattens a sequence
+;; Write a function which flattens a sequence.
 ;; restrictions: flatten
 
 (ns p28.core

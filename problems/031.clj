@@ -1,6 +1,6 @@
 ;; p31: Pack a Sequence
 
-;; Write a function which packs consecutive duplicates into sub-lists
+;; Write a function which packs consecutive duplicates into sub-lists.
 
 (ns p31.core
   (:require [clojure.test :refer [deftest testing is]]))

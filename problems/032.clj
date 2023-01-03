@@ -1,6 +1,6 @@
 ;; p32: Duplicate a Sequence
 
-;; Write a function which duplicates each element of a sequence
+;; Write a function which duplicates each element of a sequence.
 
 (ns p32.core
   (:require [clojure.test :refer [deftest testing is]]))

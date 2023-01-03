@@ -1,6 +1,6 @@
 ;; p22: Count a Sequence
 
-;; Write a function which returns the total number of elements in a sequence
+;; Write a function which returns the total number of elements in a sequence.
 ;; restrictions: count
 
 (ns p22.core

@@ -1,6 +1,6 @@
 ;; p23: Reverse a Sequence
 
-;; Write a function which reverses a sequence
+;; Write a function which reverses a sequence.
 ;; restrictions: reverse, rseq
 
 (ns p23.core

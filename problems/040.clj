@@ -1,6 +1,6 @@
 ;; p40: Interpose a Seq
 
-;; Write a function which separates the items of a sequence by an arbitrary value
+;; Write a function which separates the items of a sequence by an arbitrary value.
 ;; restrictions: interpose
 
 (ns p40.core

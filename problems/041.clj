@@ -1,6 +1,6 @@
 ;; p41: Drop Every Nth Item
 
-;; Write a function which drops every Nth item from a sequence
+;; Write a function which drops every Nth item from a sequence.
 
 (ns p41.core
   (:require [clojure.test :refer [deftest testing is]]))

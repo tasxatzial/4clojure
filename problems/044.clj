@@ -1,6 +1,6 @@
 ;; p44: Rotate Sequence
 
-;; Write a function which can rotate a sequence in either direction
+;; Write a function which can rotate a sequence in either direction.
 
 (ns p44.core
   (:require [clojure.test :refer [deftest testing is]]))

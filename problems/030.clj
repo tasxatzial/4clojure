@@ -1,12 +1,12 @@
 ;; p30: Compress a Sequence
 
-;; Write a function which removes consecutive duplicates from a sequence
+;; Write a function which removes consecutive duplicates from a sequence/
+
+;; Note: A trivial solution is the built-in function 'dedupe'
+;; but it is not listed as a problem restriction.
 
 (ns p30.core
   (:require [clojure.test :refer [deftest testing is]]))
-
-;; Note: A trivial solution is the built-in function 'dedupe'
-;; but it is not listed as a problem restriction
 
 (defn compress-seq
   ([xs]

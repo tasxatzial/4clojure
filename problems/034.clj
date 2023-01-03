@@ -1,6 +1,6 @@
 ;; p34: Implement range
 
-;; Write a function which creates a list of all integers in a given range
+;; Write a function which creates a list of all integers in a given range.
 ;; restrictions: range
 
 (ns p34.core
