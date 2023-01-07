@@ -1,31 +1,36 @@
 ;p86: Happy numbers
-;Happy numbers are positive integers that follow a particular formula: take each individual
-;digit, square it, and then sum the squares to get a new number. Repeat with the new number
-;and eventually, you might get to a number whose squared sum is 1. This is a happy number. 
-;An unhappy number (or sad number) is one that loops endlessly.
-;Write a function that determines if a number is happy or not
-;
+
+;; Happy numbers are positive integers that follow a particular formula: take each
+;; individual digit, square it, and then sum the squares to get a new number. Repeat
+;; with the new number and eventually, you might get to a number whose squared sum
+;; is 1. This is a happy number. An unhappy number (or sad number) is one that loops
+;; endlessly.
+;; Write a function that determines if a number is happy or not.
+
+(ns p86.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn squared-digit-sum
   "Returns the sum of the squares of the digits of N."
   [N]
   (let [digits (map (comp read-string str) (str N))]
-    (reduce (fn [result x]
-              (+ result (* x x)))
-            0
-            digits)))
+    (apply + (map * digits digits))))
 
 (defn happy?
-  "Returns true if N is a happy number, false otherwise."
-  ([N] (happy? N #{}))
+  ([N]
+   (happy? N #{}))
   ([N result]
-   (if (contains? result N)
-     false
-     (if (= 1 N)
-       true
-       (recur (squared-digit-sum N) (conj result N))))))
+   (cond
+     (= 1 N) true
+     (contains? result N) false
+     :else (recur (squared-digit-sum N) (conj result N)))))
 
-;tests
-(= (happy? 7) true)
-(= (happy? 986543210) true)
-(= (happy? 2) false)
-(= (happy? 3) false)
+(deftest tests
+  (testing "test1"
+    (is (= (happy? 7) true)))
+  (testing "test2"
+    (is (= (happy? 986543210) true)))
+  (testing "test3"
+    (is (= (happy? 2) false)))
+  (testing "test4"
+    (is (= (happy? 3) false))))
