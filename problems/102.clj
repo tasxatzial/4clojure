@@ -1,21 +1,21 @@
-;p102: intoCamelCase
-;When working with java, you often need to create an object with fieldsLikeThis, but you'd rather work with a hashmap
-;that has :keys-like-this until it's time to convert. Write a function which takes lower-case hyphen-separated strings
-;and converts them to camel-case strings
-;
-(defn capitalize-first
-   "Capitalizes the first letter of s."
-   [s]
-   (str (clojure.string/upper-case (first s)) (apply str (rest s))))
+;; p102: intoCamelCase
 
-(defn to-camel-case
-  "Converts s to camel-case."
+;; When working with java, you often need to create an object with fieldsLikeThis,
+;; but you'd rather work with a hashmap that has :keys-like-this until it's time to
+;; convert. Write a function which takes lower-case hyphen-separated strings and
+;; converts them to camel-case strings.
+
+(ns p102.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
+(defn into-camel-case
   [s]
-  (let [split-s (clojure.string/split s #"-")
-        capitalized-first (map capitalize-first (rest split-s))]
-    (str (first split-s) (apply str capitalized-first))))
+  (clojure.string/replace s #"(-)([a-z])" #(clojure.string/upper-case (get %1 2))))
 
-;tests
-(= (to-camel-case "something") "something")
-(= (to-camel-case "multi-word-key") "multiWordKey")
-(= (to-camel-case "leaveMeAlone") "leaveMeAlone")
+(deftest tests
+  (testing "test1"
+    (is (= (into-camel-case "something") "something")))
+  (testing "test2"
+    (is (= (into-camel-case "multi-word-key") "multiWordKey")))
+  (testing "test3"
+    (is (= (into-camel-case "leaveMeAlone") "leaveMeAlone"))))
