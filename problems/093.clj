@@ -1,9 +1,8 @@
 ;; p93: Partially Flatten a Sequence
 
-;; Write a function which flattens any nested combination of
-;; sequential things (lists, vectors, etc.), but maintains the
-;; lowest level sequential items. The result should be a
-;; sequence of sequences with only one level of nesting.
+;; Write a function which flattens any nested combination of sequential things
+;; (lists, vectors, etc.), but maintains the lowest level sequential items.
+;; The result should be a sequence of sequences with only one level of nesting.
 
 (ns p93.core
   (:require [clojure.test :refer [deftest testing is]]))
