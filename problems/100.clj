@@ -1,43 +1,53 @@
-;p100: Least Common Multiple
-;Write a function which calculates the least common multiple. Your function should accept a variable number of
-;positive integers or ratios
+;; p100: Least Common Multiple
 
-(defn my-gcd
+;; Write a function which calculates the least common multiple. Your function
+;; should accept a variable number of positive integers or ratios.
+
+(ns p100.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
+(defn GCD
   "Returns the GCD of x,y."
   [x y]
   (if (= 0 y)
     x
-    (my-gcd y (mod x y))))
+    (GCD y (mod x y))))
 
-;solution 1
-(defn my-lcm1
-  "Returns the LCM of args."
+(defn LCM1
   [& args]
-  (let [max (apply max args)]
-    ((fn lcm
-       [i]
-       (if (some #(not= 0 (mod i %)) args)
-         (recur (+ max i))
-         i))
-     max)))
+  (let [max-arg (apply max args)]
+    (loop [result max-arg]
+      (if (some #(not= 0 (mod result %)) args)
+        (recur (+ max-arg result))
+        result))))
 
-;solution 2: using GCD
-(defn my-lcm2
-  "Returns the LCM of args."
+(defn LCM2
   [& args]
   (reduce (fn [result x]
-            (/ (* result x) (my-gcd result x)))
-          (first args) args))
+            (/ (* result x) (GCD result x)))
+          (first args)
+          args))
 
-;tests
-(== (my-lcm1 2 3) 6)
-(== (my-lcm1 5 3 7) 105)
-(== (my-lcm1 1/3 2/5) 2)
-(== (my-lcm1 3/4 1/6) 3/2)
-(== (my-lcm1 7 5/7 2 3/5) 210)
+(deftest tests-LCM1
+  (testing "test1"
+    (is (== (LCM1 2 3) 6)))
+  (testing "test2"
+    (is (== (LCM1 5 3 7) 105)))
+  (testing "test3"
+    (is (== (LCM1 1/3 2/5) 2)))
+  (testing "test4"
+    (is (== (LCM1 3/4 1/6) 3/2)))
+  (testing "test4"
+    (is (== (LCM1 7 5/7 2 3/5) 210))))
 
-(== (my-lcm2 2 3) 6)
-(== (my-lcm2 5 3 7) 105)
-(== (my-lcm2 1/3 2/5) 2)
-(== (my-lcm2 3/4 1/6) 3/2)
-(== (my-lcm2 7 5/7 2 3/5) 210)
+(deftest tests-LCM2
+  (testing "test1"
+    (is (== (LCM2 2 3) 6)))
+  (testing "test2"
+    (is (== (LCM2 5 3 7) 105)))
+  (testing "test3"
+    (is (== (LCM2 1/3 2/5) 2)))
+  (testing "test4"
+    (is (== (LCM2 3/4 1/6) 3/2)))
+  (testing "test4"
+    (is (== (LCM2 7 5/7 2 3/5) 210))))
