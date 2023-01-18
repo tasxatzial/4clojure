@@ -9,12 +9,17 @@
 (defn add-to-colls
   "Adds x to every collection in xs. Returns a set of the updated collections."
   [xs x]
-  (set (map #(conj % x) xs)))
+  (->> xs
+       (map #(conj % x))
+       set))
 
 (defn power-set
+  "Returns the power set."
   [xs]
   (reduce (fn [res x]
-            (into res (conj (add-to-colls res x) #{x})))
+            (->> #{x}
+                 (conj (add-to-colls res x))
+                 (into res)))
           #{#{}}
           xs))
 
