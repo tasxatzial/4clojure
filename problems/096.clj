@@ -7,19 +7,17 @@
 (ns p96.core
   (:require [clojure.test :refer [deftest testing is]]))
 
-(defn symmetric-trees?
-  "Returns true the given trees are symmetric."
-  [left-node right-node]
-  (if (and (sequential? left-node) (sequential? right-node))
-    (and (= (first left-node) (first right-node))
-         (symmetric-trees? (second left-node) (last right-node))
-         (symmetric-trees? (second right-node) (last left-node)))
-    (= left-node right-node)))
-
 (defn symmetric-tree?
-  [node]
-  (or (nil? node)
-      (symmetric-trees? (second node) (last node))))
+  "Returns true the given trees are symmetric."
+  ([node]
+   (or (nil? node)
+       (symmetric-tree? (second node) (last node))))
+  ([left-node right-node]
+   (if (and (sequential? left-node) (sequential? right-node))
+     (and (= (first left-node) (first right-node))
+          (symmetric-tree? (second left-node) (last right-node))
+          (symmetric-tree? (second right-node) (last left-node)))
+     (= left-node right-node))))
 
 (deftest tests
   (testing "test1"
