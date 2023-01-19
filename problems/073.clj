@@ -21,17 +21,17 @@
 (defn get-diagonal1
   "Returns the first diagonal of the board."
   [board]
-  [(get-in board [0 0]) (get-in board [1 1]) (get-in board [2 2])])
+  (mapv (partial get-in board) [[0 0] [1 1] [2 2]]))
 
 (defn get-diagonal2
   "Returns the second diagonal of the board."
   [board]
-  [(get-in board [0 2]) (get-in board [1 1]) (get-in board [2 0])])
+  (mapv (partial get-in board) [[0 2] [1 1] [2 0]]))
 
 (defn get-col
   "Returns the i-th column of the board."
   [i board]
-  [(get-in board [0 i]) (get-in board [1 i]) (get-in board [2 i])])
+  (mapv (partial get-in board) [[0 i] [1 i] [2 i]]))
 
 (defn get-row
   "Returns the i-th row of the board."
@@ -40,43 +40,40 @@
 
 ;; Vector with functions that return all board rows, columns, diagonals
 (def get-lines-fns
-  [get-diagonal1 get-diagonal2
-   (partial get-col 0) (partial get-col 1) (partial get-col 2)
-   (partial get-row 0) (partial get-row 1) (partial get-row 2)])
+  (-> [get-diagonal1 get-diagonal2]
+      (into (map #(partial get-col %) [0 1 2]))
+      (into (map #(partial get-row %) [0 1 2]))))
 
-(defn analyze-board
+(defn winner?
   [board]
-  (loop [[get-line & rest-get-lines] get-lines-fns]
-    (when get-line
-      (or (analyze-line (get-line board))
-          (recur rest-get-lines)))))
+  (some #(analyze-line (% board)) get-lines-fns))
 
 (deftest tests
   (testing "test1"
-    (is (= nil (analyze-board [[:e :e :e]
+    (is (= nil (winner? [[:e :e :e]
                                [:e :e :e]
                                [:e :e :e]]))))
   (testing "test2"
-    (is (= :x (analyze-board [[:x :e :o]
+    (is (= :x (winner? [[:x :e :o]
                               [:x :e :e]
                               [:x :e :o]]))))
   (testing "test3"
-    (is (= :o (analyze-board [[:e :x :e]
+    (is (= :o (winner? [[:e :x :e]
                               [:o :o :o]
                               [:x :e :x]]))))
   (testing "test4"
-    (is (= nil (analyze-board [[:x :e :o]
+    (is (= nil (winner? [[:x :e :o]
                                [:x :x :e]
                                [:o :x :o]]))))
   (testing "test5"
-    (is (= :x (analyze-board [[:x :e :e]
+    (is (= :x (winner? [[:x :e :e]
                               [:o :x :e]
                               [:o :e :x]]))))
   (testing "test6"
-    (is (= :o (analyze-board [[:x :e :o]
+    (is (= :o (winner? [[:x :e :o]
                               [:x :o :e]
                               [:o :e :x]]))))
   (testing "test7"
-    (is (= nil (analyze-board [[:x :o :x]
+    (is (= nil (winner? [[:x :o :x]
                                [:x :o :x]
                                [:o :x :o]])))))
