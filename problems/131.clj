@@ -1,60 +1,78 @@
-;p131: Sum Some Set Subsets
-;Given a variable number of sets of integers, create a function which returns true iff all
-;of the sets have a non-empty subset with an equivalent summation
-;
-(defn set-add
-   "Adds el to every set in col."
-   [col el]
-   (reduce (fn [result x]
-             (conj result (conj x el)))
-           #{}
-           col))
+;; p131: Sum Some Set Subsets
+
+;; Given a variable number of sets of integers, create a function which returns true
+;; iff all of the sets have a non-empty subset with an equivalent summation.
+
+(ns p131.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
+(defn add-to
+  "Adds x to every collection in colls. Returns a set of the updated collections."
+  [colls x]
+  (->> colls
+       (map #(conj % x))
+       set))
 
 (defn power-set
-  "Returns the power set of set."
-  [set]
-  (reduce (fn [result x]
-            (into result (conj (set-add result x) #{x})))
-          #{#{}}
-          set))
+  "Returns the power set of coll."
+  [coll]
+  (reduce (fn [res x]
+            (->> #{x}
+                 (conj (add-to res x))
+                 (into res)))
+          #{}
+          coll))
 
-(defn power-set-sums
-  "Returns a set which has the sum of all terms for each set of the power-set."
-  [power-set]
+(defn coll-sum
+  "Sums the numbers in each of the colls and returns the result as
+  a vector. Empty collections are excluded."
+  [colls]
   (reduce (fn [result x]
             (if (empty? x)
               result
               (conj result (reduce + x))))
-          #{}
-          power-set))
+          []
+          colls))
 
 (defn p131
-  [& col]
-  (let [power-sets-sums (map power-set-sums (map power-set col))]
-    (boolean (seq (apply clojure.set/intersection power-sets-sums)))))
+  [& colls]
+  (->> colls
+       (map (comp set coll-sum power-set))
+       (apply set/intersection)
+       seq
+       boolean))
 
-;tests
-(= true  (p131 #{-1 1 99}
-             #{-2 2 888}
-             #{-3 3 7777}))
-(= false (p131 #{1}
-             #{2}
-             #{3}
-             #{4}))
-(= true  (p131 #{1}))
-(= false (p131 #{1 -3 51 9}
-             #{0}
-             #{9 2 81 33}))
-(= true  (p131 #{1 3 5}
-             #{9 11 4}
-             #{-3 12 3}
-             #{-3 4 -2 10}))
-(= false (p131 #{-1 -2 -3 -4 -5 -6}
-             #{1 2 3 4 5 6 7 8 9}))
-(= true  (p131 #{1 3 5 7}
-             #{2 4 6 8}))
-(= true  (p131 #{-1 3 -5 7 -9 11 -13 15}
-             #{1 -3 5 -7 9 -11 13 -15}
-             #{1 -1 2 -2 4 -4 8 -8}))
-(= true  (p131 #{-10 9 -8 7 -6 5 -4 3 -2 1}
-             #{10 -9 8 -7 6 -5 4 -3 2 -1}))
+(deftest tests
+  (testing "test1"
+    (is (= true  (p131 #{-1 1 99}
+                       #{-2 2 888}
+                       #{-3 3 7777}))))
+  (testing "test2"
+    (is (= false (p131 #{1}
+                       #{2}
+                       #{3}
+                       #{4}))))
+  (testing "test3"
+    (is (= true  (p131 #{1}))))
+  (testing "test4"
+    (is (= false (p131 #{1 -3 51 9}
+                       #{0}
+                       #{9 2 81 33}))))
+  (testing "test5"
+    (is (= true  (p131 #{1 3 5}
+                       #{9 11 4}
+                       #{-3 12 3}
+                       #{-3 4 -2 10}))))
+  (testing "test6"
+    (is (= false (p131 #{-1 -2 -3 -4 -5 -6}
+                       #{1 2 3 4 5 6 7 8 9}))))
+  (testing "test7"
+    (is (= true  (p131 #{1 3 5 7}
+                       #{2 4 6 8}))))
+  (testing "test8"
+    (is (= true  (p131 #{-1 3 -5 7 -9 11 -13 15}
+                       #{1 -3 5 -7 9 -11 13 -15}
+                       #{1 -1 2 -2 4 -4 8 -8}))))
+  (testing "test9"
+    (is (= true  (p131 #{-10 9 -8 7 -6 5 -4 3 -2 1}
+                       #{10 -9 8 -7 6 -5 4 -3 2 -1})))))
