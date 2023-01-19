@@ -1,36 +1,43 @@
-;p108: Lazy Searching
-;Given any number of sequences, each sorted from smallest to largest, find the
-;smallest single number which appears in all of the sequences. The sequences may
-;be infinite, so be careful to search lazily
-;
-(defn my-contains?
-  "Returns true if col contains X, false otherwise. col must be sorted in
-  increasing order and may be infinite."
-  [col X]
-  (= X (last (take-while #(<= % X) col))))
+;; p108: Lazy Searching
 
-(defn _smallest-common
-  "Returns the smallest number which appears in all args. Every collection
-   in args must be sorted in increasing order."
-  ([args] (_smallest-common (first args) (rest args)))
-  ([first-arg rest-args]
-   (if (empty? first-arg)
-     nil
-     (let [num (first first-arg)]
-       (if (some false? (map #(my-contains? % num) rest-args))
-         (_smallest-common (rest first-arg) rest-args)
-         num)))))
+;; Given any number of sequences, each sorted from smallest to largest, find the
+;; smallest single number which appears in all of the sequences. The sequences may
+;; be infinite, so be careful to search lazily.
 
-(defn smallest-common
-  "Returns the smallest number which appears in all args. Every collection
-   in args must be sorted in increasing order."
-  [& args]
-  (_smallest-common args))
+(ns p108.core
+  (:require [clojure.test :refer [deftest testing is]]))
 
-;tests
-(= 3 (smallest-common [3 4 5]))
-(= 4 (smallest-common [1 2 3 4 5 6 7] [0.5 3/2 4 19]))
-(= 7 (smallest-common (range) (range 0 100 7/6) [2 3 5 7 11 13]))
-(= 64 (smallest-common (map #(* % % %) (range)) ;; perfect cubes
-                       (filter #(zero? (bit-and % (dec %))) (range)) ;; powers of 2
-                       (iterate inc 20))) ;; at least as large as 20
+(defn contained?
+  "Returns true if xs contains n, else false.
+  xs must be sorted in increasing order."
+  [n xs]
+  (->> xs
+       (take-while #(<= % n))
+       last
+       (= n)))
+
+(defn find-smallest-common
+  "Returns the smallest number which appears in all colls.
+  Every collection must be sorted in increasing order."
+  ([& colls]
+   (let [first-coll (first colls)
+         rest-colls (rest colls)]
+     (loop [first-coll first-coll]
+       (when (seq first-coll)
+         (let [num (first first-coll)
+               contained-in-rest (map (partial contained? num) rest-colls)]
+           (if (some false? contained-in-rest)
+             (recur (rest first-coll))
+             num)))))))
+
+(deftest tests
+  (testing "test1"
+    (is (= 3 (find-smallest-common [3 4 5]))))
+  (testing "test2"
+    (is (= 4 (find-smallest-common [1 2 3 4 5 6 7] [0.5 3/2 4 19]))))
+  (testing "test3"
+    (is (= 7 (find-smallest-common (range) (range 0 100 7/6) [2 3 5 7 11 13]))))
+  (testing "test4"
+    (is (= 64 (find-smallest-common (map #(* % % %) (range))
+                               (filter #(zero? (bit-and % (dec %))) (range))
+                               (iterate inc 20))))))
