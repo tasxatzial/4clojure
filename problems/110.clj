@@ -1,26 +1,33 @@
-;p110: Sequence of pronunciations
-;Write a function that returns a lazy sequence of "pronunciations" of a sequence
-;of numbers. A pronunciation of each element in the sequence consists of the number
-;of repeating identical numbers and the number itself. For example, [1 1] is pronounced
-;as [2 1] ("two ones"), which in turn is pronounced as [1 2 1 1] ("one two, one one").
-;Your function should accept an initial sequence of numbers, and return an infinite lazy
-;sequence of pronunciations, each element being a pronunciation of the previous element
-;
+;; p110: Sequence of pronunciations
+
+;; Write a function that returns a lazy sequence of "pronunciations" of a sequence
+;; of numbers. A pronunciation of each element in the sequence consists of the number
+;; of repeating identical numbers and the number itself. For example, [1 1] is pronounced
+;; as [2 1] ("two ones"), which in turn is pronounced as [1 2 1 1] ("one two, one one").
+;; Your function should accept an initial sequence of numbers, and return an infinite lazy
+;; sequence of pronunciations, each element being a pronunciation of the previous element.
+
+(ns p110.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 (defn pronounce
   "Returns the pronunciation of a sequence of numbers."
   [col]
-  (reduce (fn [result x]
-            (conj result (count x) (first x)))
-          []
-          (partition-by identity col)))
+  (->> col
+       (partition-by identity)
+       (reduce #(conj %1 (count %2) (first %2)) [])))
 
-(defn gen-pronounce-seq
-  "Returns a lazy sequence of \"pronunciations\" of a sequence of numbers."
+(defn pronunciations
   [col]
-  (lazy-seq (cons (pronounce col) (gen-pronounce-seq (pronounce col)))))
+  (lazy-seq
+    (cons (pronounce col) (pronunciations (pronounce col)))))
 
-;tests
-(= [[1 1] [2 1] [1 2 1 1]] (take 3 (gen-pronounce-seq [1])))
-(= [3 1 2 4] (first (gen-pronounce-seq [1 1 1 4 4])))
-(= [1 1 1 3 2 1 3 2 1 1] (nth (gen-pronounce-seq [1]) 6))
-(= 338 (count (nth (gen-pronounce-seq [3 2]) 15)))
+(deftest tests
+  (testing "test1"
+    (is (= [[1 1] [2 1] [1 2 1 1]] (take 3 (pronunciations [1])))))
+  (testing "test2"
+    (is (= [3 1 2 4] (first (pronunciations [1 1 1 4 4])))))
+  (testing "test3"
+    (is (= [1 1 1 3 2 1 3 2 1 1] (nth (pronunciations [1]) 6))))
+  (testing "test4"
+    (is (= 338 (count (nth (pronunciations [3 2]) 15))))))
