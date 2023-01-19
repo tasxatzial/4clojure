@@ -1,108 +1,103 @@
-;p119
-;As in Problem 73, a tic-tac-toe board is represented by a two dimensional vector.
-;X is represented by :x, O is represented by :o, and empty is represented by :e.
-;Create a function that accepts a game piece and board as arguments, and returns a
-;set (possibly empty) of all valid board placements of the game piece which would
-;result in an immediate win.
+;; p119: Win at Tic-Tac-Toe
 
-(defn analyze
-  "Analyzes a row or column. Returns :x or :o if all elements are :x or :o
-  respectively. Returns nil otherwise."
+;; As in Problem 73, a tic-tac-toe board is represented by a two dimensional vector.
+;; X is represented by :x, O is represented by :o, and empty is represented by :e.
+;; Create a function that accepts a game piece and board as arguments, and returns a
+;; set (possibly empty) of all valid board placements of the game piece which would
+;; result in an immediate win.
+
+(ns p119.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
+(defn analyze-line
+  "Analyzes a line (row, column, diagonal). Returns :x or :o if all elements
+  are :x or :o respectively. Returns nil otherwise."
   [line]
-  (let [set-line (set line)]
-    (when (= 1 (count set-line))
-      (if (contains? set-line :x)
-        :x
-        (when (contains? set-line :o)
-          :o)))))
+  (cond
+    (= line [:x :x :x]) :x
+    (= line [:o :o :o]) :o
+    :else nil))
 
 (defn get-diagonal1
   "Returns the first diagonal of the board."
   [board]
-  [(get-in board [0 0])
-   (get-in board [1 1])
-   (get-in board [2 2])])
+  (mapv (partial get-in board) [[0 0] [1 1] [2 2]]))
 
 (defn get-diagonal2
   "Returns the second diagonal of the board."
   [board]
-  [(get-in board [0 2])
-   (get-in board [1 1])
-   (get-in board [2 0])])
+  (mapv (partial get-in board) [[0 2] [1 1] [2 0]]))
 
-(defn get-col-i
+(defn get-col
   "Returns the i-th column of the board."
-  [board i]
-  [(get-in board [0 i])
-   (get-in board [1 i])
-   (get-in board [2 i])])
+  [i board]
+  (mapv (partial get-in board) [[0 i] [1 i] [2 i]]))
 
-(defn full-board
-  "Returns a new board that includes both diagonals and all 3 columns."
-  [board]
-  (let [diag1 (get-diagonal1 board)
-        diag2 (get-diagonal2 board)
-        col1 (get-col-i board 0)
-        col2 (get-col-i board 1)
-        col3 (get-col-i board 2)
-        new-board (conj board diag1 diag2 col1 col2 col3)]
-    new-board))
+(defn get-row
+  "Returns the i-th row of the board."
+  [i board]
+  (get board i))
 
-(defn board-insert
-  "Returns a new board with piece inserted into position [x y]. If position
-   [x y] is already occupied, it returns nil."
-  [piece [x y] board]
-  (if (or (= :x (get-in board [x y]))
-          (= :o (get-in board [x y])))
-    nil
-    (let [row (get board x)
-          new-row (assoc row y piece)]
-      (assoc board x new-row))))
+;; Vector with functions that return all board rows, columns, diagonals
+(def get-lines-fns
+  (-> [get-diagonal1 get-diagonal2]
+      (into (map #(partial get-col %) [0 1 2]))
+      (into (map #(partial get-row %) [0 1 2]))))
 
-(defn winning-board?
-  "Analyzes a tic-tac-toe board and returns true if it represents
-   a winning board."
+(defn winner?
+  "Analyzes the board and returns :x or :o based on the winner.
+  Returns nil otherwise."
   [board]
   (when board
-    (let [full-board (full-board board)
-          analyzed-board (map analyze full-board)
-          values (set analyzed-board)]
-      (or (contains? values :x)
-          (contains? values :o)))))
+    (some #(analyze-line (% board)) get-lines-fns)))
+
+(defn board-insert
+  "Returns a new board with piece inserted into position [x y].
+  Returns nil if the position is already occupied."
+  [piece board [x y]]
+  (when (= :e (get-in board [x y]))
+    (assoc-in board [x y] piece)))
+
+(defn get-board-positions
+  "Returns a seq of the positions of the board starting from [0 0]."
+  []
+  (for [x [0 1 2]
+        y [0 1 2]]
+    [x y]))
+
+(def memoized_get-board-positions
+  (memoize get-board-positions))
 
 (defn immediate-win-positions
-  "Returns a set of all immediate winning positions when piece is inserted
-   into the empty positions of the board."
   [piece board]
-  (let [positions (for [x [0 1 2]
-                        y [0 1 2]]
-                    [x y])]
-    (reduce (fn [result [x y]]
-              (let [inserted-board (board-insert piece [x y] board)]
-                (if (winning-board? inserted-board)
-                 (conj result [x y])
-                  result)))
-            #{}
-            positions)))
+  (let [update-position (partial board-insert piece board)]
+    (->> (memoized_get-board-positions)
+         (filter #(winner? (update-position %)))
+         set)))
 
-;tests
-(= (immediate-win-positions :x [[:o :e :e]
-                                [:o :x :o]
-                                [:x :x :e]])
-   #{[2 2] [0 1] [0 2]})
-(= (immediate-win-positions :x [[:x :o :o]
-                                [:x :x :e]
-                                [:e :o :e]])
-   #{[2 2] [1 2] [2 0]})
-(= (immediate-win-positions :x [[:x :e :x]
-                                [:o :x :o]
-                                [:e :o :e]])
-   #{[2 2] [0 1] [2 0]})
-(= (immediate-win-positions :x [[:x :x :o]
-                                [:e :e :e]
-                                [:e :e :e]])
-   #{})
-(= (immediate-win-positions :o [[:x :x :o]
-                                [:o :e :o]
-                                [:x :e :e]])
-   #{[2 2] [1 1]})
+(deftest tests
+  (testing "test1"
+    (is (= (immediate-win-positions :x [[:o :e :e]
+                                        [:o :x :o]
+                                        [:x :x :e]])
+           #{[2 2] [0 1] [0 2]})))
+  (testing "test2"
+    (is (= (immediate-win-positions :x [[:x :o :o]
+                                        [:x :x :e]
+                                        [:e :o :e]])
+           #{[2 2] [1 2] [2 0]})))
+  (testing "test3"
+    (is (= (immediate-win-positions :x [[:x :e :x]
+                                        [:o :x :o]
+                                        [:e :o :e]])
+           #{[2 2] [0 1] [2 0]})))
+  (testing "test4"
+    (is (= (immediate-win-positions :x [[:x :x :o]
+                                        [:e :e :e]
+                                        [:e :e :e]])
+           #{})))
+  (testing "test5"
+    (is (= (immediate-win-positions :o [[:x :x :o]
+                                        [:o :e :o]
+                                        [:x :e :e]])
+           #{[2 2] [1 1]}))))
