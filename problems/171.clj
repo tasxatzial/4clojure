@@ -1,35 +1,39 @@
-;p171: Intervals
-;Write a function that takes a sequence of integers and returns a sequence of "intervals".
-;Each interval is a a vector of two integers, start and end, such that all integers between
-;start and end (inclusive) are contained in the input sequence
-;
-(defn find-intervals
-  "Takes a sequence of integers col and returns a sequence of \"intervals\".
-   Each interval is represented by two adjacent numbers. For example in
-   [1 3 4 5] the intervals are 1-3 and 4-5."
-  ([col]
-   (if (empty? col)
-     []
-     (let [sorted-col (sort col)]
-       (find-intervals sorted-col [(first sorted-col)] (first sorted-col)))))
-  ([col result prev-num]
-   (if (empty? col)
-     (conj result prev-num)
-     (let [cur-num (first col)]
-       (if (> cur-num (inc prev-num))
-         (recur (rest col) (conj result prev-num cur-num) cur-num)
-         (recur (rest col) result cur-num))))))
+;; p171: Intervals
 
-(defn interval-split
-  "Takes a sequence of integers col and returns a sequence of \"intervals\"."
-  [col]
-  (let [intervals (partition 2 (find-intervals col))]
-    (map #(apply vector %) intervals)))
+;; Write a function that takes a sequence of integers and returns a sequence of
+;; "intervals". Each interval is a a vector of two integers, start and end, such
+;; that all integers between start and end (inclusive) are contained in the input
+;; sequence.
 
-;tests
-(= (interval-split [1 2 3]) [[1 3]])
-(= (interval-split [10 9 8 1 2 3]) [[1 3] [8 10]])
-(= (interval-split [1 1 1 1 1 1 1]) [[1 1]])
-(= (interval-split []) [])
-(= (interval-split [19 4 17 1 3 10 2 13 13 2 16 4 2 15 13 9 6 14 2 11])
-   [[1 4] [6 6] [9 11] [13 17] [19 19]])
+(ns p171.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
+(defn intervals
+  [coll]
+  (if (empty? coll)
+    []
+    (let [sorted-and-distinct (sort (distinct coll))]
+      (loop [coll (rest sorted-and-distinct)
+             result []
+             interval-start (first sorted-and-distinct)
+             interval-end interval-start]
+        (if (empty? coll)
+          (conj result [interval-start interval-end])
+          (let [[curr & rest-coll] coll]
+            (if (= (inc interval-end) curr)
+              (recur rest-coll result interval-start curr)
+              (let [updated-result (conj result [interval-start interval-end])]
+                (recur rest-coll updated-result curr curr)))))))))
+
+(deftest tests-create-map2
+  (testing "test1"
+    (is (= (intervals [1 2 3]) [[1 3]])))
+  (testing "test2"
+    (is (= (intervals [10 9 8 1 2 3]) [[1 3] [8 10]])))
+  (testing "test3"
+    (is (= (intervals [1 1 1 1 1 1 1]) [[1 1]])))
+  (testing "test4"
+    (is (= (intervals []) [])))
+  (testing "test5"
+    (is (= (intervals [19 4 17 1 3 10 2 13 13 2 16 4 2 15 13 9 6 14 2 11])
+           [[1 4] [6 6] [9 11] [13 17] [19 19]]))))
