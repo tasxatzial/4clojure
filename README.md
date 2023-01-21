@@ -1,7 +1,7 @@
-# 4clojure
+# 4clojure solutions
 
-My solutions to the problems listed on the [4clojure](http://www.4clojure.com/) platform.
+[4clojure](https://4clojure.com) is an interactive problem website for learning Clojure.
 
-*Update*: The site has been discontinued but the problems can still be accessed [here](https://4clojure.oxal.org/).
+Here are my solutions to some of the problems.
 
-**Note:** This is my first attempt at writing Clojure.
+**Update**: 4clojure.com has been discontinued, but the problems can still be accessed at [4ever-clojure](https://4clojure.oxal.org/).
