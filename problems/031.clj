@@ -6,16 +6,15 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn partition-by-identity
-  ([xs]
-   (if (empty? xs)
-     []
-     (partition-by-identity xs 1 [])))
-  ([[x & rest-xs] equal-count result]
-   (if (seq rest-xs)
-     (if (= x (first rest-xs))
-       (recur rest-xs (inc equal-count) result)
-       (recur rest-xs 1 (conj result (take equal-count (repeat x)))))
-     (conj result (take equal-count (repeat x))))))
+  [xs]
+  (loop [[x & rest-xs] xs
+         equal-count 1
+         result []]
+    (if (seq rest-xs)
+      (if (= x (first rest-xs))
+        (recur rest-xs (inc equal-count) result)
+        (recur rest-xs 1 (conj result (take equal-count (repeat x)))))
+      (conj result (take equal-count (repeat x))))))
 
 (defn partition-by-identity2
   [xs]
