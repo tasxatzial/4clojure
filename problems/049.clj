@@ -6,9 +6,9 @@
 (ns p49.core
   (:require [clojure.test :refer [deftest testing is]]))
 
-(defn split-seq-at
-  [N xs]
-  [(take N xs) (drop N xs)])
+(defn split-seq
+  [idx xs]
+  [(take idx xs) (drop idx xs)])
 
 (deftest tests
   (testing "test1"
