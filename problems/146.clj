@@ -13,11 +13,11 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn tree-into-table
-  [[key val]]
-  (reduce (fn [result [inner-key inner-val]]
-            (into result {[key inner-key] inner-val}))
+  [[k v]]
+  (reduce (fn [result [inner-k inner-v]]
+            (conj result [[k inner-k] inner-v]))
           {}
-          val))
+          v))
 
 (defn trees-into-tables
   [tree]
