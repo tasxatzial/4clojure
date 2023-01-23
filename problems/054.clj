@@ -9,11 +9,11 @@
 
 (defn partition-seq
   [N xs]
-  (loop [xs- xs
+  (loop [xs xs
          result []]
-    (let [first-N (take N xs-)]
+    (let [first-N (take N xs)]
       (if (= N (count first-N))
-        (recur (drop N xs-) (conj result first-N))
+        (recur (drop N xs) (conj result first-N))
         result))))
 
 ;; lazy
