@@ -9,23 +9,22 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn sequs-horribilis
-  [N col]
-  ((fn _sequs-horribilis
-     [col sum result]
-     (if (empty? col)
-       result
-       (let [current-element (first col)]
-         (if (sequential? current-element)
-           (let [sublist (_sequs-horribilis current-element sum '())
-                 new-sum (+ sum (apply + (flatten sublist)))
-                 new-result (concat result [sublist])]
-             (recur (next col) new-sum new-result))
-           (if (< N (+ sum current-element))
-             result
-             (let [new-sum (+ sum current-element)
-                   new-result (concat result [current-element])]
-               (recur (next col) new-sum new-result)))))))
-   col 0 '()))
+  [N coll]
+  (letfn [(_sequs-horribilis [coll sum result]
+            (if (empty? coll)
+              result
+              (let [curr-el (first coll)]
+                (if (sequential? curr-el)
+                  (let [sublist (_sequs-horribilis curr-el sum ())
+                        new-sum (+ sum (apply + (flatten sublist)))
+                        new-result (concat result [sublist])]
+                    (recur (next coll) new-sum new-result))
+                  (if (< N (+ sum curr-el))
+                    result
+                    (let [new-sum (+ sum curr-el)
+                          new-result (concat result [curr-el])]
+                      (recur (next coll) new-sum new-result)))))))]
+    (_sequs-horribilis coll 0 ())))
 
 (deftest tests
   (testing "test1"
