@@ -17,13 +17,13 @@
     (apply + (map * digits digits))))
 
 (defn happy?
-  ([N]
-   (happy? N #{}))
-  ([N result]
-   (cond
-     (= 1 N) true
-     (contains? result N) false
-     :else (recur (squared-digit-sum N) (conj result N)))))
+  [N]
+  (loop [N N
+         result #{}]
+    (cond
+      (= 1 N) true
+      (contains? result N) false
+      :else (recur (squared-digit-sum N) (conj result N)))))
 
 (deftest tests
   (testing "test1"
