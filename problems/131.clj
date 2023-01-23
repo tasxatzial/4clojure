@@ -7,23 +7,23 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn add-to
-  "Adds x to every collection in colls. Returns a set of the updated collections."
+  "Adds x to every collection. Returns a set."
   [colls x]
   (->> colls
        (map #(conj % x))
        set))
 
 (defn power-set
-  "Returns the power set of coll."
+  "Returns the power set."
   [coll]
   (reduce (fn [res x]
             (->> #{x}
                  (conj (add-to res x))
                  (into res)))
-          #{}
+          #{#{}}
           coll))
 
-(defn coll-sum
+(defn sum-per-coll
   "Sums the numbers in each of the colls and returns the result as
   a vector. Empty collections are excluded."
   [colls]
@@ -37,7 +37,7 @@
 (defn p131
   [& colls]
   (->> colls
-       (map (comp set coll-sum power-set))
+       (map (comp set sum-per-coll power-set))
        (apply set/intersection)
        seq
        boolean))
