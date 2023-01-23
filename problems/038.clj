@@ -8,12 +8,13 @@
 
 (defn get-max
   [& xs]
-  (reduce (fn [result x]
-            (if (> x result)
-              x
-              result))
-          (first xs)
-          (rest xs)))
+  (loop [[x & rest-xs] (rest xs)
+         result (first xs)]
+    (if x
+      (if (> x result)
+        (recur rest-xs x)
+        (recur rest-xs result))
+      result)))
 
 (deftest tests
   (testing "test1"
