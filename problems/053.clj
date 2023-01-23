@@ -8,29 +8,27 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn get-non-decreasing-length
-  "Returns the length of the first non-decreasing subseq."
+  "Returns the length of the first non-decreasing subseq.
+  Assumes xs is never empty."
   [xs]
-  (loop [xs- (rest xs)
-         prev (first xs)
+  (loop [[x & rest-xs] xs
          length 1]
-    (if (empty? xs-)
-      length
-      (if (> (first xs-) prev)
-        (recur (rest xs-) (first xs-) (inc length))
-        length))))
+    (if (and (seq rest-xs) (> (first rest-xs) x))
+      (recur rest-xs (inc length))
+      length)))
 
 (defn longest-increasing-subseq
   [xs]
-  (loop [xs- xs
+  (loop [_xs xs
          idx 0
          max-length 0
          max-idx 0]
-    (if (empty? xs-)
+    (if (empty? _xs)
       (if (< max-length 2)
         ()
         (take max-length (drop max-idx xs)))
-      (let [non-increasing-length (get-non-decreasing-length xs-)
-            new-xs- (drop non-increasing-length xs-)
+      (let [non-increasing-length (get-non-decreasing-length _xs)
+            new-xs- (drop non-increasing-length _xs)
             new-idx (+ idx non-increasing-length)]
         (if (> non-increasing-length max-length)
           (recur new-xs- new-idx non-increasing-length idx)
