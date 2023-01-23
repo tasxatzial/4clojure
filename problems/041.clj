@@ -19,14 +19,14 @@
 (defn drop-every-nth2
   [xs N]
   (let [nth-element? (partial nth? N)]
-    (loop [xs- xs
+    (loop [xs xs
            idx 0
            result []]
-      (if (empty? xs-)
+      (if (empty? xs)
         result
         (if (nth-element? idx)
-          (recur (rest xs-) (inc idx) result)
-          (recur (rest xs-) (inc idx) (conj result (first xs-))))))))
+          (recur (rest xs) (inc idx) result)
+          (recur (rest xs) (inc idx) (conj result (first xs))))))))
 
 ;; lazy
 (defn drop-every-nth3
