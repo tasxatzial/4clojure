@@ -19,8 +19,7 @@
   [N]
   (if (= 1 N)
     1
-    (let [get-N-gcd (partial get-gcd N)
-          gcds (map get-N-gcd (range 1 N))]
+    (let [gcds (map #(get-gcd N %) (range 1 N))]
       (count (filter #{1} gcds)))))
 
 (deftest tests
