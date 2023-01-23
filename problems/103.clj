@@ -7,26 +7,26 @@
 (ns p103.core
   (:require [clojure.test :refer [deftest testing is]]))
 
-(defn add-to-colls
-  "Adds x to every collection in xs. Returns a set of the updated collections."
-  [xs x]
-  (->> xs
+(defn add-to
+  "Adds x to every collection. Returns a set."
+  [colls x]
+  (->> colls
        (map #(conj % x))
        set))
 
 (defn power-set
   "Returns the power set."
-  [xs]
+  [coll]
   (reduce (fn [res x]
             (->> #{x}
-                 (conj (add-to-colls res x))
+                 (conj (add-to res x))
                  (into res)))
           #{#{}}
-          xs))
+          coll))
 
 (defn generate-k-combinations
-  [N xs]
-  (->> (power-set xs)
+  [N coll]
+  (->> (power-set coll)
        (filter #(= N (count %)))
        set))
 
