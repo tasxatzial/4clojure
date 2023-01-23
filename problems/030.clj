@@ -9,17 +9,14 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn compress-seq
-  ([xs]
-   (if (empty? xs)
-     []
-     (compress-seq xs [])))
-  ([xs result]
-   (let [[x & rest-xs] xs]
-     (if (seq rest-xs)
-       (if (= x (first rest-xs))
-         (recur rest-xs result)
-         (recur rest-xs (conj result x)))
-       (conj result x)))))
+  [xs]
+  (loop [[x & rest-xs] xs
+         result []]
+    (if (seq rest-xs)
+      (if (= x (first rest-xs))
+        (recur rest-xs result)
+        (recur rest-xs (conj result x)))
+      (conj result x))))
 
 ;; lazy
 (defn compress-seq2
