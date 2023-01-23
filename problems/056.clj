@@ -8,28 +8,30 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn remove-duplicates
-  ([xs]
-   (remove-duplicates xs #{} []))
-  ([xs set-xs result]
-   (if (empty? xs)
-     result
-     (if (contains? set-xs (first xs))
-       (recur (rest xs) set-xs result)
-       (let [new-set-xs (conj set-xs (first xs))
-             new-result (conj result (first xs))]
-         (recur (rest xs) new-set-xs new-result))))))
+  [xs]
+  (loop [xs xs
+         set-xs #{}
+         result []]
+    (if (empty? xs)
+      result
+      (let [[x & rest-xs] xs]
+        (if (contains? set-xs x)
+          (recur rest-xs set-xs result)
+          (let [new-set-xs (conj set-xs x)
+                new-result (conj result x)]
+            (recur rest-xs new-set-xs new-result)))))))
 
 ;; lazy
 (defn remove-duplicates2
-  ([xs]
-   (remove-duplicates2 xs #{}))
-  ([xs set-xs]
-   (lazy-seq
-     (when (seq xs)
-       (let [[x & rest-xs] xs]
-         (if (contains? set-xs x)
-           (remove-duplicates2 rest-xs set-xs)
-           (cons x (remove-duplicates2 rest-xs (conj set-xs x)))))))))
+  [xs]
+  (letfn [(_remove-duplicates [xs set-xs]
+            (lazy-seq
+              (when (seq xs)
+                (let [[x & rest-xs] xs]
+                  (if (contains? set-xs x)
+                    (_remove-duplicates rest-xs set-xs)
+                    (cons x (_remove-duplicates rest-xs (conj set-xs x))))))))]
+    (_remove-duplicates xs #{})))
 
 (deftest tests-remove-duplicates
   (testing "test1"
