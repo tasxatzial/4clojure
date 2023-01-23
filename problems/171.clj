@@ -19,11 +19,11 @@
              interval-end interval-start]
         (if (empty? coll)
           (conj result [interval-start interval-end])
-          (let [[curr & rest-coll] coll]
-            (if (= (inc interval-end) curr)
-              (recur rest-coll result interval-start curr)
+          (let [[curr-el & rest-coll] coll]
+            (if (= (inc interval-end) curr-el)
+              (recur rest-coll result interval-start curr-el)
               (let [updated-result (conj result [interval-start interval-end])]
-                (recur rest-coll updated-result curr curr)))))))))
+                (recur rest-coll updated-result curr-el curr-el)))))))))
 
 (deftest tests-create-map2
   (testing "test1"
