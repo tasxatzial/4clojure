@@ -17,14 +17,14 @@
   (get-in triangle [row col]))
 
 (defn sum-min-path
-  ([triangle]
-   (sum-min-path triangle 0 0))
-  ([triangle row col]
-   (if (last-row? triangle row)
-     (get-val triangle row col)
-     (let [x (sum-min-path triangle (inc row) col)
-           y (sum-min-path triangle (inc row) (inc col))]
-       (+ (min x y) (get-val triangle row col))))))
+  [triangle]
+  (letfn [(_sum-min-path [triangle row col]
+            (if (last-row? triangle row)
+              (get-val triangle row col)
+              (let [x (_sum-min-path triangle (inc row) col)
+                    y (_sum-min-path triangle (inc row) (inc col))]
+                (+ (min x y) (get-val triangle row col)))))]
+    (_sum-min-path triangle 0 0)))
 
 (deftest tests
   (testing "test1"
