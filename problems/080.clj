@@ -12,14 +12,14 @@
   (= 0 (mod dividend divisor)))
 
 (defn perfect?
-  ([N]
-   (perfect? N 1 0))
-  ([N I sum]
-   (if (> I (/ N 2))
-     (= sum N)
-     (if (divides? N I)
-       (recur N (inc I) (+ sum I))
-       (recur N (inc I) sum)))))
+  [N]
+  (loop [I 1
+         sum 0]
+    (if (> I (/ N 2))
+      (= sum N)
+      (if (divides? N I)
+        (recur (inc I) (+ sum I))
+        (recur (inc I) sum)))))
 
 (deftest tests
   (testing "test1"
