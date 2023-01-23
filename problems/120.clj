@@ -9,7 +9,7 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn to-digits
-  "Returns a list of the digits of a number."
+  "Returns a seq of the digits of a number."
   [n]
   (->> n
        str
