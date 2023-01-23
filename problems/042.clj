@@ -10,14 +10,14 @@
   (apply *' (range 1 (inc N))))
 
 (defn factorial2
-  ([N]
-   (if (zero? N)
-     1
-     (factorial2 N 1)))
-  ([N result]
-   (if (= N 1)
-     result
-     (recur (dec N) (*' result N)))))
+  [N]
+  (if (zero? N)
+    1
+    (loop [N N
+           result 1]
+      (if (= N 1)
+        result
+        (recur (dec N) (*' result N))))))
 
 (deftest tests-factorial
   (testing "test1"
