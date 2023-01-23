@@ -12,15 +12,15 @@
 
 (defn pronounce
   "Returns the pronunciation of a sequence of numbers."
-  [col]
-  (->> col
+  [xs]
+  (->> xs
        (partition-by identity)
        (reduce #(conj %1 (count %2) (first %2)) [])))
 
 (defn pronunciations
-  [col]
+  [xs]
   (lazy-seq
-    (cons (pronounce col) (pronunciations (pronounce col)))))
+    (cons (pronounce xs) (pronunciations (pronounce xs)))))
 
 (deftest tests
   (testing "test1"
