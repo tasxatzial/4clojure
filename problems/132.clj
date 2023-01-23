@@ -18,7 +18,7 @@
                     (if (pred last-added x)
                       (cons val (cons x (_insert-between (rest coll) x)))
                       (cons x (_insert-between (rest coll) x)))))))]
-      (cons (first coll) (_insert-between (rest coll) (first coll))))))
+      (lazy-seq (cons (first coll) (_insert-between (rest coll) (first coll)))))))
 
 (deftest tests
   (testing "test1"
