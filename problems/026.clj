@@ -6,11 +6,11 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn fib
-  ([]
-   (fib 1 1))
-  ([prev next]
-   (lazy-seq
-     (cons prev (fib next (+ prev next))))))
+  []
+  (letfn [(_fib [prev next]
+            (lazy-seq
+              (cons prev (_fib next (+ prev next)))))]
+    (_fib 1 1)))
 
 (defn get-fib
   [N]
