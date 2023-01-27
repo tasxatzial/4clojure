@@ -12,6 +12,16 @@
        (take-while #(< % (inc (Math/sqrt N))))
        (some #(zero? (mod N %)))))
 
+(defn primes-lazy
+  "Returns a lazy seq of primes."
+  []
+  (letfn [(_primes [result N]
+            (lazy-seq
+              (if (composite? N result)
+                (_primes result (inc N))
+                (cons N (_primes (conj result N) (inc N))))))]
+    (_primes [] 2)))
+
 (defn primes
   [x]
   (loop [x x
@@ -23,10 +33,22 @@
         (recur x result (inc N))
         (recur (dec x) (conj result N) (inc N))))))
 
-(deftest tests
+(defn primes2
+  [x]
+  (take x (primes-lazy)))
+
+(deftest tests-primes
   (testing "test1"
     (is (= (primes 2) [2 3])))
   (testing "test2"
     (is (= (primes 5) [2 3 5 7 11])))
   (testing "test3"
     (is (= (last (primes 100)) 541))))
+
+(deftest tests-primes2
+  (testing "test1"
+    (is (= (primes2 2) [2 3])))
+  (testing "test2"
+    (is (= (primes2 5) [2 3 5 7 11])))
+  (testing "test3"
+    (is (= (last (primes2 100)) 541))))
