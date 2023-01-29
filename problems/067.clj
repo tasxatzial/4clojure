@@ -6,11 +6,13 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn composite?
-  "Returns true if N has any of the primes as a factor, else false."
-  [N primes]
+  "Returns true if n has any of the primes as a factor, else false.
+  Primes includes all primes which are <= square root of n."
+  [n primes]
   (->> primes
-       (take-while #(< % (inc (Math/sqrt N))))
-       (some #(zero? (mod N %)))))
+       (take-while #(< % (inc (Math/sqrt n))))
+       (some #(zero? (mod n %)))
+       boolean))
 
 (defn primes-lazy
   "Returns a lazy seq of primes."
