@@ -5,23 +5,27 @@
 (ns p67.core
   (:require [clojure.test :refer [deftest testing is]]))
 
-(defn composite?
-  "Returns true if n has any of the primes as a factor, else false.
-  Primes includes all primes which are <= square root of n."
-  [n primes]
-  (->> primes
-       (take-while #(< % (inc (Math/sqrt n))))
-       (some #(zero? (mod n %)))
-       boolean))
+(defn prime?
+  "Returns true if N is prime. This will happen if N is a multiple
+  of any number in the given list of primes."
+  [N primes]
+  (reduce (fn [result prime]
+            (if (> prime (inc (Math/sqrt N)))
+              (reduced true)
+              (if (= 0 (mod N prime))
+                (reduced false)
+                result)))
+          true
+          primes))
 
 (defn primes-lazy
   "Returns a lazy seq of primes."
   []
   (letfn [(_primes [result N]
             (lazy-seq
-              (if (composite? N result)
-                (_primes result (inc N))
-                (cons N (_primes (conj result N) (inc N))))))]
+              (if (prime? N result)
+                (cons N (_primes (conj result N) (inc N)))
+                (_primes result (inc N)))))]
     (_primes [] 2)))
 
 (defn primes
@@ -31,9 +35,9 @@
          N 2]
     (if (zero? x)
       result
-      (if (composite? N result)
-        (recur x result (inc N))
-        (recur (dec x) (conj result N) (inc N))))))
+      (if (prime? N result)
+        (recur (dec x) (conj result N) (inc N))
+        (recur x result (inc N))))))
 
 (defn primes2
   [x]
