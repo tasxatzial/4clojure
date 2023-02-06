@@ -5,17 +5,19 @@
 (ns p122.core
   (:require [clojure.test :refer [deftest testing is]]))
 
+(defn bin-char->dec
+  "Returns the decimal value of a char that represents a binary digit."
+  [c]
+  (- (int c) 48))
+
 (defn to-decimal
-  [str]
-  (loop [digits (seq str)
-         result 0
-         idx (dec (count digits))]
-    (if digits
-      (if (= \0 (first digits))
-        (recur (next digits) result (dec idx))
-        (let [pow2 (Math/round (Math/pow 2 idx))]
-          (recur (next digits) (+' result pow2) (dec idx))))
-      result)))
+  [s]
+  (let [decimal-values (map bin-char->dec s)]
+    (+ (last decimal-values)
+       (reduce (fn [result digit]
+                 (* 2 (+ result digit)))
+               0
+               (butlast decimal-values)))))
 
 (deftest tests
   (testing "test1"
