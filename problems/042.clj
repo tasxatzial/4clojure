@@ -7,7 +7,7 @@
 
 (defn factorial
   [N]
-  (apply *' (range 1 (inc N))))
+  (reduce *' (range 1 (inc N))))
 
 (defn factorial2
   [N]

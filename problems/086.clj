@@ -14,7 +14,7 @@
   "Returns the sum of the squares of the digits of N."
   [N]
   (let [digits (map (comp read-string str) (str N))]
-    (apply + (map * digits digits))))
+    (reduce + (map * digits digits))))
 
 (defn happy?
   [N]

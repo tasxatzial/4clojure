@@ -18,8 +18,8 @@
   [N]
   (let [digits (to-digits N)
         half (/ (count digits) 2)
-        sum-left-half (apply + (take half digits))
-        sum-right-half (apply + (take-last half digits))]
+        sum-left-half (reduce + (take half digits))
+        sum-right-half (reduce + (take-last half digits))]
     (= sum-left-half sum-right-half)))
 
 (deftest tests

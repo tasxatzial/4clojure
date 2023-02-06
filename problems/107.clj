@@ -14,7 +14,7 @@
 
 (defn math-pow
   [n]
-  (partial #(apply *' (repeat n %))))
+  (partial #(reduce *' (repeat n %))))
 
 (deftest tests
   (testing "test1"

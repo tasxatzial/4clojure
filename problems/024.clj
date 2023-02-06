@@ -7,7 +7,7 @@
 
 (defn sum
   [xs]
-  (apply + xs))
+  (reduce + xs))
 
 (deftest tests
   (testing "test1"

@@ -21,7 +21,7 @@
   (->> n
        to-digits
        (map #(* % %))
-       (apply +)))
+       (reduce +)))
 
 (defn p120
   [col]

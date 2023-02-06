@@ -16,7 +16,7 @@
               (let [curr-el (first coll)]
                 (if (sequential? curr-el)
                   (let [sublist (_sequs-horribilis curr-el sum ())
-                        new-sum (+ sum (apply + (flatten sublist)))
+                        new-sum (+ sum (reduce + (flatten sublist)))
                         new-result (concat result [sublist])]
                     (recur (next coll) new-sum new-result))
                   (if (< N (+ sum curr-el))
