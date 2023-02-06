@@ -13,11 +13,11 @@
 (defn merge-maps-with
   [f & args]
   (let [keys-set (set (apply concat (map keys args)))]
-    (reduce (fn [result _key]
-              (let [_vals (filter some? (map #(% _key) args))]
-                (if (= 1 (count _vals))
-                  (assoc result _key (first _vals))
-                  (assoc result _key (apply f _vals)))))
+    (reduce (fn [result a-key]
+              (let [values (filter some? (map #(% a-key) args))]
+                (if (= 1 (count values))
+                  (assoc result a-key (first values))
+                  (assoc result a-key (apply f values)))))
             {}
             keys-set)))
 

@@ -9,8 +9,8 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn group-by-equivalence
-  [f xs]
-  (->> xs
+  [f coll]
+  (->> coll
        (group-by f)
        vals
        (map set)
