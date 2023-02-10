@@ -31,9 +31,9 @@
     (is (= (k-combinations 2 #{0 1 2}) #{#{0 1} #{0 2} #{1 2}})))
   (testing "test4"
     (is (= (k-combinations 3 #{0 1 2 3 4}) #{#{0 1 2} #{0 1 3} #{0 1 4} #{0 2 3} #{0 2 4}
-                                                      #{0 3 4} #{1 2 3} #{1 2 4} #{1 3 4} #{2 3 4}})))
+                                             #{0 3 4} #{1 2 3} #{1 2 4} #{1 3 4} #{2 3 4}})))
   (testing "test5"
     (is (= (k-combinations 4 #{[1 2 3] :a "abc" "efg"}) #{#{[1 2 3] :a "abc" "efg"}})))
   (testing "test6"
     (is (= (k-combinations 2 #{[1 2 3] :a "abc" "efg"}) #{#{[1 2 3] :a} #{[1 2 3] "abc"} #{[1 2 3] "efg"}
-                                                                   #{:a "abc"} #{:a "efg"} #{"abc" "efg"}}))))
+                                                          #{:a "abc"} #{:a "efg"} #{"abc" "efg"}}))))
