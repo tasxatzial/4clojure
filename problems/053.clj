@@ -19,16 +19,16 @@
 
 (defn longest-increasing-subseq
   [xs]
-  (loop [_xs xs
+  (loop [xs$ xs
          idx 0
          max-length 0
          max-idx 0]
-    (if (empty? _xs)
+    (if (empty? xs$)
       (if (< max-length 2)
         ()
         (take max-length (drop max-idx xs)))
-      (let [non-increasing-length (get-non-decreasing-length _xs)
-            new-xs- (drop non-increasing-length _xs)
+      (let [non-increasing-length (get-non-decreasing-length xs$)
+            new-xs- (drop non-increasing-length xs$)
             new-idx (+ idx non-increasing-length)]
         (if (> non-increasing-length max-length)
           (recur new-xs- new-idx non-increasing-length idx)

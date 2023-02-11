@@ -11,16 +11,16 @@
 
 (defn global-take-while
   [n pred xs]
-  (letfn [(step [xs result satisfy-pred-count]
+  (letfn [(_step [xs result satisfy-pred-count]
             (lazy-seq
               (when (seq xs)
                 (let [curr-el (first xs)]
                   (if (pred curr-el)
                     (if (= (dec n) satisfy-pred-count)
                       result
-                      (cons curr-el (step (rest xs) result (inc satisfy-pred-count))))
-                    (cons curr-el (step (rest xs) result satisfy-pred-count)))))))]
-    (step xs [] 0)))
+                      (cons curr-el (_step (rest xs) result (inc satisfy-pred-count))))
+                    (cons curr-el (_step (rest xs) result satisfy-pred-count)))))))]
+    (_step xs [] 0)))
 
 (deftest tests
   (testing "test1"

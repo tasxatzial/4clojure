@@ -24,14 +24,14 @@
 ;; lazy
 (defn remove-duplicates2
   [xs]
-  (letfn [(_remove-duplicates [xs set-xs]
+  (letfn [(_step [xs set-xs]
             (lazy-seq
               (when (seq xs)
                 (let [[x & rest-xs] xs]
                   (if (contains? set-xs x)
-                    (_remove-duplicates rest-xs set-xs)
-                    (cons x (_remove-duplicates rest-xs (conj set-xs x))))))))]
-    (_remove-duplicates xs #{})))
+                    (_step rest-xs set-xs)
+                    (cons x (_step rest-xs (conj set-xs x))))))))]
+    (_step xs #{})))
 
 (deftest tests-remove-duplicates
   (testing "test1"

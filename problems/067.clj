@@ -21,12 +21,12 @@
 (defn primes-lazy
   "Returns a lazy seq of primes."
   []
-  (letfn [(_primes [result N]
+  (letfn [(_step [result N]
             (lazy-seq
               (if (prime? N result)
-                (cons N (_primes (conj result N) (inc N)))
-                (_primes result (inc N)))))]
-    (_primes [] 2)))
+                (cons N (_step (conj result N) (inc N)))
+                (_step result (inc N)))))]
+    (_step [] 2)))
 
 (defn primes
   "Returns the first x primes."

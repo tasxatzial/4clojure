@@ -11,14 +11,14 @@
   [pred val coll]
   (if (empty? coll)
     coll
-    (letfn [(_insert-between [coll last-added]
+    (letfn [(_step [coll last-added]
               (lazy-seq
                 (when (seq coll)
                   (let [x (first coll)]
                     (if (pred last-added x)
-                      (cons val (cons x (_insert-between (rest coll) x)))
-                      (cons x (_insert-between (rest coll) x)))))))]
-      (lazy-seq (cons (first coll) (_insert-between (rest coll) (first coll)))))))
+                      (cons val (cons x (_step (rest coll) x)))
+                      (cons x (_step (rest coll) x)))))))]
+      (lazy-seq (cons (first coll) (_step (rest coll) (first coll)))))))
 
 (deftest tests
   (testing "test1"

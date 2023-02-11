@@ -24,18 +24,17 @@
 
 (defn k-combinations-lazy
   [k coll]
-  (letfn [(step [k coll]
+  (letfn [(_step [k coll]
             (lazy-seq
               (when (seq coll)
                 (if (= k 1)
                   (map list coll)
                   (concat (map #(cons (first coll) %)
-                               (step (dec k) (rest coll)))
-                          (step k (rest coll)))))))]
+                               (_step (dec k) (rest coll)))
+                          (_step k (rest coll)))))))]
     (if (<= k 0)
       ()
-      (step k coll))))
-
+      (_step k coll))))
 (defn k-combinations1
   [k coll]
   (set (map set (k-combinations-non-lazy k coll))))

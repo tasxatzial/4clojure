@@ -7,10 +7,10 @@
 
 (defn fib
   []
-  (letfn [(_fib [prev next]
+  (letfn [(_step [prev next]
             (lazy-seq
-              (cons prev (_fib next (+ prev next)))))]
-    (_fib 1 1)))
+              (cons prev (_step next (+ prev next)))))]
+    (_step 1 1)))
 
 (defn get-fib
   [N]
