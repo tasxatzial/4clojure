@@ -9,7 +9,7 @@
 
 (defn zip-map
   [col1 col2]
-  (into {} (map #(vector %1 %2) col1 col2)))
+  (into {} (map vector col1 col2)))
 
 (deftest tests
   (testing "test1"
