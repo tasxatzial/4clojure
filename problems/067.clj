@@ -29,6 +29,7 @@
     (_primes [] 2)))
 
 (defn primes
+  "Returns the first x primes."
   [x]
   (loop [x x
          result []
@@ -40,6 +41,7 @@
         (recur x result (inc N))))))
 
 (defn primes2
+  "Returns the first x primes."
   [x]
   (take x (primes-lazy)))
 
