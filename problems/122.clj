@@ -23,11 +23,8 @@
 (defn to-decimal
   [s]
   (let [decimal-values (map bin-char->dec s)]
-    (+ (last decimal-values)
-       (reduce (fn [result digit]
-                 (* 2 (+ result digit)))
-               0
-               (butlast decimal-values)))))
+    (reduce #(+ %2 (* 2 %1))
+            0 decimal-values)))
 
 (defn to-decimal2
   [s]
