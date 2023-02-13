@@ -1,61 +1,50 @@
-;p84
-;Write a function which generates the transitive closure of a binary relation. The relation will
-;be represented as a set of 2 item vectors.
-;
-(defn find-relation
-  "Produces a new relation from vec1 and vec2. The new relation is nil
-  if the second item of vec1 is different that the first item of
-  vec1 otherwise it is [(first vec1) (second vec2)]."
-  [vec1 vec2]
-  (if (= (second vec1) (first vec2))
-    [(first vec1) (second vec2)]
-    nil))
+;; p84: Transitive Closure
+
+;; Write a function which generates the transitive closure of a binary relation.
+;; The relation will be represented as a set of 2 item vectors.
 
 (defn find-relations
-  "Produces all the new relations of vec with each item in col. The order
-  of the item does not matter."
-  [vec col]
+  "Adds to coll the relations of v with each item in coll."
+  [v coll]
   (reduce (fn [result x]
-            (let [relation1 (find-relation vec x)
-                  relation2 (find-relation x vec)]
-              (if relation1
-                (conj result relation1)
-                (if relation2
-                  (conj result relation2)
-                  result))))
-          col
-          col))
+            (let [[vf vs] v
+                  [xf xs] x
+                  rel1 (when (= xs vf) [xf vs])
+                  rel2 (when (= vs xf) [vf xs])]
+              (remove nil? (into result [rel1 rel2]))))
+          coll
+          coll))
 
-(defn transitive-closure-one-pass
-  "Produces all new relations of each item in col with the rest
-  of the col. The order of the items does not matter."
-  ([col] (transitive-closure-one-pass col col))
-  ([col result]
-   (if (empty? col)
-     result
-     (let [vec (first col)
-           relations (find-relations vec (rest col))]
-       (recur (rest col) (into result relations))))))
+(defn transitive-closure-single-pass
+  "Adds to coll the relations of each of its items with the rest of the coll."
+  [coll]
+  (loop [coll$ coll
+         result coll]
+    (if (seq coll$)
+      (let [relations (find-relations (first coll$) (rest coll$))]
+        (recur (rest coll$) (into result relations)))
+      result)))
 
-(defn transitive-clojure
-  "Returns the transitive closure of a binary relation. The relation is
-  represented as a set of 2 item vectors."
-  [col]
-  (let [one-pass-closure (transitive-closure-one-pass col)]
-    (if (= one-pass-closure col)
-      col
-      (recur one-pass-closure))))
+(defn transitive-closure
+  [coll]
+  (let [single-pass-closure (transitive-closure-single-pass coll)]
+    (if (= single-pass-closure coll)
+      coll
+      (recur single-pass-closure))))
 
-;tests
-(let [divides #{[8 4] [9 3] [4 2] [27 9]}]
-  (= (transitive-clojure divides) #{[4 2] [8 4] [8 2] [9 3] [27 9] [27 3]}))
-(let [more-legs
-      #{["cat" "man"] ["man" "snake"] ["spider" "cat"]}]
-  (= (transitive-clojure more-legs)
-     #{["cat" "man"] ["cat" "snake"] ["man" "snake"]
-       ["spider" "cat"] ["spider" "man"] ["spider" "snake"]}))
-(let [progeny
-      #{["father" "son"] ["uncle" "cousin"] ["son" "grandson"]}]
-  (= (transitive-clojure progeny)
-     #{["father" "son"] ["father" "grandson"]
-       ["uncle" "cousin"] ["son" "grandson"]}))
+(deftest tests
+  (testing "test1"
+    (let [divides #{[8 4] [9 3] [4 2] [27 9]}]
+      (is (= (transitive-closure divides) #{[4 2] [8 4] [8 2] [9 3] [27 9] [27 3]}))))
+  (testing "test2"
+    (let [more-legs
+          #{["cat" "man"] ["man" "snake"] ["spider" "cat"]}]
+      (is (= (transitive-closure more-legs)
+             #{["cat" "man"] ["cat" "snake"] ["man" "snake"]
+               ["spider" "cat"] ["spider" "man"] ["spider" "snake"]}))))
+  (testing "test3"
+    (let [progeny
+          #{["father" "son"] ["uncle" "cousin"] ["son" "grandson"]}]
+      (is (= (transitive-closure progeny)
+             #{["father" "son"] ["father" "grandson"]
+               ["uncle" "cousin"] ["son" "grandson"]})))))
