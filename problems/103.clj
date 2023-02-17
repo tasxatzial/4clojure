@@ -35,6 +35,7 @@
     (if (<= k 0)
       ()
       (_step k coll))))
+
 (defn k-combinations1
   [k coll]
   (set (map set (k-combinations-non-lazy k coll))))
