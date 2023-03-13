@@ -9,12 +9,17 @@
   [N idx]
   (zero? (mod (inc idx) N)))
 
-;; lazy
 (defn drop-every-nth
   [xs N]
   (let [nth-element? (partial nth? N)]
-    (keep-indexed #(if (not (nth-element? %1)) %2)
-                  xs)))
+    (loop [xs xs
+           idx 0
+           result []]
+      (if (empty? xs)
+        result
+        (if (nth-element? idx)
+          (recur (rest xs) (inc idx) result)
+          (recur (rest xs) (inc idx) (conj result (first xs))))))))
 
 (deftest tests
   (testing "test1"

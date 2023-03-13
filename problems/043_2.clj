@@ -7,10 +7,7 @@
 
 (defn reverse-interleave
   [xs N]
-  (let [partitioned (partition N xs)]
-    (->> partitioned
-         (apply interleave)
-         (partition (count partitioned)))))
+  (apply map list (partition N xs)))
 
 (deftest tests
   (testing "test1"

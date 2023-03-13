@@ -25,7 +25,7 @@
               (let [updated-result (conj result [interval-start interval-end])]
                 (recur rest-coll updated-result curr-el curr-el)))))))))
 
-(deftest tests-create-map2
+(deftest tests
   (testing "test1"
     (is (= (intervals [1 2 3]) [[1 3]])))
   (testing "test2"

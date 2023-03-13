@@ -7,8 +7,9 @@
 
 (defn rotate
   [N xs]
-  (let [split-index (mod N (count xs))]
-    (concat (drop split-index xs) (take split-index xs))))
+  (let [split-index (mod N (count xs))
+        split-xs (split-at split-index xs)]
+    (concat (second split-xs) (first split-xs))))
 
 (deftest tests
   (testing "test1"

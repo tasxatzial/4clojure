@@ -6,14 +6,9 @@
 (ns p29.core
   (:require [clojure.test :refer [deftest testing is]]))
 
-(defn capital?
-  "Returns true if char c is a capital letter, false otherwise."
-  [c]
-  (<= 65 (int c) 90))
-
 (defn get-capital
   [s]
-  (apply str (filter capital? s)))
+  (apply str (re-seq #"[A-Z]" s)))
 
 (deftest tests
   (testing "test1"

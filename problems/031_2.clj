@@ -7,15 +7,7 @@
 
 (defn partition-by-identity
   [xs]
-  (loop [[x & rest-xs] xs
-         equal-count 1
-         result []]
-    (if (seq rest-xs)
-      (if (= x (first rest-xs))
-        (recur rest-xs (inc equal-count) result)
-        (recur rest-xs 1 (conj result (take equal-count (repeat x)))))
-      (conj result (take equal-count (repeat x))))))
-
+  (partition-by identity xs))
 
 (deftest tests
   (testing "test1"

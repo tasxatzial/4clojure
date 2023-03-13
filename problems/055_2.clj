@@ -9,12 +9,10 @@
 
 (defn frequencies-seq
   [xs]
-  (reduce (fn [result x]
-            (if (contains? result x)
-              (update result x inc)
-              (assoc result x 1)))
-          {}
-          xs))
+  (->> xs
+       (group-by identity)
+       (map #(vector (first %) (count (second %))))
+       (into {})))
 
 (deftest tests
   (testing "test1"

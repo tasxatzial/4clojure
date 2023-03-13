@@ -7,19 +7,17 @@
 (ns p56.core
   (:require [clojure.test :refer [deftest testing is]]))
 
+;; lazy
 (defn remove-duplicates
   [xs]
-  (loop [xs xs
-         set-xs #{}
-         result []]
-    (if (empty? xs)
-      result
-      (let [[x & rest-xs] xs]
-        (if (contains? set-xs x)
-          (recur rest-xs set-xs result)
-          (let [new-set-xs (conj set-xs x)
-                new-result (conj result x)]
-            (recur rest-xs new-set-xs new-result)))))))
+  (letfn [(_step [xs set-xs]
+            (lazy-seq
+              (when (seq xs)
+                (let [[x & rest-xs] xs]
+                  (if (contains? set-xs x)
+                    (_step rest-xs set-xs)
+                    (cons x (_step rest-xs (conj set-xs x))))))))]
+    (_step xs #{})))
 
 (deftest tests
   (testing "test1"

@@ -8,7 +8,7 @@
 
 (defn indexed-sequence
   [coll]
-  (partition 2 (interleave coll (range))))
+  (keep-indexed #(vector %2 %1) coll))
 
 (deftest tests
   (testing "test1"

@@ -11,10 +11,9 @@
 
 (defn create-map
   [val coll]
-  (reduce (fn [result x]
-            (conj result [x val]))
-          {}
-          coll))
+  (->> (repeat val)
+       (interleave coll)
+       (apply hash-map)))
 
 (deftest tests
   (testing "test1"

@@ -7,24 +7,23 @@
 (ns p103.core
   (:require [clojure.test :refer [deftest testing is]]))
 
-(defn k-combinations-non-lazy
+(defn k-combinations-lazy
   [k coll]
-  (if (<= k 0)
-    ()
-    (if (= k 1)
-      (map list coll)
-      (loop [result []
-             coll coll]
-        (if (seq coll)
-          (let [[el & rest-coll] coll
-                rest-combinations (k-combinations-non-lazy (dec k) rest-coll)
-                el-combinations (map #(conj % el) rest-combinations)]
-            (recur (into result el-combinations) rest-coll))
-          result)))))
+  (letfn [(_step [k coll]
+            (lazy-seq
+              (when (seq coll)
+                (if (= k 1)
+                  (map list coll)
+                  (concat (map #(cons (first coll) %)
+                               (_step (dec k) (rest coll)))
+                          (_step k (rest coll)))))))]
+    (if (<= k 0)
+      ()
+      (_step k coll))))
 
 (defn k-combinations
   [k coll]
-  (set (map set (k-combinations-non-lazy k coll))))
+  (set (map set (k-combinations-lazy k coll))))
 
 (deftest tests
   (testing "test1"

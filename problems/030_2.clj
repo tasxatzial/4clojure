@@ -8,15 +8,10 @@
 (ns p30.core
   (:require [clojure.test :refer [deftest testing is]]))
 
+;; lazy
 (defn compress-seq
   [xs]
-  (loop [[x & rest-xs] xs
-         result []]
-    (if (seq rest-xs)
-      (if (= x (first rest-xs))
-        (recur rest-xs result)
-        (recur rest-xs (conj result x)))
-      (conj result x))))
+  (map first (partition-by identity xs)))
 
 (deftest tests
   (testing "test1"

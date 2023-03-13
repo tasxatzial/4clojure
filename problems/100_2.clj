@@ -15,13 +15,12 @@
 
 (defn LCM
   [& args]
-  (let [max-arg (apply max args)]
-    (loop [result max-arg]
-      (if (some #(not= 0 (mod result %)) args)
-        (recur (+ max-arg result))
-        result))))
+  (reduce (fn [result x]
+            (/ (* result x) (GCD result x)))
+          (first args)
+          args))
 
-(deftest tests
+(deftest tests-LCM
   (testing "test1"
     (is (== (LCM 2 3) 6)))
   (testing "test2"

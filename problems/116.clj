@@ -49,7 +49,7 @@
                  next-prime (get-next-prime primes)]
              (= N (/ (+ prev-prime next-prime) 2)))))))
 
-(deftest tests-primes
+(deftest tests
   (testing "test1"
     (is (= false (balanced-prime? 4))))
   (testing "test2"

@@ -7,14 +7,13 @@
 (ns p54.core
   (:require [clojure.test :refer [deftest testing is]]))
 
+;; lazy
 (defn partition-seq
   [N xs]
-  (loop [xs xs
-         result []]
+  (lazy-seq
     (let [first-N (take N xs)]
-      (if (= N (count first-N))
-        (recur (drop N xs) (conj result first-N))
-        result))))
+      (when (= N (count first-N))
+        (cons first-N (partition-seq N (drop N xs)))))))
 
 (deftest tests
   (testing "test1"

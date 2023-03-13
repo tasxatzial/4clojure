@@ -7,7 +7,13 @@
 
 (defn factorial
   [N]
-  (reduce *' (range 1 (inc N))))
+  (if (zero? N)
+    1
+    (loop [N N
+           result 1]
+      (if (= N 1)
+        result
+        (recur (dec N) (*' result N))))))
 
 (deftest tests
   (testing "test1"

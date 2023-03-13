@@ -7,7 +7,7 @@
 
 (defn duplicate-elements
   [xs]
-  (apply concat (map #(vector % %) xs)))
+  (interleave xs xs))
 
 (deftest tests
   (testing "test1"

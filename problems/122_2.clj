@@ -10,11 +10,21 @@
   [c]
   (- (int c) 48))
 
+(defn pow2n
+  "Returns 2^n."
+  [n]
+  (reduce * (repeat n 2)))
+
+(defn powers2n
+  "Returns a seq of the powers of 2 from 2^n to 2^0."
+  [n]
+  (map #(pow2n %) (range n -1 -1)))
+
 (defn to-decimal
   [s]
-  (let [decimal-values (map bin-char->dec s)]
-    (reduce #(+ %2 (* 2 %1))
-            0 decimal-values)))
+  (let [decimal-values (map bin-char->dec s)
+        powers (powers2n (dec (count decimal-values)))]
+    (reduce + (map * decimal-values powers))))
 
 (deftest tests
   (testing "test1"

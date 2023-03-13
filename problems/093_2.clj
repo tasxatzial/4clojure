@@ -7,17 +7,16 @@
 (ns p93.core
   (:require [clojure.test :refer [deftest testing is]]))
 
-;; lazy
 (defn make-flat
   [xs]
-  (lazy-seq
-    (when (seq xs)
-      (let [[x & rest-xs] xs]
-        (if (sequential? x)
-          (if (every? (complement sequential?) x)
-            (cons x (make-flat rest-xs))
-            (concat (make-flat x) (make-flat rest-xs)))
-          (cons x (make-flat rest-xs)))))))
+  (reduce (fn _flat [result x]
+            (if (sequential? x)
+              (if (every? (complement sequential?) x)
+                (conj result x)
+                (reduce _flat result x))
+              (conj result x)))
+          []
+          xs))
 
 (deftest tests
   (testing "test1"

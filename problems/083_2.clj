@@ -9,8 +9,9 @@
 
 (defn half-truth
   [& args]
-  (and (or (some true? args) false)
-       (or (some false? args) false)))
+  (let [true-args (filter true? args)]
+    (and (boolean (seq true-args))
+         (not= (count args) (count true-args)))))
 
 (deftest tests
   (testing "test1"

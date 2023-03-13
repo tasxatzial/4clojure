@@ -8,9 +8,11 @@
 
 (defn get-range
   [n1 n2]
-  (lazy-seq 
-    (when (< n1 n2) 
-      (cons n1 (get-range (inc n1) n2)))))
+  (loop [result []
+         n1 n1]
+    (if (< n1 n2)
+      (recur (conj result n1) (inc n1))
+      result)))
 
 (deftest tests
   (testing "test1"

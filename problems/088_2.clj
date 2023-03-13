@@ -10,7 +10,8 @@
 
 (defn symmetric-difference
   [set1 set2]
-  (set/difference (set/union set1 set2) (set/intersection set1 set2)))
+  (let [intersection (set/intersection set1 set2)]
+    (into (set/difference set1 intersection) (set/difference set2 intersection))))
 
 (deftest tests
   (testing "test1"
