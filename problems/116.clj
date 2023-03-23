@@ -33,7 +33,7 @@
   [primes]
   (if (empty? primes)
     2
-    (loop [result (inc (last primes))]
+    (loop [result (inc (peek primes))]
       (if (prime? result primes)
         result
         (recur (inc result))))))
