@@ -6,7 +6,7 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn prime?
-  "Returns true if N is prime. This will happen if N is a multiple
+  "Returns true if N is prime. This will happen if N is not a multiple
   of any number in the given list of primes."
   [N primes]
   (reduce (fn [result prime]
