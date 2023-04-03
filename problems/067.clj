@@ -2,21 +2,24 @@
 
 ;; Write a function which returns the first x number of prime numbers.
 
+;; non-lazy implementation
+
 (ns p67.core
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn prime?
-  "Returns true if N is prime. This will happen if N is not a multiple
-  of any number in the given list of primes."
+  "Returns true if N is prime. This will happen if N is a not multiple
+  of any number in the given vector of primes."
   [N primes]
-  (reduce (fn [result prime]
-            (if (> prime (inc (Math/sqrt N)))
+  (let [sqrt-N (Math/sqrt N)]
+    (reduce (fn [result prime]
+            (if (> prime sqrt-N)
               (reduced true)
               (if (= 0 (mod N prime))
                 (reduced false)
                 result)))
           true
-          primes))
+          primes)))
 
 (defn primes
   "Returns the first x primes."
