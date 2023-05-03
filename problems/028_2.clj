@@ -13,8 +13,8 @@
     (when (seq xs)
       (let [[x & rest-xs] xs]
         (if (sequential? x)
-          (concat (make-flat2 x) (make-flat2 rest-xs))
-          (cons x (make-flat2 rest-xs)))))))
+          (concat (make-flat x) (make-flat rest-xs))
+          (cons x (make-flat rest-xs)))))))
 
 (deftest tests
   (testing "test1"
