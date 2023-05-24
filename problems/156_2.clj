@@ -10,9 +10,9 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn create-map
-  [val coll]
+  [val xs]
   (->> (repeat val)
-       (interleave coll)
+       (interleave xs)
        (apply hash-map)))
 
 (deftest tests

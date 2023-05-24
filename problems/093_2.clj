@@ -9,11 +9,11 @@
 
 (defn make-flat
   [xs]
-  (reduce (fn _flat [result x]
+  (reduce (fn flat [result x]
             (if (sequential? x)
               (if (every? (complement sequential?) x)
                 (conj result x)
-                (reduce _flat result x))
+                (reduce flat result x))
               (conj result x)))
           []
           xs))

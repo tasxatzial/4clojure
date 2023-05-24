@@ -9,7 +9,7 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn to-digits
-  "Returns a seq of the digits of a number."
+  "Returns a sequence of the digits of a number."
   [n]
   (->> n
        str
@@ -24,8 +24,8 @@
        (reduce +)))
 
 (defn p120
-  [col]
-  (->> col
+  [coll]
+  (->> coll
        (filter #(< % (squared-digit-sum %)))
        count))
 

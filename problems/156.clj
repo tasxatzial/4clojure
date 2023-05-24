@@ -10,11 +10,11 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn create-map
-  [val coll]
+  [val xs]
   (reduce (fn [result x]
             (conj result [x val]))
           {}
-          coll))
+          xs))
 
 (deftest tests
   (testing "test1"

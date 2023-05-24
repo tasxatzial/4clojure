@@ -8,7 +8,7 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn get-non-decreasing-length
-  "Returns the length of the first non-decreasing subseq.
+  "Returns the length of the first non-decreasing subsequence.
   Assumes xs is never empty."
   [xs]
   (loop [[x & rest-xs] xs

@@ -10,12 +10,12 @@
 (defn oscillate
   [val & fns]
   (let [fns-count (count fns)]
-    (letfn [(_step [idx last-val]
+    (letfn [(step [idx last-val]
               (lazy-seq
                 (let [f (nth fns (mod idx fns-count))
                       fval (f last-val)]
-                  (cons fval (_step (inc idx) fval)))))]
-      (lazy-seq (cons val (_step 0 val))))))
+                  (cons fval (step (inc idx) fval)))))]
+      (lazy-seq (cons val (step 0 val))))))
 
 (deftest tests
   (testing "test1"

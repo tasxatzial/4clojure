@@ -5,14 +5,14 @@
 ;; (if any) between it and the next keyword in the sequence.
 
 (defn identify-keys-vals
-  [coll]
+  [xs]
   (loop [result {}
-         coll coll]
-    (if (seq coll)
-      (let [key (first coll)
-            values (take-while (complement keyword?) (rest coll))]
+         xs xs]
+    (if (seq xs)
+      (let [key (first xs)
+            values (take-while (complement keyword?) (rest xs))]
         (recur (assoc result key values)
-               (drop (inc (count values)) coll)))
+               (drop (inc (count values)) xs)))
       result)))
 
 (deftest tests

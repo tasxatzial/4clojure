@@ -16,7 +16,7 @@
   (reduce * (repeat n 2)))
 
 (defn powers2n
-  "Returns a seq of the powers of 2 from 2^n to 2^0."
+  "Returns a sequence of the powers of 2 from 2^n to 2^0."
   [n]
   (map #(pow2n %) (range n -1 -1)))
 

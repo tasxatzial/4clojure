@@ -10,7 +10,7 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn get-sorted-chars
-  "Splits a string into a sorted seq of chars."
+  "Splits a string into a sorted sequence of chars."
   [s]
   (sort (map identity s)))
 

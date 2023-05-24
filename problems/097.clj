@@ -10,13 +10,13 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn next-row
-  "Returns the next row of pascal's triangle."
+  "Returns the next row of Pascal's triangle."
   [row]
   (let [zero-append (conj row 0)]
     (mapv +' zero-append (rseq zero-append))))
 
 (defn row
-  "Returns the Nth row of pascal's triangle."
+  "Returns the Nth row of Pascal's triangle."
   [N]
   (loop [row [1]
          N N]

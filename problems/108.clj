@@ -17,16 +17,16 @@
        (= n)))
 
 (defn find-smallest-common
-  "Returns the smallest number which appears in all seqs.
+  "Returns the smallest number which appears in all sequences.
   Every sequence must be sorted in increasing order."
-  ([& seqs]
-   (let [rest-xss (rest seqs)]
-     (loop [first-coll (first seqs)]
-       (when (seq first-coll)
-         (let [num (first first-coll)
+  ([& xss]
+   (let [rest-xss (rest xss)]
+     (loop [first-xs (first xss)]
+       (when (seq first-xs)
+         (let [num (first first-xs)
                contained-in-rest (map (partial contained? num) rest-xss)]
            (if (some false? contained-in-rest)
-             (recur (rest first-coll))
+             (recur (rest first-xs))
              num)))))))
 
 (deftest tests

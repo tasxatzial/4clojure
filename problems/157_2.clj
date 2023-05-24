@@ -7,8 +7,8 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn indexed-sequence
-  [coll]
-  (keep-indexed #(vector %2 %1) coll))
+  [xs]
+  (keep-indexed #(vector %2 %1) xs))
 
 (deftest tests
   (testing "test1"

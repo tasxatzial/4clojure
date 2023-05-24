@@ -18,11 +18,11 @@
 (defn transitive-closure-single-pass
   "Adds to coll the relations of each of its items with the rest of the coll."
   [coll]
-  (loop [coll$ coll
+  (loop [coll coll
          result coll]
-    (if (seq coll$)
-      (let [relations (find-relations (first coll$) (rest coll$))]
-        (recur (rest coll$) (into result relations)))
+    (if (seq coll)
+      (let [relations (find-relations (first coll) (rest coll))]
+        (recur (rest coll) (into result relations)))
       result)))
 
 (defn transitive-closure

@@ -7,8 +7,8 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn indexed-sequence
-  [coll]
-  (partition 2 (interleave coll (range))))
+  [xs]
+  (partition 2 (interleave xs (range))))
 
 (deftest tests
   (testing "test1"

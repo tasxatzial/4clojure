@@ -8,17 +8,17 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn insert-between
-  [pred val coll]
-  (if (empty? coll)
-    coll
-    (letfn [(_step [coll last-added]
+  [pred val xs]
+  (if (empty? xs)
+    xs
+    (letfn [(step [xs last-added]
               (lazy-seq
-                (when (seq coll)
-                  (let [x (first coll)]
+                (when (seq xs)
+                  (let [x (first xs)]
                     (if (pred last-added x)
-                      (cons val (cons x (_step (rest coll) x)))
-                      (cons x (_step (rest coll) x)))))))]
-      (lazy-seq (cons (first coll) (_step (rest coll) (first coll)))))))
+                      (cons val (cons x (step (rest xs) x)))
+                      (cons x (step (rest xs) x)))))))]
+      (lazy-seq (cons (first xs) (step (rest xs) (first xs)))))))
 
 (deftest tests
   (testing "test1"

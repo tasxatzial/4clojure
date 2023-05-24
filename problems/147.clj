@@ -20,9 +20,9 @@
     (mapv +' zero-append-row zero-prepend-row)))
 
 (defn pascal-trapezoid
-  [coll]
+  [xs]
   (lazy-seq
-    (cons coll (pascal-trapezoid (next-row coll)))))
+    (cons xs (pascal-trapezoid (next-row xs)))))
 
 (deftest tests
   (testing "test1"

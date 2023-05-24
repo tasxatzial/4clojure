@@ -8,23 +8,23 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn k-combinations-non-lazy
-  [k coll]
+  [k xs]
   (if (<= k 0)
     ()
     (if (= k 1)
-      (map list coll)
+      (map list xs)
       (loop [result []
-             coll coll]
-        (if (seq coll)
-          (let [[el & rest-coll] coll
-                rest-combinations (k-combinations-non-lazy (dec k) rest-coll)
+             xs xs]
+        (if (seq xs)
+          (let [[el & rest-xs] xs
+                rest-combinations (k-combinations-non-lazy (dec k) rest-xs)
                 el-combinations (map #(conj % el) rest-combinations)]
-            (recur (into result el-combinations) rest-coll))
+            (recur (into result el-combinations) rest-xs))
           result)))))
 
 (defn k-combinations
-  [k coll]
-  (set (map set (k-combinations-non-lazy k coll))))
+  [k xs]
+  (set (map set (k-combinations-non-lazy k xs))))
 
 (deftest tests
   (testing "test1"

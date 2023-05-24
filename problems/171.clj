@@ -9,21 +9,21 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn intervals
-  [coll]
-  (if (empty? coll)
+  [xs]
+  (if (empty? xs)
     []
-    (let [sorted-and-distinct (sort (distinct coll))]
-      (loop [coll (rest sorted-and-distinct)
+    (let [sorted-and-distinct (sort (distinct xs))]
+      (loop [xs (rest sorted-and-distinct)
              result []
              interval-start (first sorted-and-distinct)
              interval-end interval-start]
-        (if (empty? coll)
+        (if (empty? xs)
           (conj result [interval-start interval-end])
-          (let [[curr-el & rest-coll] coll]
+          (let [[curr-el & rest-xs] xs]
             (if (= (inc interval-end) curr-el)
-              (recur rest-coll result interval-start curr-el)
+              (recur rest-xs result interval-start curr-el)
               (let [updated-result (conj result [interval-start interval-end])]
-                (recur rest-coll updated-result curr-el curr-el)))))))))
+                (recur rest-xs updated-result curr-el curr-el)))))))))
 
 (deftest tests
   (testing "test1"

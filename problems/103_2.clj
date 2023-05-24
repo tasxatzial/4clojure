@@ -8,22 +8,22 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn k-combinations-lazy
-  [k coll]
-  (letfn [(_step [k coll]
+  [k xs]
+  (letfn [(step [k xs]
             (lazy-seq
-              (when (seq coll)
+              (when (seq xs)
                 (if (= k 1)
-                  (map list coll)
-                  (concat (map #(cons (first coll) %)
-                               (_step (dec k) (rest coll)))
-                          (_step k (rest coll)))))))]
+                  (map list xs)
+                  (concat (map #(cons (first xs) %)
+                               (step (dec k) (rest xs)))
+                          (step k (rest xs)))))))]
     (if (<= k 0)
       ()
-      (_step k coll))))
+      (step k xs))))
 
 (defn k-combinations
-  [k coll]
-  (set (map set (k-combinations-lazy k coll))))
+  [k xs]
+  (set (map set (k-combinations-lazy k xs))))
 
 (deftest tests
   (testing "test1"

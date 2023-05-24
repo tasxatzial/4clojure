@@ -10,11 +10,10 @@
 
 (defn split-by-type
   [xs]
-  (->>
-    [keyword? number? string? vector?]
-    (map #(filter % xs))
-    (filter not-empty)
-    (map #(apply vector %))))
+  (->> [keyword? number? string? vector?] 
+       (map #(filter % xs)) 
+       (filter not-empty) 
+       (map #(apply vector %))))
 
 (deftest tests
   (testing "test1"
