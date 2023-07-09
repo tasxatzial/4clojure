@@ -5,10 +5,10 @@
 (ns p122.core
   (:require [clojure.test :refer [deftest testing is]]))
 
-(defn bin-char->dec
-  "Returns the decimal value of a char that represents a binary digit."
-  [c]
-  (- (int c) 48))
+(defn digit-char->num
+  "Convert a digit char to the corresponding number."
+  [ch]
+  (Character/digit ^char ch 10))
 
 (defn pow2n
   "Returns 2^n."
@@ -18,11 +18,11 @@
 (defn powers2n
   "Returns a sequence of the powers of 2 from 2^n to 2^0."
   [n]
-  (map #(pow2n %) (range n -1 -1)))
+  (map pow2n (range n -1 -1)))
 
 (defn to-decimal
   [s]
-  (let [decimal-values (map bin-char->dec s)
+  (let [decimal-values (map digit-char->num s)
         powers (powers2n (dec (count decimal-values)))]
     (reduce + (map * decimal-values powers))))
 
