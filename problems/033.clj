@@ -7,7 +7,7 @@
 
 (defn replicate-elements
   [xs N]
-  (apply concat (map #(take N (repeat %)) xs)))
+  (apply concat (map #(repeat N %) xs)))
 
 (deftest tests
   (testing "test1"
