@@ -14,9 +14,9 @@
   (loop [result (first args)
          args (rest args)]
     (let [[f n & rest-args] args]
-      (if (nil? f)
-        result
-        (recur (f result n) rest-args)))))
+      (if f
+        (recur (f result n) rest-args)
+        result))))
 
 (deftest tests
   (testing "test1"
