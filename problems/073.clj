@@ -9,44 +9,45 @@
 (ns p73.core
   (:require [clojure.test :refer [deftest testing is]]))
 
-(defn analyze-line
-  "Analyzes a line (row, column, diagonal). Returns :x or :o if all elements
-  are :x or :o respectively. Returns nil otherwise."
+(defn winning-player
+  "Returns :x or :o if all elements are :x or :o respectively.
+  Returns nil otherwise."
   [line]
-  (cond
-    (= line [:x :x :x]) :x
-    (= line [:o :o :o]) :o
-    :else nil))
+  (case line
+    [:x :x :x] :x
+    [:o :o :o] :o
+    nil))
 
 (defn get-diagonal1
-  "Returns the first diagonal of the board."
   [board]
   (mapv (partial get-in board) [[0 0] [1 1] [2 2]]))
 
 (defn get-diagonal2
-  "Returns the second diagonal of the board."
   [board]
   (mapv (partial get-in board) [[0 2] [1 1] [2 0]]))
 
 (defn get-col
-  "Returns the i-th column of the board."
   [i board]
   (mapv (partial get-in board) [[0 i] [1 i] [2 i]]))
 
 (defn get-row
-  "Returns the i-th row of the board."
   [i board]
   (get board i))
 
-;; Vector with functions that return all board rows, columns, diagonals
-(def get-lines-fns
-  (-> [get-diagonal1 get-diagonal2]
-      (into (map #(partial get-col %) [0 1 2]))
-      (into (map #(partial get-row %) [0 1 2]))))
+(defn get-lines
+  [board]
+  [(get-diagonal1 board)
+   (get-diagonal2 board)
+   (get-col 0 board)
+   (get-col 1 board)
+   (get-col 2 board)
+   (get-row 0 board)
+   (get-row 1 board)
+   (get-row 2 board)])
 
 (defn winner?
   [board]
-  (some #(analyze-line (% board)) get-lines-fns))
+  (some #(winning-player %) (get-lines board)))
 
 (deftest tests
   (testing "test1"
