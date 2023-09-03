@@ -12,28 +12,26 @@
   [triangle row]
   (= (dec (count triangle)) row))
 
-(defn get-val
+(defn min-sum-from-pos
   [triangle row col]
-  (get-in triangle [row col]))
+  (if (last-row? triangle row)
+    (get-in triangle [row col])
+    (let [x (min-sum-from-pos triangle (inc row) col)
+          y (min-sum-from-pos triangle (inc row) (inc col))]
+      (+ (min x y) (get-in triangle [row col])))))
 
-(defn sum-min-path
+(defn min-sum
   [triangle]
-  (letfn [(_sum-min-path [triangle row col]
-            (if (last-row? triangle row)
-              (get-val triangle row col)
-              (let [x (_sum-min-path triangle (inc row) col)
-                    y (_sum-min-path triangle (inc row) (inc col))]
-                (+ (min x y) (get-val triangle row col)))))]
-    (_sum-min-path triangle 0 0)))
+  (min-sum-from-pos triangle 0 0))
 
 (deftest tests
   (testing "test1"
-    (is (= 7 (sum-min-path [   [1]
+    (is (= 7 (min-sum      [   [1]
                               [2 4]
                              [5 1 4]
                             [2 3 4 5]]))))
   (testing "test2"
-    (is (= 20 (sum-min-path [     [3]
+    (is (= 20 (min-sum      [     [3]
                                  [2 4]
                                 [1 9 3]
                                [9 9 2 4]
