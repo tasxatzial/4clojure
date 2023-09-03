@@ -21,9 +21,7 @@
 
 (defn trees-into-tables
   [tree]
-  (->> tree
-       (map tree-into-table)
-       (into {})))
+  (into {} (map tree-into-table) tree))
 
 (deftest tests
   (testing "test1"
