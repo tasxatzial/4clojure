@@ -10,10 +10,14 @@
 (ns p86.core
   (:require [clojure.test :refer [deftest testing is]]))
 
+(defn get-digits
+  [N]
+  (map #(Character/digit ^char % 10) (str N)))
+
 (defn squared-digit-sum
   "Returns the sum of the squares of the digits of N."
   [N]
-  (let [digits (map (comp read-string str) (str N))]
+  (let [digits (get-digits N)]
     (reduce + (map * digits digits))))
 
 (defn happy?
