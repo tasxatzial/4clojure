@@ -8,25 +8,24 @@
 (ns p137.core
   (:require [clojure.test :refer [deftest testing is]]))
 
-(defn to-digits
+(defn from-base10
   [n base]
-  (if (= 0 n)
-    '(0)
-    (loop [result ()
-           n n]
-      (if (= 0 n)
-        result
-        (recur (conj result (mod n base))
-               (quot n base))))))
+  (loop [result ()
+         n n]
+    (if (zero? n)
+      (or (seq result) '(0))
+      (let [r (rem n base)
+            q (quot n base)]
+        (recur (conj result r) q)))))
 
 (deftest tests
   (testing "test1"
-    (is (= [1 2 3 4 5 0 1] (to-digits 1234501 10))))
+    (is (= [1 2 3 4 5 0 1] (from-base10 1234501 10))))
   (testing "test2"
-    (is (= [0] (to-digits 0 11))))
+    (is (= [0] (from-base10 0 11))))
   (testing "test3"
-    (is (= [1 0 0 1] (to-digits 9 2))))
+    (is (= [1 0 0 1] (from-base10 9 2))))
   (testing "test4"
-    (is (= [1 0] (let [n (rand-int 100000)] (to-digits n n)))))
+    (is (= [1 0] (let [n (rand-int 100000)] (from-base10 n n)))))
   (testing "test5"
-    (is (= [16 18 5 24 15 1] (to-digits Integer/MAX_VALUE 42)))))
+    (is (= [16 18 5 24 15 1] (from-base10 Integer/MAX_VALUE 42)))))
