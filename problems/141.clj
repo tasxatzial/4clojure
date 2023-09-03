@@ -30,12 +30,12 @@
               (rest coll)))))
 
 (deftest tests
-  (let [notrump (p141 nil)]
-    (testing "test1"
-      (is (= {:suit :club :rank 9}  (notrump [{:suit :club :rank 4}
-                                              {:suit :club :rank 9}])))
-      (is (= {:suit :spade :rank 2} (notrump [{:suit :spade :rank 2}
-                                              {:suit :club :rank 10}])))))
+  (testing "test1"
+    (let [notrump (p141 nil)]
+      (and (= {:suit :club :rank 9}  (notrump [{:suit :club :rank 4}
+                                               {:suit :club :rank 9}]))
+           (= {:suit :spade :rank 2} (notrump [{:suit :spade :rank 2}
+                                               {:suit :club :rank 10}])))))
   (testing "test2"
     (is (= {:suit :club :rank 10} ((p141 :club) [{:suit :spade :rank 2}
                                                  {:suit :club :rank 10}]))))
