@@ -15,15 +15,14 @@
     (let [sorted-and-distinct (sort (distinct xs))]
       (loop [xs (rest sorted-and-distinct)
              result []
-             interval-start (first sorted-and-distinct)
-             interval-end interval-start]
+             start (first sorted-and-distinct)
+             end start]
         (if (empty? xs)
-          (conj result [interval-start interval-end])
-          (let [[curr-el & rest-xs] xs]
-            (if (= (inc interval-end) curr-el)
-              (recur rest-xs result interval-start curr-el)
-              (let [updated-result (conj result [interval-start interval-end])]
-                (recur rest-xs updated-result curr-el curr-el)))))))))
+          (conj result [start end])
+          (let [[x & rest-xs] xs]
+            (if (= (inc end) x)
+              (recur rest-xs result start x)
+              (recur rest-xs (conj result [start end]) x x))))))))
 
 (deftest tests
   (testing "test1"
