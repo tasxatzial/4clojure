@@ -6,16 +6,14 @@
 ;; Note: Some test cases have a very large n, so the most obvious solution
 ;; will exceed the time limit
 
-;; Personal note:
+(ns p148.core
+  (:require [clojure.test :refer [deftest testing is]]))
+
 ;; All numbers < N which are divisible by X form a arithmetic progression.
 ;; Their sum is: X * q * (q + 1) / 2
 ;;
 ;; where q = total numbers < N that divide X
 ;; and q = (quotient (N-1) X)
-
-(ns p148.core
-  (:require [clojure.test :refer [deftest testing is]]))
-
 (defn sum-of-divisible
   "Calculates the sum of the numbers < N which are divisible by X."
   [N X]
