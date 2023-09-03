@@ -8,9 +8,9 @@
 
 (defn product-digits
   [x y]
-  (->> (*' x y)
+  (->> (* x y)
        str
-       (map (comp read-string str))))
+       (map #(Character/digit ^char % 10))))
 
 (deftest tests
   (testing "test1"
