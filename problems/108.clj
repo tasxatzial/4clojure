@@ -8,24 +8,30 @@
   (:require [clojure.test :refer [deftest testing is]]))
 
 (defn contained?
-  "Returns true if xs contains n, else false.
-  xs must be sorted in increasing order."
+  "Returns true if xs contains n, else false."
   [n xs]
   (->> xs
        (take-while #(<= % n))
        last
        (= n)))
 
+(defn contained-in?
+  "Returns true if any of the sequences in xss contains n,
+  else false."
+  [n xss]
+  (->> xss
+       (map #(contained? n %))
+       (some false?)
+       some?))
+
 (defn find-smallest-common
-  "Returns the smallest number which appears in all sequences.
-  Every sequence must be sorted in increasing order."
+  "Returns the smallest number which appears in all sequences."
   ([& xss]
    (let [rest-xss (rest xss)]
      (loop [first-xs (first xss)]
        (when (seq first-xs)
-         (let [num (first first-xs)
-               contained-in-rest (map (partial contained? num) rest-xss)]
-           (if (some false? contained-in-rest)
+         (let [num (first first-xs)]
+           (if (contained-in? num rest-xss)
              (recur (rest first-xs))
              num)))))))
 
