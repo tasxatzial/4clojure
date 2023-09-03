@@ -14,12 +14,14 @@
 (ns p128.core
   (:require [clojure.test :refer [deftest testing is]]))
 
-(def char-values
+(def char->suit
   {\S :spade
    \D :diamond
    \H :heart
-   \C :club
-   \2 0
+   \C :club})
+
+(def char->value
+  {\2 0
    \3 1
    \4 2
    \5 3
@@ -36,8 +38,8 @@
 (defn recognize-card
   [card]
   (let [[suit value] card]
-    {:suit (char-values suit)
-     :rank (char-values value)}))
+    {:suit (char->suit suit)
+     :rank (char->value value)}))
 
 (deftest tests
   (testing "test1"
