@@ -10,7 +10,7 @@
 
 (defn into-camel-case
   [s]
-  (clojure.string/replace s #"(-)([a-z])" #(clojure.string/upper-case (get %1 2))))
+  (clojure.string/replace s #"-([a-z])" #(clojure.string/upper-case (get %1 1))))
 
 (deftest tests
   (testing "test1"
